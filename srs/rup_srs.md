@@ -31,7 +31,7 @@
     - [3.1 Funktionalität](#31-funktionalität)
       - [Phase 1 (bis Dezember) - Kernfunktionalität:](#phase-1-bis-dezember---kernfunktionalität)
       - [Phase 2 (bis Juni) - Erweiterungen:](#phase-2-bis-juni---erweiterungen)
-    - [Funktionale Anforderungen im Detail:](#funktionale-anforderungen-im-detail)
+    - [Funktionale Anforderungen im Detail](#funktionale-anforderungen-im-detail)
     - [3.2 Benutzbarkeit](#32-benutzbarkeit)
       - [3.2.1 Intuitive Bedienung](#321-intuitive-bedienung)
       - [3.2.2 Responsive Design](#322-responsive-design)
@@ -181,18 +181,18 @@ Das Projekt wird als responsive Webanwendung realisiert, die in modernen Browser
 #### Phase 1 (bis Dezember) - Kernfunktionalität:
 
 - **3.1.1 Account Management**  
-  Registrierung, Login, Gast-Zugang, Logout
+  Registrierung, Login, Passwort Reset, Gast-Zugang, Logout
 - **3.1.2 Lobby Management**  
-  Lobby erstellen, per Code beitreten, Rollenzuweisung, Spiel starten
+  Lobby erstellen und beitreten, Rollenzuweisung, Spiel starten
 - **3.1.3 Spielmechaniken**  
-  Vollständige Implementierung der klassischen Siedler von Catan Regeln
+  Vollständige Implementierung der Spielmechaniken und Mehrspieler-Logik
 - **3.1.4 Grundlegende UI**  
-  Funktionales Spielfeld, Ressourcenverwaltung, Bau-Interface
+  Start- und Spielbildschirm, Anmeldefenster
 
 #### Phase 2 (bis Juni) - Erweiterungen:
 
 - **3.1.5 Erweiterte UI-Komponenten**  
-  Pause-Menu, Home Page, verbesserte Match Page
+  Pause-Menu, verbesserte Start- und Spielbildschirme
 - **3.1.6 Mods-System**  
   Doppeltes Würfeln, Völker-Fähigkeiten, Riesiges Spielfeld
 - **3.1.7 Skins**  
@@ -200,52 +200,41 @@ Das Projekt wird als responsive Webanwendung realisiert, die in modernen Browser
 - **3.1.8 Design-Verbesserungen**  
   Light/Dark Mode, verbesserte Visualisierung
 
-### Funktionale Anforderungen im Detail:
+### Funktionale Anforderungen im Detail
 
-```
-(((ich weiß noch nicht wie wir das hier richtig implementieren)))
+- **3.1.1 Account Management**  
+  - 3.1.1.1 [Registrierung](./account_management/registration/registration.md)
+  - 3.1.1.2 [Login](./account_management/login/login.md)
+  - 3.1.1.3 [Passwort Reset](./account_management/password_reset/password_reset.md)
+  - 3.1.1.4 [Gast-Login](./account_management/gast_login/gast_login.md)
+  - 3.1.1.5 [Logout](./account_management/logout/logout.md)
 
-2. ### **Account Management**
+- **3.1.2 Lobby Management**  
+  - 3.1.2.1 [Lobby erstellen](./lobby_management/lobby_erstellen/lobby_erstellen.md)
+  - 3.1.2.2 [Lobby beitreten](./lobby_management/lobby_beitreten/lobby_beitreten.md)
+  - 3.1.2.3 [Match starten](./lobby_management/match_starten/match_starten.md)
+  - 3.1.2.4 [Rollenzuweisung](./lobby_management/leader_ehemalige_zuweisung/leader_ehemalige_zuweisung.md)
 
-   1. ### *…*
+- **3.1.3 Spielmechaniken**  
+  - 3.1.3.1 [Spielzug ausführen]()
+  - 3.1.3.2 [Aktualisierung und Datenaustausch]()
+  - 3.1.3.3 [Laufendes Match]()
 
-   3. ### **Lobby Management**
+- **3.1.4 Grundlegende UI**  
+  - ...
 
-      1. ### *…*
+- **3.1.5 Erweiterte UI-Komponenten**  
+  - ...
 
-   4. **User Interface**
+- **3.1.6 Mods-System**  
+  - ...
 
-      1. ### *Laufendes Match*
+- **3.1.7 Skins**  
+  - ...
 
-Durch das Drücken der Starttaste in einer Lobby wird ein Match gestartet. Das Match wird nur durch den Sieg eines Spielers oder nach Abstimmung der Spieler beendet.
+- **3.1.8 Design-Verbesserungen**  
+  - ...
 
-1. ### *Spielzug ausführen*
-
-Am Anfang jedes Spielzuges würfelt der Spieler automatisch zwei Paare. Danach kann der Spieler eine von beiden Paaren auswählen. Sei die Summe S aus dem ausgewählten Paar. Alle Spieler, die ein ressourcen-sammelndes Gebäude an einem Feld mit der Zahl S gebaut haben, erhalten nun die Ressource des Feldes.  
-Nach dem Austeilen der Ressourcen darf der Spieler Gebäude bauen, mit Spielern oder unter bestimmten Bedingungen mit der Bank handeln. Der Spielzug wird nach dem Befehl des Spielers oder nach dem Ablauf einer festgelegten Zeit automatisch beendet.
-
-[Link zu github]
-
-2. ### *Aktualisierung und Datenaustausch*
-
-Jede Aktion, die den Spielstand verändert, muss an alle beteiligten Spielern mitgesendet werden, sodass auch ihre Clients die Änderung anzeigen können.
-
-2. ### **Match-Page**
-
-Die **Match-Page** umfasst alle Funktionen, die das eigentliche Spielen ermöglichen.
-
-1. ### *Spielfeld*
-
-Das Spielfeld besteht aus aneinander gereihten Feldern. Jeder Spieler muss einen Überblick über das Spielfeld haben können.
-
-2. ### *Spielstand Anzeige*
-
-Die **Spielfeld Anzeige** umfasst alle visuellen Funktionen, die einem Spieler helfen sich über den Spielstand zu informieren und um bei einem Spielzug gewisse Aktionen wie das Handeln ausführen zu können.
-
-3. ### *Spiel-Menü (ESC)*
-
-Ähnlich wie bei jedem Videospiel soll das **Spiel-Menü** das Einstellen vom Spielerlebnis wie z. B. das Toggeln von Light/Dark-Mode ermöglichen.
-```
 
 ### 3.2 Benutzbarkeit
 
