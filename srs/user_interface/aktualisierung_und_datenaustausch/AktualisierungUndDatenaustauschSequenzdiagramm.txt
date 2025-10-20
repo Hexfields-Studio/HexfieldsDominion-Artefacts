@@ -5,14 +5,16 @@ participant Backend
 participant Client
 
 activate Spieler
-Spieler->Backend:Führt Aktion aus bzw.\ndie Zeit für den Zug läuft ab
+Spieler->Backend:Aktion vom Spieler bzw.\ndie Zeit für den Zug läuft ab\n(Selbstaufruf vom Backend)
 
 activate Backend
-Backend->Client:Überträgt den neuen Spielstand\nan alle Clients
+note over Backend:Daraus erfolgt eine\nÄnderung des Spielzustandes
+Backend->Client:Übertragung des neuen\nSpielstandes an alle Clients
 
 activate Client
+note over Client:Rendern des\nneuen Spielzustandes
 Backend<--Client:
 deactivate Client
-Spieler<--Backend:drag to move
+Spieler<--Backend:
 deactivate Backend
 deactivate Spieler
