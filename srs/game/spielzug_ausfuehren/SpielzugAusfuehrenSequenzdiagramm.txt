@@ -1,0 +1,34 @@
+title Spielzug Ausführen
+
+participant Spieler
+participant Backend
+participant Clients
+
+activate Backend
+Spieler<-Backend:Benachrichtigung "Du bist dran"
+activate Spieler
+loop Spieler hat das Zugrecht
+
+  Spieler->Backend:Anfrage/Beenden eines Spielzugs
+  activate Backend
+  alt Spielzug ist valide
+  note over Backend:Internes Ausführen des Spielzuges
+  Backend->Clients:Übertragung von Änderungen\ndes Spielzustandes
+  activate Clients
+  note over Clients: Anzeigen der\nÄnderungen
+  Backend<--Clients:
+  deactivate Clients
+  Spieler<--Backend:Antwort (200)
+  else
+
+  Spieler<--Backend:Fehlermeldung (4xx)
+  deactivate Backend
+  Spieler-->Backend:
+  
+  deactivate Spieler
+  end  
+end
+
+note over Backend:Zuweisung des Spielzugs an den nächsten Spieler
+space 
+deactivate Backend
