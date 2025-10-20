@@ -1,15 +1,13 @@
 # **Hexfields: Dominion**
 
-# **Software Requirements Specification (SRS)**
-
-# **Version 1.1**
+# **Software Requirements Specification (SRS) - Version 1.0**
 
 **Revision History**
 
 | Date | Version | Description | Author |
 |------|---------|-------------|--------|
-| 18/Oct/2025 | 1.0 | Initial version of SRS document | A., J., M. |
-| 20/Oct/2025 | 1.1 | Added content | A., J., M. |
+| 18/Oct/2025 | 0.9 | Initial version of SRS document | A., J., M. |
+| 20/Oct/2025 | 1.0 | Added content | A., J., M. |
 
 ## **Inhaltsverzeichnis**
 
@@ -249,45 +247,26 @@ Das Projekt wird als responsive Webanwendung realisiert, die in modernen Browser
 
 ### 3.2 Benutzbarkeit
 
-*(Enthält Anforderungen zur Benutzerfreundlichkeit, wie z.B. Einarbeitungszeit, Aufgabenzeiten für typische Aufgaben und Konformität mit Usability-Standards.)*
-
-#### 3.2.1 Intuitive Bedienung
-*BEISPIELTEXT* Die Oberfläche orientiert sich am originalen Brettspiel-Design, um erfahrenen Siedler-Spielern ein vertrautes Gefühl zu vermitteln.
-#### 3.2.2 Responsive Design
-*BEISPIELTEXT* Die Webanwendung ist auf Desktop- und Mobilgeräten gleichermaßen gut bedienbar.
+- Intuitive Bedienung: Die Oberfläche orientiert sich am originalen Brettspiel-Design, um erfahrenen "Siedler-von-Catan"-Spielern ein vertrautes Gefühl zu vermitteln.
+- Responsives Design: Die Webanwendung ist auf Desktop- und Mobilgeräten gleichermaßen gut bedienbar.
 
 ### 3.3 Zuverlässigkeit
 
-*(Spezifiziert Anforderungen zur Systemzuverlässigkeit, einschließlich Verfügbarkeit, MTBF, MTTR, Genauigkeit und Fehlerraten.)*
-
-#### 3.3.1 Verfügbarkeit
-*BEISPIELTEXT* Der Server soll zu 95% der Zeit verfügbar sein. Wartungsarbeiten werden außerhalb der Hauptspielzeiten durchgeführt.
-#### 3.3.2 Datenkonsistenz
-*BEISPIELTEXT* Spielstände werden regelmäßig gesichert. Bei Verbindungsabbrüchen können Spieler an ihre vorherige Position zurückkehren.
+- Verfügbarkeit: Der Server soll zu 95% der Zeit verfügbar sein. Wartungsarbeiten werden außerhalb der Hauptspielzeiten durchgeführt.
+- Datenkonsistenz: Spielstände werden regelmäßig gesichert. Bei Verbindungsabbrüchen können Spieler an ihre vorherige Position zurückkehren.
 
 ### 3.4 Leistung
 
-*(Beschreibt die Leistungsmerkmale des Systems, einschließlich Antwortzeiten, Durchsatz, Kapazität und Ressourcennutzung.)*
-
-#### 3.4.1 Antwortzeiten
-*BEISPIELTEXT* Spielaktionen werden innerhalb von 1 Sekunde visualisiert. Ladezeiten für neue Spiele unter 3 Sekunden.
-#### 3.4.2 Gleichzeitige Benutzer
-*BEISPIELTEXT* Das System unterstützt mindestens 200 gleichzeitige Benutzer und 50 parallel laufende Spiele.
+- Antwortzeiten: Spielaktionen werden innerhalb von einer Sekunde visualisiert. Ladezeiten für neue Spiele unter 3 Sekunden.
+- Gleichzeitige Benutzer: Das Backend-System ist skalierbar und sollte damit eine beinahe unendliche Anzahl gleichzeitiger Nutzer und Spiele unterstützen.
 
 ### 3.5 Wartbarkeit
 
-*(Enthält Anforderungen zur Verbesserung der Wartbarkeit, einschließlich Coding-Standards, Namenskonventionen und Wartungszugang.)*
-
-#### 3.5.1 Clean Code Standards
-*BEISPIELTEXT* Verwendung etablierter TypeScript und Java Coding Conventions. Regelmäßige Code-Reviews im Team.
-#### 3.5.2 Testabdeckung
-*BEISPIELTEXT* Mindestens 80% Testabdeckung im Backend, 70% im Frontend. Wöchentliche Integrationstests.
+- Clean Code Standards: Verwendung etablierter TypeScript und Java Coding Conventions und Linter-Einstellungen. Es gibt regelmäßige Code-Reviews im Team.
+- Testabdeckung: Mindestens 80% Testabdeckung im Backend, 70% im Frontend. Wöchentliche Integrationstests.
 
 ### 3.6 Design-Einschränkungen
 
-*(Zeigt Design-Einschränkungen auf, die eingehalten werden müssen, wie z.B. Programmiersprachen, Entwicklungsprozesse oder Architekturbeschränkungen.)*
-
-*BEISPIELTEXT FOLGT*
 #### Unterstützte Browser
 - Chrome 90+
 - Firefox 88+
@@ -301,23 +280,16 @@ Das Projekt wird als responsive Webanwendung realisiert, die in modernen Browser
 
 ### 3.7 Online-Benutzerdokumentation und Hilfesystem
 
-*(Beschreibt die Anforderungen für Online-Benutzerdokumentation, Hilfesysteme und Hilfebanner.)*
-
-*BEISPIELTEXT* Integriertes Regelwerk und FAQ für neue Spieler. Context-sensitive Hilfe in der Spieloberfläche.
+Integriertes Regelwerk und FAQ für neue Spieler. Context-sensitive Hilfe in der Spieloberfläche.
 
 ### 3.8 Gekaufte Komponenten
 
-*(Beschreibt gekaufte Komponenten, Lizenzbeschränkungen und Kompatibilitätsstandards.)*
-
-*BEISPIELTEXT* Aktuell sind keine gekauften Komponenten geplant.
+Aktuell sind keine gekauften Komponenten geplant.
 
 ### 3.9 Schnittstellen
 
-*(Definiert die von der Anwendung zu unterstützenden Schnittstellen mit ausreichender Spezifität für Entwicklung und Verifikation.)*
-
 #### 3.9.1 Benutzerschnittstellen
 
-*BEISPIELTEXT FOLGT*
 - **Home Page**: Lobby-Übersicht und Spielerstellung
 - **Match Page**: Spielfeld, Spielzustandsanzeige, Spielmenü (ESC)
 - **Account Management**: Login, Registrierung, Profilverwaltung
@@ -325,29 +297,22 @@ Das Projekt wird als responsive Webanwendung realisiert, die in modernen Browser
 
 #### 3.9.2 Software-Schnittstellen
 
-*BEISPIELTEXT* RESTful API zwischen Frontend und Backend, WebSockets für Echtzeit-Spielupdates.
+RESTful API zwischen Frontend und Backend, WebSockets für Echtzeit-Spielupdates.
 
 #### 3.9.3 Kommunikationsschnittstellen
 
-*BEISPIELTEXT* HTTPS für API-Kommunikation, WebSockets für Echtzeit-Spielzustandsupdates.
+HTTPS für API-Kommunikation, WebSockets für Echtzeit-Spielzustandsupdates.
 
 ### 3.10 Lizenzanforderungen
 
-*(Definiert Lizenzdurchsetzungsanforderungen und Nutzungsbeschränkungen.)*
-
-*BEISPIELTEXT* Die Anwendung wird als Educational Project unter MIT-Lizenz veröffentlicht.
+Alle zur Programmierung benutzen Komponenten und Medien unterliegen Open-Source bzw. Creative-Commons-Lizensen. Die Anwendung wird als Educational Project unter MIT-Lizenz veröffentlicht.
 
 ### 3.11 Rechtliche Hinweise, Urheberrecht und Sonstiges
 
-*(Beschreibt rechtliche Haftungsausschlüsse, Garantien, Urheberrechtshinweise und Markenkonformität.)*
-
-*BEISPIELTEXT* Dieses Projekt ist ein Bildungsprojekt und nicht kommerziell. "Siedler von Catan" ist eine Marke von Asmodee. Das Logo von Hexfields: Dominion ist Eigentum des Entwicklungsteams.
+Dieses Projekt ist ein Bildungsprojekt und nicht kommerziell. "Siedler von Catan" ist eine Marke von Asmodee. Das Logo von Hexfields: Dominion ist Eigentum des Entwicklungsteams.
 
 ### 3.12 Anwendbare Standards
 
-*(Beschreibt per Referenz alle anwendbaren Standards und deren spezifische Abschnitte.)*
-
-*BEISPIELTEXT FOLGT*
 - Web Standards des W3C
 - WCAG 2.1 Level AA für Barrierefreiheit
 - REST-API Best Practices
@@ -355,8 +320,6 @@ Das Projekt wird als responsive Webanwendung realisiert, die in modernen Browser
 
 ## 4. Unterstützende Informationen
 
-*(Enthält Inhaltsverzeichnis, Index und Anhänge wie Use-Case-Storyboards oder UI-Prototypen.)*
-
-*BEISPIELTEXT* Für weitere Informationen kontaktieren Sie das Hexfields Studio Team oder besuchen Sie unsere [GitHub Organisation](https://github.com/Hexfields-Studio).
+Für weitere Informationen kontaktieren Sie das Hexfields Studio Team oder besuchen Sie unsere [GitHub Organisation](https://github.com/Hexfields-Studio).
 
 *Dokument basierend auf dem Rational Unified Process SRS-Template und IEEE 830-1998 Standard.*
