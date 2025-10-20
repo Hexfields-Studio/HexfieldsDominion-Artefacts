@@ -11,10 +11,13 @@ Dieses Use-Case dient dazu, dass User einer bestehenden Lobby beitreten können.
 # 2. Ablauf von Ereignissen
 
 ## 2.1 Ereignisse
-...
+- Die User klicken auf "Beitreten"
+- Das Frontend fragt beim Backend die zum Code zugehörige Lobby ab
+- Das Backend gibt die zugehörige Lobby und die ID zurück
+- Die User werden zur Lobby Seite weitergeleitet
 
 ### Sequenzdiagramm
-...
+![Sequenzdiagramm Lobby beitreten](lobby_beitreten_seqdg.png)
 
 ## 2.2 Alternative Abläufe
 n/a

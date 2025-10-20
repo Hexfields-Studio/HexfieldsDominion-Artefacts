@@ -1,0 +1,4 @@
+title Start Menü
+
+Spieler->Frontend:Klickt "Lobby beitreten"
+Frontend->Spieler:Öffnet Fenster zum Beitritt einer Lobby

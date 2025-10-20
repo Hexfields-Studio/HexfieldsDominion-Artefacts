@@ -1,0 +1,6 @@
+title Lobby beitreten
+
+Spieler->Frontend:Klickt "Beitreten"
+Frontend->Backend:Zum Code zugehörige Lobby abfragen
+Backend->Frontend:Zugehörige Lobby mit ID zurückgeben
+Frontend->Spieler:Lobby Seite anzeigen

@@ -11,13 +11,18 @@ Dieses Use-Case dient dazu, dass User einer Lobby und damit einem Match beitrete
 # 2. Ablauf von Ereignissen
 
 ## 2.1 Ereignisse
-...
+- Die User klicken auf "Lobby erstellen"
+- Das Frontend öffnet das Fenster zur Erstellung einer Lobby
 
 ### Sequenzdiagramm
-...
+![Sequenzdiagramm Start Menü 1](start_menü_seqdg1.png)
 
 ## 2.2 Alternative Abläufe
-n/a
+- Die User klicken "Lobby beitreten"
+- Das Frontend öffnet das Fenster zum Beitritt einer Lobby
+
+### Sequenzdiagramm
+![Sequenzdiagramm Start Menü 2](start_menü_seqdg2.png)
 
 # 3. Spezielle Anforderungen
 n/a

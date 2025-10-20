@@ -11,10 +11,16 @@ Dieses Use-Case dient einerseits dazu, dass Leader einer Lobby die Leader-Rolle 
 # 2. Ablauf von Ereignissen
 
 ## 2.1 Ereignisse
-...
+- Die User öffnen die Lobbyeinstellungen
+- Das Frontend zeigt das Fenster zur Verwaltung der Spieler in der Lobby an
+- Parallel fragt das Frontend ehemalige Gast-Spieler der Lobby ab, die vom Backend zurückgegeben werden. Darauf hin werden die Dropdowns zur Auswahl ehemaliger Spieler aktualisiert
+- Die User klicken auf "Änderungen speichern"
+- Das Frontend schickt die Änderungen an das Backend, das diese anwendet
+- Das Backend gibt zurück, ob das erfolgreich geschehen ist
+- Wenn es erfolgreich war, schließt das Frontend das Fenster. Andernfalls zeigt es eine Fehlermeldung an
 
 ### Sequenzdiagramm
-...
+![Sequenzdiagramm Leader und (ehemalige) Spieler Zuweisung](leader_ehemalige_zuweisung_seqdg.png)
 
 ## 2.2 Alternative Abläufe
 n/a

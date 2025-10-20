@@ -1,0 +1,4 @@
+title Start Menü
+
+Spieler->Frontend:Klickt "Lobby erstellen"
+Frontend->Spieler:Öffnet Fenster zur Erstellung einer Lobby

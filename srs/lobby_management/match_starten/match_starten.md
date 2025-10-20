@@ -11,10 +11,13 @@ Dieses Use-Case dient dazu, dass User ein Match starten können. Dabei wird eine
 # 2. Ablauf von Ereignissen
 
 ## 2.1 Ereignisse
-...
+- Die User klicken auf "Match starten"
+- Das Frontend fragt beim Backend an, dass ein Match auf Grundlage der Lobby erstellt wird
+- Das Backend gibt das zugehörige Match und die ID zurück
+- Alle Spieler in der Lobby werden zur Match Seite weitergeleitet
 
 ### Sequenzdiagramm
-...
+![Sequenzdiagramm Match starten](match_starten_seqdg.png)
 
 ## 2.2 Alternative Abläufe
 n/a

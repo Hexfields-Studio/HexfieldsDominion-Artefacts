@@ -11,10 +11,13 @@ Dieses Use-Case dient dazu, dass User eine neue Lobby erstellen können.
 # 2. Ablauf von Ereignissen
 
 ## 2.1 Ereignisse
-...
+- Die User klicken auf "Erstellen"
+- Das Frontend fragt beim Backend an, dass die Lobby mit der gewählten Konfiguration erstellt wird
+- Das Backend gibt die erstellte Lobby und die ID zurück
+- Die User werden zur Lobby Seite weitergeleitet
 
 ### Sequenzdiagramm
-...
+![Sequenzdiagramm Lobby erstellen](lobby_erstellen_seqdg.png)
 
 ## 2.2 Alternative Abläufe
 n/a
