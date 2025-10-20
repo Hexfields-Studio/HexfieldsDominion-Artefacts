@@ -3,10 +3,9 @@
 # 1. Aktualisierung und Datenaustausch
 
 ## 1.1 Kurze Beschreibung
-Dieses Use-Case dient zur Anzeige von Änderungen des Spielstandes auf der Seite des Clients. Demnach ist sie rein technisch basiert und passiert automatisch während die Spieler ihre Spielzüge auspielen.
-Die Aktualisierung wird durch einige von Spielern ausgelösten Ereignissen augelöst:
+Dieses Use-Case dient zur Anzeige des aktuellen Spielstandes auf der Seite des Clients. Demnach ist sie rein technisch basiert und wird im Hintergrund aktiviert, wenn die Spieler ihre Spielzüge auspielen oder andere Aktionen wie z.B. das schreiben in einen Chat ausführen.
+Andere Ereignisse, die die Aktualisierung auch auslösen, sind unter anderem:
 - Das erhalten von neuen Ressourcen nach dem Würfeln
-- Platzierung von neuen Gebäuden
 - Übertragung der Rolle des Spielleiters
 - etc.
 
