@@ -31,7 +31,7 @@ n/a
 3. Die User haben im Start Menü auf "Lobby erstellen" geklickt.
 
 # 5. Nachbedingungen
-1. Die User werden zur erstellten Lobby weitergeleitet.
+Die User werden zur erstellten Lobby weitergeleitet.
 
 # 6. Aufwandsschätzung
 Story Points: 8
