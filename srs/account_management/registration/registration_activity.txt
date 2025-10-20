@@ -1,0 +1,40 @@
+# Registration Activity Diagram
+
+title Konto registrieren
+
+participant Spieler
+participant Client
+participant Server
+participant Datenbank
+
+activate Spieler
+Spieler->Client:Registrierungsdaten eingegeben
+activate Client
+Spieler->Client:Schaltfläche "Register" gedrückt
+Client->Server:Registrierungsdaten \nwerden übermittelt
+activate Server
+Server->Datenbank:Registrierungsdaten \nwerden übermittelt
+activate Datenbank
+
+note over Datenbank:Daten prüfen und Konto erstellen
+
+alt Daten gültig
+  Datenbank-->Server:Konto erstellt
+  deactivate Datenbank
+  Server-->Client:Registrierung bestätigen
+  deactivate Server
+  
+  note over Client:Anmeldedaten \nwerden gespeichert
+  
+  Spieler<--Client:Erfolgsmeldung anzeigen
+else Daten ungültig
+  Datenbank-->Server:Fehler zurückgeben
+  deactivate Datenbank
+  Server-->Client:Fehlermeldung anzeigen
+  deactivate Server
+  
+  Spieler<--Client:Fehlermeldung anzeigen
+end
+
+deactivate Client
+deactivate Spieler

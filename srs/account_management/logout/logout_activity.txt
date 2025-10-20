@@ -1,0 +1,17 @@
+# Logout Activity Diagram
+
+title Logout
+
+participant Spieler
+participant Client
+
+activate Spieler
+Spieler->Client:Schaltfläche "Log out" gedrückt
+
+activate Client
+note over Client:Anmeldeinformationen\nwerden entfernt
+
+Spieler<--Client:
+deactivate Client
+
+deactivate Spieler

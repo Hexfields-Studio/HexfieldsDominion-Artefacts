@@ -1,0 +1,29 @@
+# Gast Login Activity Diagram
+
+title Mit Gast-Konto einloggen
+
+participant Spieler
+participant Client
+participant Server
+participant Datenbank
+
+activate Spieler
+Spieler->Client:Schaltfläche "Log in as Guest" gedrückt
+activate Client
+Client->Server:Gast-Anmeldedaten \nwerden übermittelt
+activate Server
+Server->Datenbank:Gast-Anmeldedaten \nwerden übermittelt
+activate Datenbank
+
+note over Datenbank:Anmeldung speichern
+
+Datenbank-->Server:Anmeldung bestätigen
+deactivate Datenbank
+Server-->Client:Anmeldung bestätigen
+deactivate Server
+
+note over Client:Gast-Anmeldedaten \nwerden gespeichert
+
+Spieler<--Client:
+deactivate Client
+deactivate Spieler
