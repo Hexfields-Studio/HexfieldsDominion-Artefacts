@@ -15,12 +15,20 @@
             height: 100vh;
             background: #f6f8fa;
         }
+        body.dark-mode {
+            background: #0d1117;
+            color: #c9d1d9;
+        }
         #sidebar {
             width: 300px;
             background: white;
             border-right: 1px solid #e1e4e8;
             overflow-y: auto;
             padding: 20px;
+        }
+        .dark-mode #sidebar {
+            background: #0d1117;
+            border-right: 1px solid #30363d;
         }
         #content {
             flex: 1;
@@ -30,6 +38,10 @@
             margin: 20px;
             border-radius: 6px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .dark-mode #content {
+            background: #0d1117;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.5);
         }
         .file-item, .folder-item {
             padding: 8px 12px;
@@ -41,6 +53,9 @@
         }
         .file-item:hover, .folder-item:hover {
             background: #f0f4f8;
+        }
+        .dark-mode .file-item:hover, .dark-mode .folder-item:hover {
+            background: #161b22;
         }
         .file-item::before {
             content: '📄';
@@ -58,10 +73,16 @@
             color: #6a737d;
             font-style: italic;
         }
+        .dark-mode .empty-folder {
+            color: #8b949e;
+        }
         .breadcrumb {
             margin-bottom: 20px;
             padding-bottom: 15px;
             border-bottom: 1px solid #e1e4e8;
+        }
+        .dark-mode .breadcrumb {
+            border-bottom: 1px solid #30363d;
         }
         .breadcrumb a {
             color: #0366d6;
@@ -71,9 +92,15 @@
         .breadcrumb a:hover {
             text-decoration: underline;
         }
+        .dark-mode .breadcrumb a {
+            color: #58a6ff;
+        }
         .loading {
             color: #6a737d;
             font-style: italic;
+        }
+        .dark-mode .loading {
+            color: #8b949e;
         }
         img { 
             max-width: 100%; 
@@ -87,11 +114,19 @@
             border-radius: 3px;
             font-family: 'Monaco', 'Menlo', monospace;
         }
+        .dark-mode code {
+            background: #161b22;
+            color: #c9d1d9;
+        }
         pre {
             background: #f6f8fa;
             padding: 16px;
             border-radius: 6px;
             overflow-x: auto;
+        }
+        .dark-mode pre {
+            background: #161b22;
+            color: #c9d1d9;
         }
         blockquote {
             border-left: 4px solid #dfe2e5;
@@ -99,11 +134,67 @@
             padding-left: 16px;
             color: #6a737d;
         }
+        .dark-mode blockquote {
+            border-left: 4px solid #30363d;
+            color: #8b949e;
+        }
+        
+        /* Dark mode toggle styles */
+        .dark-mode-toggle {
+            display: flex;
+            align-items: center;
+            margin: 15px 0 20px 0;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+        .dark-mode-toggle:hover {
+            background: #f0f4f8;
+        }
+        .dark-mode .dark-mode-toggle:hover {
+            background: #161b22;
+        }
+        .toggle-label {
+            margin-left: 8px;
+            font-size: 14px;
+            user-select: none;
+        }
+        .toggle-switch {
+            position: relative;
+            width: 40px;
+            height: 20px;
+            background: #e1e4e8;
+            border-radius: 10px;
+            transition: background-color 0.2s;
+        }
+        .dark-mode .toggle-switch {
+            background: #30363d;
+        }
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 16px;
+            height: 16px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.2s;
+        }
+        .dark-mode .toggle-switch::after {
+            transform: translateX(20px);
+            background: #58a6ff;
+        }
     </style>
 </head>
 <body>
     <div id="sidebar">
-        <h3>📚 Documentation</h3>
+        <h3>Project Explorer</h3>
+        <div class="dark-mode-toggle" onclick="toggleDarkMode()">
+            <div class="toggle-switch"></div>
+            <span class="toggle-label">Dark Mode</span>
+        </div>
         <div id="file-tree"></div>
     </div>
     <div id="content">
@@ -304,7 +395,23 @@
             const contents = await fetchContents();
             renderFileTree(contents);
             document.getElementById('document-viewer').innerHTML = 
-                '<h1>Welcome to the Documentation Explorer</h1><p>Select a document from the sidebar to view it.</p>';
+                '<h1>Welcome to the Documentation Explorer</h1><p>Select a document from the sidebar to view it.</p><p>Warning: Links from inside the markdown viewer will not open documents.</p>';
+        }
+
+        // Dark mode functionality
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            // Save preference to localStorage
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDarkMode);
+        }
+
+        // Check for saved dark mode preference
+        function initDarkMode() {
+            const savedDarkMode = localStorage.getItem('darkMode');
+            if (savedDarkMode === 'true') {
+                document.body.classList.add('dark-mode');
+            }
         }
 
         // Initialize
@@ -322,6 +429,7 @@
         }
 
         // Start the application
+        initDarkMode();
         loadRoot();
     </script>
 </body>

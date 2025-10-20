@@ -1,0 +1,26 @@
+# Light-Dark Mode Activity Diagram
+
+title Light-Dark Mode wechseln
+
+participant Spieler
+participant Client
+participant Lokaler_Speicher
+
+activate Spieler
+Spieler->Client:Einstellungs-Icon geklickt
+activate Client
+
+note over Client:Einstellungsmenü öffnen
+
+Spieler->Client:Light-Dark Mode Schalter betätigt
+Client->Client:Farbschema sofort wechseln
+Client->Lokaler_Speicher:Modus-Einstellung speichern
+activate Lokaler_Speicher
+Lokaler_Speicher-->Client:Einstellung gespeichert
+deactivate Lokaler_Speicher
+
+note over Client:Visuelle Bestätigung anzeigen
+
+Spieler<--Client:Einstellungsmenü schließen
+deactivate Client
+deactivate Spieler
