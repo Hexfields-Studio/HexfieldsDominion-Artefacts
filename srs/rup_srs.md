@@ -1,19 +1,17 @@
-# **Hexfields: Dominion**
-
 # **Software Requirements Specification (SRS) - Version 1.1**
 
-**Revision History**
+## **Revision History**
 
 | Date | Version | Description | Author |
 |------|---------|-------------|--------|
-| 18/Oct/2025 | 0.9 | Initial version of SRS document | Alex, Jona, Marcel |
-| 20/Oct/2025 | 1.0 | Added content | Alex, Jona, Marcel |
-| 20/Oct/2025 | 1.1 | Updated Use-Cases | Alex, Marcel |
+| 18/Oct/2025 | 0.9 | Dokumenten-Struktur | Alex, Jona, Marcel |
+| 20/Oct/2025 | 1.0 | Use-Cases hinzugefügt | Alex, Jona, Marcel |
+| 20/Oct/2025 | 1.1 | Diagramme hinzugefügt | Alex, Marcel |
 
 ## **Inhaltsverzeichnis**
 
-- [**Hexfields: Dominion**](#hexfields-dominion)
 - [**Software Requirements Specification (SRS) - Version 1.1**](#software-requirements-specification-srs---version-11)
+  - [**Revision History**](#revision-history)
   - [**Inhaltsverzeichnis**](#inhaltsverzeichnis)
   - [1. Einleitung](#1-einleitung)
     - [1.1 Zweck](#11-zweck)
@@ -48,7 +46,6 @@
     - [3.9 Schnittstellen](#39-schnittstellen)
       - [3.9.1 Benutzerschnittstellen](#391-benutzerschnittstellen)
       - [3.9.2 Software-Schnittstellen](#392-software-schnittstellen)
-      - [3.9.3 Kommunikationsschnittstellen](#393-kommunikationsschnittstellen)
     - [3.10 Lizenzanforderungen](#310-lizenzanforderungen)
     - [3.11 Rechtliche Hinweise, Urheberrecht und Sonstiges](#311-rechtliche-hinweise-urheberrecht-und-sonstiges)
     - [3.12 Anwendbare Standards](#312-anwendbare-standards)
@@ -59,8 +56,6 @@
 ### 1.1 Zweck
 
 Diese Software-Anforderungsspezifikation dient zur Definition von funktionellen und nicht funktionellen Anforderungen für das Videospiel “Hexfields: Dominion”. Dieses Dokument ist für die Entwickler, es bietet eine detaillierte Beschreibung des Spielverhaltens und des Designs, um ein gemeinsames Verständnis des Systems zu gewährleisten.
-
-*(Dieses SRS beschreibt das vollständige externe Verhalten der Anwendung sowie nicht-funktionale Anforderungen, Design-Einschränkungen und andere Faktoren für eine umfassende Beschreibung der Software-Anforderungen.)*
 
 ### 1.2 Umfang
 
@@ -80,8 +75,6 @@ Das Projekt wird als responsive Webanwendung realisiert, die in modernen Browser
 - **Echtzeit-Kommunikation**: Datenaustausch zwischen Frontend und Backend während des Spiels
 - **Benutzeroberfläche**: Responsive UI mit Spielfeld, Spielzustandsanzeige und Menüsystem
 
-*(Dieser Abschnitt beschreibt die Software-Anwendung, auf die sich das SRS bezieht, sowie alle Teilsysteme und Funktionen, die von diesem Dokument betroffen oder beeinflusst werden.)*
-
 ### 1.3 Definitionen, Akronyme und Abkürzungen
 
 | Bezeichnung | Definition |
@@ -98,8 +91,6 @@ Das Projekt wird als responsive Webanwendung realisiert, die in modernen Browser
 | Würfeln | Jeder Spieler würfelt automatisch am Anfang seines Zuges zwei Würfel. |
 | Spielzugphase | Einteilung der aufeinander folgenden Aktionen, wenn ein neuer Spieler am Zug ist. Es gibt die Ertrags-, Handels- und Bauphase. |
 
-*( Dieses Unterkapitel sollte Definitionen aller Begriffe, Akronyme und Abkürzungen enthalten, die zum korrekten Verständnis des SRS erforderlich sind.)*
-
 ### 1.4 Referenzen
 
 | Titel | Änderungsdatum | Organisation |
@@ -110,13 +101,9 @@ Das Projekt wird als responsive Webanwendung realisiert, die in modernen Browser
 | [GitHub Repository: Artefakte](https://github.com/Hexfields-Studio/HexfieldsDominion-Artefacts) | 18/Oct/2025 | Hexfields Studio |
 | [GitHub Pages: Webseite](https://hexfields-studio.github.io/HexfieldsDominion/) | 18/Oct/2025 | Hexfields Studio |
 
-*(Enthält eine vollständige Liste aller im SRS referenzierten Dokumente mit Titel, Datum und herausgebender Organisation.)*
-
 ### 1.5 Übersicht
 
  Kapitel 2 bietet eine allgemeine Beschreibung des Projekts mit Vision, Teamstruktur und Technologie-Stack. Das dritte Kapitel (Spezifische Anforderungen) liefert detaillierte Informationen zu den funktionalen und nicht-funktionalen Anforderungen, strukturiert nach den beiden Entwicklungsphasen.
-
-*(Beschreibt den Inhalt und die Organisation des restlichen SRS-Dokuments.)*
 
 ## 2. Allgemeine Beschreibung
 
@@ -124,14 +111,11 @@ Das Projekt wird als responsive Webanwendung realisiert, die in modernen Browser
 
 “Hexfields: Dominion” ist ein eigenständiges Videospiel im Multiplayer, das im Webbrowser spielbar ist und somit auf jedem Computer und Smartphone erreichbar ist. Das Spiel soll eine im Web spielbare und leicht zugängliche Alternative zum Brettspiel “Siedler von Catan” sein. Matches zwischen Spielern können sowohl in Echtzeit als auch zugabhängig stattfinden. Dabei bieten sie neben zufälligen Mitspielern auch die Möglichkeit, mit Freunden zusammen zu spielen. Bekannte Bestandteile des originalen Spiels werden mit erweiterten Funktionen und Mechaniken (Mods) ergänzt, sodass ein neues Spielerlebnis entsteht.
 
-*(Dieser Abschnitt beschreibt die allgemeinen Faktoren, die das Produkt und seine Anforderungen beeinflussen, ohne spezifische Anforderungen zu nennen.)*
-
 ### 2.2 Use-Case-Diagramm
 
-*![Use-Case-Diagramm des gesamten Projekts](./use_case_diagram_all.jpg "Use-Case-Diagramm des gesamten Projekts")*
+*![Use-Case-Diagramm des gesamten Projekts](./use_case_diagram_new.jpg "Use-Case-Diagramm des gesamten Projekts")*
 
-- **Dunkel-Grün:** Kernfunktionen des Spiels
-- **Hell-Grün & Weiß:** Erweiterte Komponenten und Design-Verbesserungen der Webseite
+*Anmerkung: Die alte Version des Use-Case Diagramms ist im Verzeichnis als "[use_case_diagram_old.jpg](./use_case_diagram_old.jpg)" verfügbar.*
 
 ### 2.3 Technologie-Stack
 
@@ -164,11 +148,7 @@ Das Projekt wird als responsive Webanwendung realisiert, die in modernen Browser
 
 ## 3. Spezifische Anforderungen
 
-*(Dieses Kapitel enthält alle Software-Anforderungen in ausreichender Detailtiefe, um Designern das Entwerfen und Testern das Testen des Systems zu ermöglichen. Es umfasst funktionale und nicht-funktionale Anforderungen.)*
-
 ### 3.1 Funktionalität
-
-*(Beschreibt die funktionalen Anforderungen des Systems, einschließlich Funktionsumfang, Fähigkeiten und Sicherheitsaspekte.)*
 
 #### Phase 1 (bis Dezember) - Kernfunktionalität
 
@@ -217,25 +197,24 @@ Das Projekt wird als responsive Webanwendung realisiert, die in modernen Browser
   - 3.1.4.2 [Spielbildschirm](./user_interface/match_page/spiel_menue/spiel_menue.md)
   - 3.1.4.3 [Anmeldefenster/Homepage](./user_interface/home_page/home_page.md)
 
-- **3.1.5 Erweiterte UI-Komponenten**  
-  - 3.1.5.1 [Pause-Menü]()
-  - 3.1.5.2 [Verbessertes Startmenü]()
-  - 3.1.5.3 [Verbessertes Spielmenü]()
+- **3.1.5 Erweiterte UI-Komponenten** *(Anforderungen Work-in-progress)*
+  - 3.1.5.1 [Pause-Menü](-)
+  - 3.1.5.2 [Verbessertes Startmenü](-)
+  - 3.1.5.3 [Verbessertes Spielmenü](-)
 
-- **3.1.6 Mods-System**  
-  - 3.1.6.1 [Doppeltes Würfeln]()
-  - 3.1.6.2 [Völker-Fähigkeiten]()
-  - 3.1.6.3 [Riesiges Spielfeld]()
+- **3.1.6 Mods-System** *(Anforderungen Work-in-progress)*
+  - 3.1.6.1 [Doppeltes Würfeln](-)
+  - 3.1.6.2 [Völker-Fähigkeiten](-)
+  - 3.1.6.3 [Riesiges Spielfeld](-)
 
-- **3.1.7 Skins**  *(Nicht sicher, ob das in funktionale Anforderungen gehört!)*
-  - 3.1.7.1 [Antike (Standard)]()
-  - 3.1.7.2 [Moderne]()
-  - 3.1.7.3 [Magisch]()
-  - 3.1.7.4 [Fliegende Inseln]()
+- **3.1.7 Skins**  *(Anforderungen Work-in-progress)*
+  - 3.1.7.1 [Antike (Standard)](-)
+  - 3.1.7.2 [Moderne](-)
+  - 3.1.7.3 [Magisch](-)
+  - 3.1.7.4 [Fliegende Inseln](-)
 
 - **3.1.8 Design-Verbesserungen**  
   - 3.1.8.1 [Light/Dark Mode](./user_interface/light_dark_mode/light_dark_mode.md)
-
 
 ### 3.2 Benutzbarkeit
 
@@ -260,11 +239,14 @@ Das Projekt wird als responsive Webanwendung realisiert, die in modernen Browser
 ### 3.6 Design-Einschränkungen
 
 #### Unterstützte Browser
+
 - Chrome 90+
 - Firefox 88+
 - Safari 14+
 - Edge 90+
+
 #### Architektur
+
 - Frontend: React mit TypeScript
 - Backend: Java Spring mit REST-API
 - Datenbank: PostgreSQL
@@ -289,11 +271,7 @@ Aktuell sind keine gekauften Komponenten geplant.
 
 #### 3.9.2 Software-Schnittstellen
 
-RESTful API zwischen Frontend und Backend, WebSockets für Echtzeit-Spielupdates.
-
-#### 3.9.3 Kommunikationsschnittstellen
-
-HTTPS für API-Kommunikation, WebSockets für Echtzeit-Spielzustandsupdates.
+RESTful API zwischen Frontend und Backend, Server-Sent-Events (SSE) für Spielinformation-Aktualisierungen.
 
 ### 3.10 Lizenzanforderungen
 
