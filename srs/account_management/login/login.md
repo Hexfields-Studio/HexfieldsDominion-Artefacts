@@ -24,9 +24,9 @@ n/a
 - Die Anmeldedaten werden gespeichert
 - Die App kehrt zur Startseite zurück.
 
-#### Sequence Diagram
+#### Sequenz Diagramm
 
-![login_sequenz](./login_sequenz.png "login_sequenz")
+![login_sequence](./login_sequence.png "login_sequence")
 
 ### 2.2 Alternative Abläufe
 

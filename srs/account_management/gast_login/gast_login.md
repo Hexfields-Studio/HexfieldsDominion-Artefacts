@@ -23,7 +23,7 @@ n/a
 - Die Anmeldedaten des User werden aus dem lokalen Speicher entfernt.
 - Die App kehrt zum Anmeldebildschirm zurück.
 
-#### Sequenz Diagram
+#### Sequenz Diagramm
 
 ![gast_login_sequence](./gast_login_sequence.png "gast_login_sequence")
 

@@ -26,9 +26,9 @@ n/a
 - Die Einstellung wird gespeichert.
 - Das Einstellungsmenü schließt sich automatisch nach kurzer Zeit oder nach Klick außerhalb.
 
-#### Sequence Diagram
+#### Sequenz Diagramm
 
-![light_dark_mode_sequenz](./light_dark_mode_sequenz.png "light_dark_mode_sequenz")
+![light_dark_mode_sequence](./light_dark_mode_sequence.png "light_dark_mode_sequence")
 
 ### 2.2 Alternative Abläufe
 
