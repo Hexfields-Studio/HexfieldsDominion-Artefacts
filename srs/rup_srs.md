@@ -1,18 +1,19 @@
 # **Hexfields: Dominion**
 
-# **Software Requirements Specification (SRS) - Version 1.0**
+# **Software Requirements Specification (SRS) - Version 1.1**
 
 **Revision History**
 
 | Date | Version | Description | Author |
 |------|---------|-------------|--------|
-| 18/Oct/2025 | 0.9 | Initial version of SRS document | A., J., M. |
-| 20/Oct/2025 | 1.0 | Added content | A., J., M. |
+| 18/Oct/2025 | 0.9 | Initial version of SRS document | Alex, Jona, Marcel |
+| 20/Oct/2025 | 1.0 | Added content | Alex, Jona, Marcel |
+| 20/Oct/2025 | 1.1 | Updated Use-Cases | Alex, Marcel |
 
 ## **Inhaltsverzeichnis**
 
 - [**Hexfields: Dominion**](#hexfields-dominion)
-- [**Software Requirements Specification (SRS) - Version 1.0**](#software-requirements-specification-srs---version-10)
+- [**Software Requirements Specification (SRS) - Version 1.1**](#software-requirements-specification-srs---version-11)
   - [**Inhaltsverzeichnis**](#inhaltsverzeichnis)
   - [1. Einleitung](#1-einleitung)
     - [1.1 Zweck](#11-zweck)
