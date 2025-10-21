@@ -26,9 +26,9 @@ n/a
 - Die Einstellung wird gespeichert.
 - Das Einstellungsmenü schließt sich automatisch nach kurzer Zeit oder nach Klick außerhalb.
 
-#### Activity Diagram
+#### Sequence Diagram
 
-![light_dark_mode_activity](./light_dark_mode_activity.png "light_dark_mode_activity")
+![light_dark_mode_sequenz](./light_dark_mode_sequenz.png "light_dark_mode_sequenz")
 
 ### 2.2 Alternative Abläufe
 

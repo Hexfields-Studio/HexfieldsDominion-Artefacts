@@ -1,4 +1,4 @@
-# Light-Dark Mode Activity Diagram
+# Light-Dark Mode Sequence Diagram
 
 title Light-Dark Mode wechseln
 

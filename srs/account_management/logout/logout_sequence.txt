@@ -1,4 +1,4 @@
-# Logout Activity Diagram
+# Logout Sequence Diagram
 
 title Logout
 

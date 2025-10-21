@@ -8,7 +8,7 @@ Dieses Use-Case ermöglicht es einem User, sich auf der Startseite ohne Konto mi
 
 ### 1.2 Mockup
 
-![login_guest_mockup](./login_guest_mockup.drawio.png "login_guest_mockup")
+![gast_login_mockup](./gast_login_mockup.drawio.png "gast_login_mockup")
 
 ### 1.3 Screenshot
 
@@ -23,9 +23,9 @@ n/a
 - Die Anmeldedaten des User werden aus dem lokalen Speicher entfernt.
 - Die App kehrt zum Anmeldebildschirm zurück.
 
-#### Activity Diagram
+#### Sequenz Diagram
 
-![gast_login_activity](./gast_login_activity.png "gast_login_activity")
+![gast_login_sequence](./gast_login_sequence.png "gast_login_sequence")
 
 ### 2.2 Alternative Abläufe
 

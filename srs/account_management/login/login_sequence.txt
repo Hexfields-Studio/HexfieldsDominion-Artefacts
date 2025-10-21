@@ -1,4 +1,4 @@
-# Login Activity Diagram
+# Login Sequence Diagram
 
 title Mit Konto einloggen
 

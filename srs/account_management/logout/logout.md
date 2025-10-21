@@ -23,9 +23,9 @@ n/a
 - Die Anmeldedaten des User werden aus dem lokalen Speicher entfernt.
 - Die App kehrt zur Startseite zurück.
 
-#### Activity Diagram
+#### Sequence Diagram
 
-![logout_activity](./logout_activity.png "logout_activity")
+![logout_sequenz](./logout_sequenz.png "logout_sequenz")
 
 ### 2.2 Alternative Abläufe
 

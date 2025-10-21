@@ -25,9 +25,9 @@ n/a
 - Eine E-Mail wird an die angegebene Adresse geschickt, mit einem zufällig generiertem Passwort.
 - Der User wird zur Anmeldeseite weitergeleitet.
 
-#### Activity Diagram
+#### Sequence Diagram
 
-![password_reset_activity](./password_reset_activity.png "password_reset_activity")
+![password_reset_sequenz](./password_reset_sequenz.png "password_reset_sequenz")
 
 ### 2.2 Alternative Abläufe
 

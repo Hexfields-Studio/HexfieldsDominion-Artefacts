@@ -1,4 +1,4 @@
-# Registration Activity Diagram
+# Registration Sequence Diagram
 
 title Konto registrieren
 

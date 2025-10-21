@@ -1,4 +1,4 @@
-# Gast Login Activity Diagram
+# Gast Login Sequence Diagram
 
 title Mit Gast-Konto einloggen
 
