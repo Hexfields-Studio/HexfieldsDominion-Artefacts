@@ -12,8 +12,7 @@
 ## **Inhaltsverzeichnis**
 
 - [**Hexfields: Dominion**](#hexfields-dominion)
-- [**Software Requirements Specification (SRS)**](#software-requirements-specification-srs)
-- [**Version 1.1**](#version-11)
+- [**Software Requirements Specification (SRS) - Version 1.0**](#software-requirements-specification-srs---version-10)
   - [**Inhaltsverzeichnis**](#inhaltsverzeichnis)
   - [1. Einleitung](#1-einleitung)
     - [1.1 Zweck](#11-zweck)
@@ -37,17 +36,9 @@
       - [Phase 2 (bis Juni) - Erweiterungen](#phase-2-bis-juni---erweiterungen)
     - [Funktionale Anforderungen im Detail](#funktionale-anforderungen-im-detail)
     - [3.2 Benutzbarkeit](#32-benutzbarkeit)
-      - [3.2.1 Intuitive Bedienung](#321-intuitive-bedienung)
-      - [3.2.2 Responsive Design](#322-responsive-design)
     - [3.3 Zuverlässigkeit](#33-zuverlässigkeit)
-      - [3.3.1 Verfügbarkeit](#331-verfügbarkeit)
-      - [3.3.2 Datenkonsistenz](#332-datenkonsistenz)
     - [3.4 Leistung](#34-leistung)
-      - [3.4.1 Antwortzeiten](#341-antwortzeiten)
-      - [3.4.2 Gleichzeitige Benutzer](#342-gleichzeitige-benutzer)
     - [3.5 Wartbarkeit](#35-wartbarkeit)
-      - [3.5.1 Clean Code Standards](#351-clean-code-standards)
-      - [3.5.2 Testabdeckung](#352-testabdeckung)
     - [3.6 Design-Einschränkungen](#36-design-einschränkungen)
       - [Unterstützte Browser](#unterstützte-browser)
       - [Architektur](#architektur)
@@ -136,10 +127,10 @@ Das Projekt wird als responsive Webanwendung realisiert, die in modernen Browser
 
 ### 2.2 Use-Case-Diagramm
 
-*[Use-Case-Diagramm des gesamten Projekts](./use_case_gesamt.jpg "Use-Case-Diagramm des gesamten Projekts")*
+*![Use-Case-Diagramm des gesamten Projekts](./use_case_diagram_all.jpg "Use-Case-Diagramm des gesamten Projekts")*
 
-- **Grün (Phase 1 - bis Dezember):** Account Management, Lobby Management, Kern-Spielmechaniken
-- **Gelb (Phase 2 - bis Juni):** Erweiterte UI-Komponenten, Mods, Skins, Design-Verbesserungen
+- **Dunkel-Grün:** Kernfunktionen des Spiels
+- **Hell-Grün & Weiß:** Erweiterte Komponenten und Design-Verbesserungen der Webseite
 
 ### 2.3 Technologie-Stack
 
