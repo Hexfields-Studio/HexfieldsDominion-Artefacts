@@ -83,26 +83,35 @@ sequenceDiagram
 title: Login Aktivitätsdiagramm
 ---
 flowchart TD
-    A([Start]) --> B[Anmeldeseite öffnen]
+    A([Start]) --> B[Home Page öffnen]
     B --> C[Anmeldedaten eingeben]
+    B --> X[Als Gast beitreten]
+    X --> Y{Server erreichbar?}
+    Y -- Nein --> G[Fehlermeldung: Server nicht erreichbar]
+    Y -- Ja --> K[Anmeldung bestätigen]
     C --> D[Login-Button klicken]
     D --> E[Anmeldedaten validieren]
     E --> F{Server erreichbar?}
     
-    F -- Nein --> G[Fehlermeldung: Server nicht erreichbar]
+    F -- Nein --> G
     F -- Ja --> H[Anmeldedaten an Server senden]
     
     H --> I{Anmeldedaten korrekt?}
     
     I -- Nein --> J[Fehlermeldung: Falsche Anmeldedaten]
-    I -- Ja --> K[Anmeldung bestätigen]
+    I -- Ja --> K
     
     K --> L[Anmeldedaten lokal speichern]
     L --> M[Zur Startseite navigieren]
     M --> N([Erfolgreich angemeldet])
     
-    G --> C
+    G --> B
     J --> C
+    
+    style A fill:#green
+    style N fill:#red
+    style G fill:#orange
+    style J fill:#orange
 ```
 
 ### 2.2 Alternative Abläufe
