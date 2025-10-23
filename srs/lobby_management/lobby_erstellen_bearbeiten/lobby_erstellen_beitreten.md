@@ -22,7 +22,35 @@ Außerdem sollen sie einer bestehenden Lobby beitreten können. Dabei ist egal, 
 4. Die User werden zur Lobby Seite weitergeleitet
 
 ### Sequenzdiagramm
-![Sequenzdiagramm Lobby erstellen](lobby_erstellen_seqdg.png)
+```mermaid
+sequenceDiagram
+title Lobby erstellen
+
+participant Spieler
+participant Frontend
+participant Backend
+
+Spieler->Frontend: Klickt "Erstellen"
+activate Spieler
+activate Frontend
+Frontend->>Backend: GET /createLobby {configs: {...}}
+deactivate Frontend
+activate Backend
+  alt emptyLobbyIsAvailable()
+    Backend-->>Frontend: 200 OK {lobby_id: ..., code: ..., players:{...}, ...}
+    activate Frontend
+    Frontend --> Spieler: Lobby Raum anzeigen
+    deactivate Frontend
+  else
+    Backend-->>Frontend: 503 Service Unavailable
+    activate Frontend
+      Frontend --> Spieler: Fehlermeldung anzeigen
+    deactivate Frontend
+    deactivate Backend
+    deactivate Spieler
+  end
+```
+
 
 ## 2.2 Alternative Abläufe
 1. Die User klicken auf "Beitreten"
@@ -31,7 +59,36 @@ Außerdem sollen sie einer bestehenden Lobby beitreten können. Dabei ist egal, 
 4. Die User werden zur Lobby Seite weitergeleitet
 
 ### Sequenzdiagramm
-![Sequenzdiagramm Lobby beitreten](lobby_beitreten_seqdg.png)
+```mermaid
+sequenceDiagram
+title Lobby beitreten
+
+participant Spieler
+participant Frontend
+participant Backend
+
+activate Spieler
+Spieler->Frontend: Klickt "Beitreten" oder verwendet eine URL mit Code
+activate Frontend
+  Frontend->>Backend: GET /joinLobby {code: ...}
+  
+deactivate Frontend
+activate Backend
+  alt lobbyExistsWithCode(code)
+  Backend-->>Frontend: 200 OK {lobby_id: ..., code: ..., players:{...}, ...}
+  activate Frontend
+  Frontend --> Spieler: Lobby Raum anzeigen
+  deactivate Frontend
+  else
+  Backend-->>Frontend: 404 Not Found
+  deactivate Backend
+  activate Frontend
+  Frontend --> Spieler: Fehlermeldung anzeigen
+  deactivate Frontend
+  deactivate Spieler
+  end
+
+```
 
 ### Vorbedingungen
 1. Die User haben die Anwendung geöffnet.
