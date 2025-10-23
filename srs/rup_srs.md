@@ -182,10 +182,9 @@ Das Projekt wird als responsive Webanwendung realisiert, die in modernen Browser
   - 3.1.1.5 [Logout](./account_management/logout/logout.md)
 
 - **3.1.2 Lobby Management**  
-  - 3.1.2.1 [Lobby erstellen](./lobby_management/lobby_erstellen/lobby_erstellen.md)
-  - 3.1.2.2 [Lobby beitreten](./lobby_management/lobby_beitreten/lobby_beitreten.md)
-  - 3.1.2.3 [Match starten](./lobby_management/match_starten/match_starten.md)
-  - 3.1.2.4 [Rollenzuweisung](./lobby_management/leader_ehemalige_zuweisung/leader_ehemalige_zuweisung.md)
+  - 3.1.2.1 [Lobby erstellen und beitreten](lobby_management/lobby_erstellen_bearbeiten/lobby_erstellen_beitreten.md)
+  - 3.1.2.2 [Match starten](lobby_management/REM match_starten/match_starten.md)
+  - 3.1.2.3 [Rollenzuweisung](./lobby_management/leader_ehemalige_zuweisung/leader_ehemalige_zuweisung.md)
 
 - **3.1.3 Spielmechaniken**  
   - 3.1.3.1 [Spielzug ausführen](./game/spielzug_ausfuehren/spielzug_ausfuehren.md)

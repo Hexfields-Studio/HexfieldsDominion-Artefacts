@@ -1,6 +1,0 @@
-title Lobby erstellen
-
-Spieler->Frontend:Klickt "Erstellen"
-Frontend->Backend:Anfragen, dass die Lobby mit Konfiguration erstellt wird
-Backend->Frontend:Erstellte Lobby mit ID zurückgeben
-Frontend->Spieler:Lobby Seite anzeigen
