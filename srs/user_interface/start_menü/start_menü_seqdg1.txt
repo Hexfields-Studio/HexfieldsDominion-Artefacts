@@ -1,4 +1,11 @@
 title Start Menü
 
-Spieler->Frontend:Klickt "Lobby erstellen"
-Frontend->Spieler:Öffnet Fenster zur Erstellung einer Lobby
+participant Spieler
+participant Frontend
+
+activate Spieler
+Spieler->Frontend: Klickt "Lobby erstellen"
+activate Frontend
+Frontend->Spieler: Öffnet Fenster zur Erstellung einer Lobby
+deactivate Frontend
+deactivate Spieler

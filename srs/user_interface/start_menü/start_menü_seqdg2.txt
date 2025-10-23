@@ -1,4 +1,11 @@
 title Start Menü
 
-Spieler->Frontend:Klickt "Lobby beitreten"
-Frontend->Spieler:Öffnet Fenster zum Beitritt einer Lobby
+participant Spieler
+participant Frontend
+
+activate Spieler
+Spieler->Frontend: Klickt "Lobby beitreten"
+activate Frontend
+Frontend->Spieler: Öffnet Fenster zum Beitritt einer Lobby
+deactivate Frontend
+deactivate Spieler
