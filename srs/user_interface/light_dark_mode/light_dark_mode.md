@@ -26,9 +26,33 @@ n/a
 - Die Einstellung wird gespeichert.
 - Das Einstellungsmenü schließt sich automatisch nach kurzer Zeit oder nach Klick außerhalb.
 
-#### Sequenz Diagramm
+#### Sequenz-Diagramm
 
 ![light_dark_mode_sequence](./light_dark_mode_sequence.png "light_dark_mode_sequence")
+
+#### Aktivitäts-Diagramm (Mermaid)
+
+```mermaid
+flowchart TD
+    A([Start]) --> B[Einstellungs-Icon klicken]
+    B --> C[Einstellungsmenü öffnen]
+    C --> D{Modus bereits gespeichert?}
+    D -- Ja --> E[Gespeicherten Modus anzeigen]
+    D -- Nein --> F[Standard/System-Modus anzeigen]
+    E --> G{Benutzeraktion}
+    F --> G
+    G --> H[Light Mode auswählen]
+    G --> I[Dark Mode auswählen]
+    G --> J[Systempräferenz folgen]
+    H --> K[Farbschema sofort wechseln]
+    I --> K
+    J --> L[Modus an OS anpassen]
+    L --> K
+    K --> M[Einstellung lokal speichern]
+    M --> N[Visuelle Bestätigung anzeigen]
+    N --> O[Einstellungsmenü schließen]
+    O --> P([Ende])
+```
 
 ### 2.2 Alternative Abläufe
 
