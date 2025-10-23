@@ -28,52 +28,74 @@ n/a
 
 ```mermaid
 sequenceDiagram
-    title Login Sequenzdiagramm
+# Login Sequence Diagram
 
-    participant User
-    participant Client
-    participant Server
-    participant Datenbank
+title Login Prozess mit Account
 
-    User->>Client: Anmeldedaten eingeben & "Anmelden" klicken
-    activate Client
-    
-    Client->>Server: POST /api/auth/login {email: "user@example.com", password: "..."}
-    activate Server
-    
-    Server->>Datenbank: SELECT * FROM users WHERE email = ?
-    activate Datenbank
-    
-    alt User nicht gefunden
-        Datenbank-->>Server: null
-        Server-->>Client: HTTP 401 Unauthorized {error: "Invalid credentials"}
-    else User inaktiv
-        Datenbank-->>Server: user {id: 123, status: "inactive"}
-        Server-->>Client: HTTP 403 Forbidden {error: "Account deactivated"}
-    else User aktiv
-        Datenbank-->>Server: user {id: 123, email: "user@example.com", passwordHash: "..."}
-        deactivate Datenbank
-        
-        Server->>Server: verifyPassword(inputPassword, storedHash)
-        alt Passwort falsch
-            Server->>Datenbank: incrementFailedAttempts(userId)
-            Server-->>Client: HTTP 401 Unauthorized {error: "Invalid credentials"}
-        else Passwort korrekt
-            Server->>Datenbank: resetFailedAttempts(userId)
-            Server->>Server: generateSessionToken()
-            Server-->>Client: HTTP 200 OK {sessionToken: "abc123", user: {id: 123, email: "user@example.com"}}
-        end
-    end
-    deactivate Server
-    
-    alt Erfolg
-        Client->>Client: localStorage.setItem("session", "abc123")
-        Client->>Client: redirectToHomepage()
-        Client-->>User: Startseite mit User-Dashboard anzeigen
-    else Fehler
-        Client->>Client: displayErrorMessage("Ungültige Anmeldedaten")
-    end
-    deactivate Client
+participant Spieler
+participant Frontend
+participant Timer
+participant Backend
+participant Datenbank
+
+activate Spieler
+Spieler->Frontend:Anmeldedaten eingegeben und auf Schaltfläche "Log in" drücken
+activate Frontend
+alt !areLoginCredentialsValid()
+Frontend-->Spieler:Fehlermeldung anzeigen: Bad Credentials
+else 
+Frontend->>Timer: resetTimeout(5s)
+activate Timer
+  Timer->>Frontend: serverTimeout()
+deactivate Timer
+activate Frontend
+  Frontend->>Spieler: Fehlermeldung anzeigen: Keine Verbindung mit Server
+deactivate Frontend
+
+Frontend->>Backend:POST /login {username: ..., password: ...}
+deactivate Frontend
+activate Backend
+  Backend->>Datenbank:SELECT COUNT(*) as user_count FROM users WHERE USERNAME = username AND PASSWORD = password;
+deactivate Backend
+activate Datenbank
+
+
+Datenbank-->>Backend:user_count
+deactivate Datenbank
+activate Backend
+alt user_count
+Backend-->Frontend:200 OK (Token mitsenden?)
+activate Frontend
+  Frontend->Spieler:Start Menü anzeigen
+deactivate Frontend
+else
+Backend-->Frontend:400 Bad Request
+deactivate Backend
+activate Frontend
+Frontend->Spieler:Fehlermeldung anzeigen: Account mit den angegebenen Daten existiert nicht
+deactivate Frontend
+
+end
+end
+
+Spieler->Frontend:Schaltfläche "als Gast beitreten"\ngedrückt
+activate Frontend
+  Frontend->>Timer: resetTimeout(5s)
+  activate Timer
+    Timer->>Frontend: serverTimeout()
+  deactivate Timer
+  activate Frontend
+    Frontend->>Spieler: Fehlermeldung anzeigen: Keine Verbindung mit Server
+  deactivate Frontend
+  Frontend->>Backend:POST /login {username:"guest", password:"cookie"}
+  deactivate Frontend
+  activate Backend
+    Backend-->Frontend: 200 OK (Token mitsenden?)
+  deactivate Backend
+  activate Frontend
+  Frontend->Spieler: Start Menü anzeigen
+  deactivate Frontend
+deactivate Spieler
 ```
 
 #### Aktivitätsdiagramm (Mermaid)
