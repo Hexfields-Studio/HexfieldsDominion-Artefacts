@@ -31,32 +31,25 @@ sequenceDiagram
 
     participant User
     participant Client
-    participant Auth as Authentifizierungs-Service
-    participant Sesh as Session-Manager
-    participant DB as Datenbank
+    participant Server
+    participant Datenbank
 
     User->>Client: "Als Gast anmelden" klicken
     activate Client
     Client->>Client: clearLocalStorage()
-    Client->>Client: removeExistingSession()
     
-    Client->>Auth: POST /api/auth/guest-login
-    activate Auth
+    Client->>Server: POST /api/auth/guest-login
+    activate Server
     
-    Auth->>DB: generateGuestUser()
-    activate DB
-    DB->>DB: createUser(role: "guest", temp: true)
-    DB-->>Auth: guestUser {id: "guest_123", temp: true}
-    deactivate DB
+    Server->>Datenbank: generateGuestUser()
+    activate Datenbank
+    Datenbank->>Datenbank: createUser(role: "guest", temp: true)
+    Datenbank-->>Server: guestUser {id: "guest_123", temp: true}
+    deactivate Datenbank
     
-    Auth->>Sesh: createSession(guestUser.id)
-    activate Sesh
-    Sesh->>Sesh: generateSessionToken()
-    Sesh-->>Auth: session {token: "xyz", userId: "guest_123"}
-    deactivate Sesh
-    
-    Auth-->>Client: HTTP 200 OK {sessionToken: "xyz", user: {id: "guest_123", role: "guest"}}
-    deactivate Auth
+    Server->>Server: createSession(guestUser.id)
+    Server-->>Client: HTTP 200 OK {sessionToken: "xyz", user: {id: "guest_123", role: "guest"}}
+    deactivate Server
     
     Client->>Client: localStorage.setItem("session", "xyz")
     Client->>Client: redirectToHomepage()

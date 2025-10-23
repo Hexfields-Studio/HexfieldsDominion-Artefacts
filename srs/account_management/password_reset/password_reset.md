@@ -33,53 +33,30 @@ sequenceDiagram
 
     participant User
     participant Client
-    participant Valid as Eingabe-Validierung
-    participant Auth as Authentifizierungs-Service
-    participant DB as Datenbank
-    participant Mails as E-Mail-Service
+    participant Server
+    participant Datenbank
 
-    User->>Client: "Passwort vergessen" klicken
-    Client->>Client: Passwort-Reset-Formular anzeigen
-    User->>Client: E-Mail-Adresse eingeben
-    User->>Client: "Passwort zurücksetzen" klicken
+    User->>Client: "Passwort vergessen" klicken & E-Mail eingeben
     activate Client
     
-    Client->>Valid: validateEmail("user@example.com")
-    activate Valid
-    Valid->>Valid: const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    Valid-->>Client: isValid: true
-    deactivate Valid
+    Client->>Server: POST /api/auth/password-reset {email: "user@example.com"}
+    activate Server
     
-    Client->>Auth: POST /api/auth/password-reset
-    note over Client,Auth: {email: "user@example.com"}
-    activate Auth
-    
-    Auth->>DB: SELECT id, email FROM users WHERE email = ?
-    activate DB
+    Server->>Datenbank: SELECT id, email FROM users WHERE email = ?
+    activate Datenbank
     alt E-Mail nicht gefunden
-        DB-->>Auth: null
-        %%deactivate DB
-        Auth-->>Client: HTTP 200 OK {message: "If email exists, reset link sent"}
-        %%deactivate Auth
+        Datenbank-->>Server: null
+        Server-->>Client: HTTP 200 OK {message: "If email exists, reset link sent"}
     else E-Mail gefunden
-        DB-->>Auth: user {id: 123, email: "user@example.com"}
-        deactivate DB
+        Datenbank-->>Server: user {id: 123, email: "user@example.com"}
+        deactivate Datenbank
         
-        Auth->>Auth: generateResetToken()
-        Auth->>DB: storeResetToken(userId, token, expiresIn: "1h")
-        activate DB
-        DB-->>Auth: success
-        deactivate DB
-        
-        Auth->>Mails: sendResetEmail(user.email, resetToken)
-        activate Mails
-        Mails->>Mails: constructResetLink(token)
-        Mails-->>Auth: emailQueued
-        deactivate Mails
-        
-        Auth-->>Client: HTTP 200 OK {message: "If email exists, reset link sent"}
-        deactivate Auth
+        Server->>Server: generateResetToken()
+        Server->>Datenbank: storeResetToken(userId, token, expiresIn: "1h")
+        Server->>Server: sendResetEmail(user.email, resetToken)
+        Server-->>Client: HTTP 200 OK {message: "If email exists, reset link sent"}
     end
+    deactivate Server
     
     Client->>Client: showSuccessMessage()
     Client-->>User: "E-Mail mit Reset-Anleitung prüfen"

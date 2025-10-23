@@ -31,35 +31,27 @@ sequenceDiagram
 
     participant User
     participant Client
-    participant Auth as Authentifizierungs-Service
-    participant Sesh as Session-Manager
-    participant Local as Lokaler Speicher
+    participant Server
+    participant Datenbank
 
-    User->>Client: Usermenü öffnen
     User->>Client: "Abmelden" klicken
     activate Client
     
-    Client->>Local: getItem("sessionToken")
-    activate Local
-    Local-->>Client: "abc123"
-    deactivate Local
+    Client->>Server: POST /api/auth/logout
+    note over Client,Server: Authorization: Bearer abc123
+    activate Server
     
-    Client->>Auth: POST /api/auth/logout
-    note over Client,Auth: Authorization: Bearer abc123
-    activate Auth
+    Server->>Datenbank: invalidateSession("abc123")
+    activate Datenbank
+    Datenbank->>Datenbank: deleteSession("abc123")
+    Datenbank-->>Server: success
+    deactivate Datenbank
     
-    Auth->>Sesh: invalidateSession("abc123")
-    activate Sesh
-    Sesh->>Sesh: deleteSession("abc123")
-    Sesh-->>Auth: success
-    deactivate Sesh
+    Server-->>Client: HTTP 200 OK
+    deactivate Server
     
-    Auth-->>Client: HTTP 200 OK
-    deactivate Auth
-    
-    Client->>Local: removeItem("sessionToken")
-    Client->>Local: removeItem("userData")
-    Client->>Client: clearUserState()
+    Client->>Client: localStorage.removeItem("sessionToken")
+    Client->>Client: localStorage.removeItem("userData")
     Client->>Client: redirectToHomepage()
     Client-->>User: Startseite mit Login-Optionen anzeigen
     deactivate Client

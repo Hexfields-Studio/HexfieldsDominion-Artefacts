@@ -28,67 +28,50 @@ n/a
 
 ```mermaid
 sequenceDiagram
-    title Login Seqeuenzdiagramm
+    title Login Sequenzdiagramm
 
     participant User
     participant Client
-    participant Valid as Eingabe-Validierung
-    participant Auth as Authentifizierungs-Service
-    participant DB as Datenbank
-    participant Sesh as Session-Manager
+    participant Server
+    participant Datenbank
 
-    User->>Client: Anmeldedaten eingeben
-    User->>Client: "Anmelden" klicken
+    User->>Client: Anmeldedaten eingeben & "Anmelden" klicken
     activate Client
     
-    Client->>Valid: validateCredentials(email, password)
-    activate Valid
-    Valid->>Valid: if (!email.includes("@")) return false
-    Valid->>Valid: if (password.length < 8) return false
-    Valid-->>Client: validationResult {isValid: true}
-    deactivate Valid
+    Client->>Server: POST /api/auth/login {email: "user@example.com", password: "..."}
+    activate Server
     
-    Client->>Auth: POST /api/auth/login
-    note over Client,Auth: {email: "user@example.com", password: "hashed_password"}
-    activate Auth
+    Server->>Datenbank: SELECT * FROM users WHERE email = ?
+    activate Datenbank
     
-    Auth->>DB: SELECT * FROM users WHERE email = ?
-    activate DB
     alt User nicht gefunden
-        DB-->>Auth: HTTP 404 Not Found
-        Auth-->>Client: HTTP 401 Unauthorized {error: "Invalid credentials"}
-        %%deactivate Auth
-        Client->>Client: displayErrorMessage("Ungültige Anmeldedaten")
+        Datenbank-->>Server: null
+        Server-->>Client: HTTP 401 Unauthorized {error: "Invalid credentials"}
     else User inaktiv
-        DB-->>Auth: user {id: 123, status: "inactive"}
-        Auth-->>Client: HTTP 403 Forbidden {error: "Account deactivated"}
-        %%deactivate Auth
-        Client->>Client: displayErrorMessage("Konto deaktiviert")
+        Datenbank-->>Server: user {id: 123, status: "inactive"}
+        Server-->>Client: HTTP 403 Forbidden {error: "Account deactivated"}
     else User aktiv
-        DB-->>Auth: user {id: 123, email: "user@example.com", passwordHash: "..."}
-        deactivate DB
+        Datenbank-->>Server: user {id: 123, email: "user@example.com", passwordHash: "..."}
+        deactivate Datenbank
         
-        Auth->>Auth: verifyPassword(inputPassword, storedHash)
+        Server->>Server: verifyPassword(inputPassword, storedHash)
         alt Passwort falsch
-            Auth->>DB: incrementFailedAttempts(userId)
-            Auth-->>Client: HTTP 401 Unauthorized {error: "Invalid credentials"}
-            %%deactivate Auth
-            Client->>Client: displayErrorMessage("Ungültige Anmeldedaten")
+            Server->>Datenbank: incrementFailedAttempts(userId)
+            Server-->>Client: HTTP 401 Unauthorized {error: "Invalid credentials"}
         else Passwort korrekt
-            Auth->>DB: resetFailedAttempts(userId)
-            Auth->>Sesh: createSession(user.id)
-            activate Sesh
-            Sesh->>Sesh: generateSessionToken()
-            Sesh-->>Auth: session {token: "abc123", userId: 123}
-            deactivate Sesh
-            
-            Auth-->>Client: HTTP 200 OK {sessionToken: "abc123", user: {id: 123, email: "user@example.com"}}
-            deactivate Auth
-            
-            Client->>Client: localStorage.setItem("session", "abc123")
-            Client->>Client: redirectToHomepage()
-            Client-->>User: Startseite mit User-Dashboard anzeigen
+            Server->>Datenbank: resetFailedAttempts(userId)
+            Server->>Server: generateSessionToken()
+            Server-->>Client: HTTP 200 OK {sessionToken: "abc123", user: {id: 123, email: "user@example.com"}}
         end
+    end
+    deactivate Server
+    
+    alt Erfolg
+        Client->>Client: localStorage.setItem("session", "abc123")
+        Client->>Client: redirectToHomepage()
+        Client-->>User: Startseite mit User-Dashboard anzeigen
+    else Fehler
+        Client->>Client: displayErrorMessage("Ungültige Anmeldedaten")
     end
     deactivate Client
 ```
@@ -120,11 +103,6 @@ flowchart TD
     
     G --> C
     J --> C
-    
-    style A fill:#green
-    style N fill:#red
-    style G fill:#orange
-    style J fill:#orange
 ```
 
 ### 2.2 Alternative Abläufe

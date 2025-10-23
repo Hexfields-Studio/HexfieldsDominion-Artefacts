@@ -35,60 +35,44 @@ sequenceDiagram
 
     participant User
     participant Client
-    participant Valid as Eingabe-Validierung
-    participant Auth as Authentifizierungs-Service
-    participant DB as Datenbank
+    participant Server
+    participant Datenbank
 
-    User->>Client: Registrierungsdaten eingeben
-    User->>Client: "Registrieren" klicken
+    User->>Client: Registrierungsdaten eingeben & "Registrieren" klicken
     activate Client
     
-    Client->>Valid: validateRegistration(formData)
-    activate Valid
-    Valid->>Valid: if (username.length < 3) return error
-    Valid->>Valid: if (password !== confirmPassword) return error
-    Valid->>Valid: if (!isStrongPassword(password)) return error
-    Valid-->>Client: validationResult {isValid: true, errors: []}
-    deactivate Valid
+    Client->>Server: POST /api/auth/register {username: "newuser", email: "new@example.com", password: "..."}
+    activate Server
     
-    Client->>Auth: POST /api/auth/register
-    note over Client,Auth: {username: "newuser", email: "new@example.com", password: "hashed"}
-    activate Auth
-    
-    Auth->>DB: checkExistingUser(username, email)
-    activate DB
+    Server->>Datenbank: checkExistingUser(username, email)
+    activate Datenbank
     alt Username existiert
-        DB-->>Auth: {usernameExists: true, emailExists: false}
-        %%deactivate DB
-        Auth-->>Client: HTTP 409 Conflict {error: "Username already taken"}
-        %%deactivate Auth
-        Client->>Client: displayErrorMessage("Username bereits vergeben")
+        Datenbank-->>Server: {usernameExists: true}
+        Server-->>Client: HTTP 409 Conflict {error: "Username already taken"}
     else E-Mail existiert
-        DB-->>Auth: {usernameExists: false, emailExists: true}
-        %%deactivate DB
-        Auth-->>Client: HTTP 409 Conflict {error: "Email already registered"}
-        %%deactivate Auth
-        Client->>Client: displayErrorMessage("E-Mail bereits registriert")
+        Datenbank-->>Server: {emailExists: true}
+        Server-->>Client: HTTP 409 Conflict {error: "Email already registered"}
     else Daten eindeutig
-        DB-->>Auth: {usernameExists: false, emailExists: false}
-        deactivate DB
+        Datenbank-->>Server: {usernameExists: false, emailExists: false}
+        deactivate Datenbank
         
-        Auth->>DB: createUser(userData)
-        activate DB
-        DB->>DB: hashPassword(password)
-        DB->>DB: insert into users (username, email, password_hash, status)
-        DB-->>Auth: newUser {id: 456, username: "newuser", email: "new@example.com"}
-        deactivate DB
+        Server->>Datenbank: createUser(userData)
+        activate Datenbank
+        Datenbank->>Datenbank: hashPassword(password)
+        Datenbank-->>Server: newUser {id: 456, username: "newuser", email: "new@example.com"}
+        deactivate Datenbank
         
-        Auth->>Auth: generateVerificationToken()
-        Auth->>DB: storeVerificationToken(userId, token)
-        
-        Auth-->>Client: HTTP 201 Created {user: {id: 456, username: "newuser"}, message: "Registration successful"}
-        deactivate Auth
-        
-        Client->>Client: autoLoginUser(sessionToken)
+        Server->>Server: generateSessionToken()
+        Server-->>Client: HTTP 201 Created {sessionToken: "def456", user: {id: 456, username: "newuser"}}
+    end
+    deactivate Server
+    
+    alt Erfolg
+        Client->>Client: localStorage.setItem("session", "def456")
         Client->>Client: redirectToHomepage()
         Client-->>User: Willkommensnachricht auf Startseite anzeigen
+    else Fehler
+        Client->>Client: displayErrorMessage("Registrierung fehlgeschlagen")
     end
     deactivate Client
 ```
