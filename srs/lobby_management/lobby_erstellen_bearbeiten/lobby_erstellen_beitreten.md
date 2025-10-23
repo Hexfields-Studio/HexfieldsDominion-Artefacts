@@ -15,20 +15,20 @@ Außerdem sollen sie einer bestehenden Lobby beitreten können. Dabei ist egal, 
 
 # 2. Ablauf von Ereignissen
 
-## 2.1 Ereignisse
-- Die User klicken auf "Erstellen"
-- Das Frontend fragt beim Backend an, dass die Lobby mit der gewählten Konfiguration erstellt wird
-- Das Backend gibt die erstellte Lobby und die ID zurück
-- Die User werden zur Lobby Seite weitergeleitet
+## 2.1 Grundlegender Ablauf
+1. Die User klicken auf "Erstellen"
+2. Das Frontend fragt beim Backend an, dass die Lobby mit der gewählten Konfiguration erstellt wird
+3. Das Backend gibt die erstellte Lobby und die ID zurück
+4. Die User werden zur Lobby Seite weitergeleitet
 
 ### Sequenzdiagramm
 ![Sequenzdiagramm Lobby erstellen](lobby_erstellen_seqdg.png)
 
 ## 2.2 Alternative Abläufe
-- Die User klicken auf "Beitreten"
-- Das Frontend fragt beim Backend die zum Code zugehörige Lobby ab
-- Das Backend gibt die zugehörige Lobby und die ID zurück
-- Die User werden zur Lobby Seite weitergeleitet
+1. Die User klicken auf "Beitreten"
+2. Das Frontend fragt beim Backend die zum Code zugehörige Lobby ab
+3. Das Backend gibt die zugehörige Lobby und die ID zurück
+4. Die User werden zur Lobby Seite weitergeleitet
 
 ### Sequenzdiagramm
 ![Sequenzdiagramm Lobby beitreten](lobby_beitreten_seqdg.png)
