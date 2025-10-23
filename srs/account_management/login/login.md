@@ -24,15 +24,52 @@ n/a
 - Die Anmeldedaten werden gespeichert
 - Die App kehrt zur Startseite zurück.
 
-#### Sequenz Diagramm
+#### Sequenz-Diagramm
 
 ![login_sequence](./login_sequence.png "login_sequence")
+
+#### Aktivitäts-Diagramm (Mermaid)
+
+```mermaid
+---
+title: Login Prozess - Aktivitätsdiagramm
+---
+flowchart TD
+    A([Start]) --> B[Anmeldeseite öffnen]
+    B --> C[Anmeldedaten eingeben]
+    C --> D[Login-Button klicken]
+    D --> E[Anmeldedaten validieren]
+    E --> F{Server erreichbar?}
+    
+    F -- Nein --> G[Fehlermeldung: Server nicht erreichbar]
+    F -- Ja --> H[Anmeldedaten an Server senden]
+    
+    H --> I{Anmeldedaten korrekt?}
+    
+    I -- Nein --> J{Account gesperrt?}
+    J -- Ja --> K[Fehlermeldung: Konto gesperrt]
+    J -- Nein --> L[Fehlermeldung: Falsche Anmeldedaten]
+    
+    I -- Ja --> M[Anmeldung bestätigen]
+    M --> N[Anmeldedaten lokal speichern]
+    N --> O[Zur Startseite navigieren]
+    O --> P([Erfolgreich angemeldet])
+    
+    G --> C
+    K --> C
+    L --> C
+    
+    style A fill:#green
+    style P fill:#red
+    style G fill:#orange
+    style K fill:#orange
+    style L fill:#orange
+```
 
 ### 2.2 Alternative Abläufe
 
 - **Server nicht erreichbar**: Fehlermeldung wird angezeigt und die Anmeldung schlägt fehl.
 - **Falsche Anmeldedaten**: Fehlermeldung wird angezeigt, User kann Daten erneut eingeben
-- **Konto gesperrt**: Hinweis auf gesperrtes Konto mit Information zur Kontaktaufnahme
 
 ## 3. Besondere Anforderungen
 
