@@ -23,9 +23,47 @@ n/a
 - Die Anmeldedaten des User werden aus dem lokalen Speicher entfernt.
 - Die App kehrt zur Startseite zurück.
 
-#### Sequenz Diagramm
+#### Sequenzdiagramm (Mermaid)
 
-![logout_sequence](./logout_sequence.png "logout_sequence")
+```mermaid
+sequenceDiagram
+    title Logout Sequenzdiagramm
+
+    participant User
+    participant Client
+    participant Auth as Authentifizierungs-Service
+    participant Sesh as Session-Manager
+    participant Local as Lokaler Speicher
+
+    User->>Client: Usermenü öffnen
+    User->>Client: "Abmelden" klicken
+    activate Client
+    
+    Client->>Local: getItem("sessionToken")
+    activate Local
+    Local-->>Client: "abc123"
+    deactivate Local
+    
+    Client->>Auth: POST /api/auth/logout
+    note over Client,Auth: Authorization: Bearer abc123
+    activate Auth
+    
+    Auth->>Sesh: invalidateSession("abc123")
+    activate Sesh
+    Sesh->>Sesh: deleteSession("abc123")
+    Sesh-->>Auth: success
+    deactivate Sesh
+    
+    Auth-->>Client: HTTP 200 OK
+    deactivate Auth
+    
+    Client->>Local: removeItem("sessionToken")
+    Client->>Local: removeItem("userData")
+    Client->>Client: clearUserState()
+    Client->>Client: redirectToHomepage()
+    Client-->>User: Startseite mit Login-Optionen anzeigen
+    deactivate Client
+```
 
 ### 2.2 Alternative Abläufe
 

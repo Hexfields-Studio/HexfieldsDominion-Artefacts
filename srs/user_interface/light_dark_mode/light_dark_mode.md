@@ -28,26 +28,79 @@ n/a
 
 #### Sequenz-Diagramm
 
-![light_dark_mode_sequence](./light_dark_mode_sequence.png "light_dark_mode_sequence")
+```mermaid
+sequenceDiagram
+    title Light-Dark Mode Wechsel - Detaillierte Implementierung
+
+    participant User
+    participant Client
+    participant Theme as Theme-Manager
+    participant Local as Lokaler Speicher
+    participant DOM as DOM-Manipulator
+
+    User->>Client: Einstellungs-Icon klicken
+    activate Client
+    
+    Client->>Client: showSettingsMenu()
+    Client->>Local: getItem("themePreference")
+    activate Local
+    Local-->>Client: "dark" | "light" | null
+    deactivate Local
+    
+    alt Theme gespeichert
+        Client->>Client: setToggleState(savedTheme)
+    else Kein Theme gespeichert
+        Client->>Client: setToggleState("system")
+        Client->>Theme: getSystemPreference()
+        activate Theme
+        Theme->>Theme: window.matchMedia('(prefers-color-scheme: dark)')
+        Theme-->>Client: systemTheme
+        deactivate Theme
+        Client->>DOM: applyTheme(systemTheme)
+    end
+    
+    User->>Client: Light-Dark Mode Schalter betätigen
+    Client->>Client: toggleTheme()
+    Client->>Theme: getNewThemeState(currentTheme)
+    activate Theme
+    Theme-->>Client: newTheme
+    deactivate Theme
+    
+    Client->>DOM: document.documentElement.setAttribute('data-theme', newTheme)
+    activate DOM
+    DOM->>DOM: updateCSSVariables(newTheme)
+    DOM-->>Client: themeApplied
+    deactivate DOM
+    
+    Client->>Local: setItem("themePreference", newTheme)
+    activate Local
+    Local-->>Client: "OK"
+    deactivate Local
+    
+    Client->>Client: showVisualConfirmation()
+    Client->>Client: closeSettingsMenuAfterDelay()
+    Client-->>User: Aktualisiertes Farbschema anzeigen
+    deactivate Client
+```
 
 #### Aktivitäts-Diagramm (Mermaid)
 
 ```mermaid
+---
+title: Light/Dark Mode Aktivitätsdiagramm
+---
 flowchart TD
     A([Start]) --> B[Einstellungs-Icon klicken]
     B --> C[Einstellungsmenü öffnen]
     C --> D{Modus bereits gespeichert?}
     D -- Ja --> E[Gespeicherten Modus anzeigen]
-    D -- Nein --> F[Standard/System-Modus anzeigen]
-    E --> G{Benutzeraktion}
+    D -- Nein --> F[Standard-Modus anzeigen]
+    E --> G{Useraktion}
     F --> G
     G --> H[Light Mode auswählen]
     G --> I[Dark Mode auswählen]
-    G --> J[Systempräferenz folgen]
     H --> K[Farbschema sofort wechseln]
     I --> K
-    J --> L[Modus an OS anpassen]
-    L --> K
     K --> M[Einstellung lokal speichern]
     M --> N[Visuelle Bestätigung anzeigen]
     N --> O[Einstellungsmenü schließen]

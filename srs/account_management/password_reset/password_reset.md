@@ -25,9 +25,66 @@ n/a
 - Eine E-Mail wird an die angegebene Adresse geschickt, mit einem zufällig generiertem Passwort.
 - Der User wird zur Anmeldeseite weitergeleitet.
 
-#### Sequenz Diagramm
+#### Sequenzdiagramm (Mermaid)
 
-![password_reset_sequence](./password_reset_sequence.png "password_reset_sequence")
+```mermaid
+sequenceDiagram
+    title Passwort-Reset Sequenzdiagramm
+
+    participant User
+    participant Client
+    participant Valid as Eingabe-Validierung
+    participant Auth as Authentifizierungs-Service
+    participant DB as Datenbank
+    participant Mails as E-Mail-Service
+
+    User->>Client: "Passwort vergessen" klicken
+    Client->>Client: Passwort-Reset-Formular anzeigen
+    User->>Client: E-Mail-Adresse eingeben
+    User->>Client: "Passwort zurücksetzen" klicken
+    activate Client
+    
+    Client->>Valid: validateEmail("user@example.com")
+    activate Valid
+    Valid->>Valid: const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    Valid-->>Client: isValid: true
+    deactivate Valid
+    
+    Client->>Auth: POST /api/auth/password-reset
+    note over Client,Auth: {email: "user@example.com"}
+    activate Auth
+    
+    Auth->>DB: SELECT id, email FROM users WHERE email = ?
+    activate DB
+    alt E-Mail nicht gefunden
+        DB-->>Auth: null
+        %%deactivate DB
+        Auth-->>Client: HTTP 200 OK {message: "If email exists, reset link sent"}
+        %%deactivate Auth
+    else E-Mail gefunden
+        DB-->>Auth: user {id: 123, email: "user@example.com"}
+        deactivate DB
+        
+        Auth->>Auth: generateResetToken()
+        Auth->>DB: storeResetToken(userId, token, expiresIn: "1h")
+        activate DB
+        DB-->>Auth: success
+        deactivate DB
+        
+        Auth->>Mails: sendResetEmail(user.email, resetToken)
+        activate Mails
+        Mails->>Mails: constructResetLink(token)
+        Mails-->>Auth: emailQueued
+        deactivate Mails
+        
+        Auth-->>Client: HTTP 200 OK {message: "If email exists, reset link sent"}
+        deactivate Auth
+    end
+    
+    Client->>Client: showSuccessMessage()
+    Client-->>User: "E-Mail mit Reset-Anleitung prüfen"
+    deactivate Client
+```
 
 ### 2.2 Alternative Abläufe
 

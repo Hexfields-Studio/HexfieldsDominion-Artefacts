@@ -23,9 +23,46 @@ n/a
 - Die Anmeldedaten des User werden aus dem lokalen Speicher entfernt.
 - Die App kehrt zum Anmeldebildschirm zurück.
 
-#### Sequenz Diagramm
+#### Sequenzdiagramm (Mermaid)
 
-![gast_login_sequence](./gast_login_sequence.png "gast_login_sequence")
+```mermaid
+sequenceDiagram
+    title Gast-Login Sequenzdiagramm
+
+    participant User
+    participant Client
+    participant Auth as Authentifizierungs-Service
+    participant Sesh as Session-Manager
+    participant DB as Datenbank
+
+    User->>Client: "Als Gast anmelden" klicken
+    activate Client
+    Client->>Client: clearLocalStorage()
+    Client->>Client: removeExistingSession()
+    
+    Client->>Auth: POST /api/auth/guest-login
+    activate Auth
+    
+    Auth->>DB: generateGuestUser()
+    activate DB
+    DB->>DB: createUser(role: "guest", temp: true)
+    DB-->>Auth: guestUser {id: "guest_123", temp: true}
+    deactivate DB
+    
+    Auth->>Sesh: createSession(guestUser.id)
+    activate Sesh
+    Sesh->>Sesh: generateSessionToken()
+    Sesh-->>Auth: session {token: "xyz", userId: "guest_123"}
+    deactivate Sesh
+    
+    Auth-->>Client: HTTP 200 OK {sessionToken: "xyz", user: {id: "guest_123", role: "guest"}}
+    deactivate Auth
+    
+    Client->>Client: localStorage.setItem("session", "xyz")
+    Client->>Client: redirectToHomepage()
+    Client-->>User: Startseite mit Gast-Status anzeigen
+    deactivate Client
+```
 
 ### 2.2 Alternative Abläufe
 
