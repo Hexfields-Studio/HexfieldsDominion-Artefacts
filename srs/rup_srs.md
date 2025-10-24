@@ -182,7 +182,7 @@ Das Projekt wird als responsive Webanwendung realisiert, die in modernen Browser
   - 3.1.1.5 [Logout](./account_management/logout/logout.md)
 
 - **3.1.2 Lobby Management**  
-  - 3.1.2.1 [Lobby erstellen und beitreten](lobby_management/lobby_erstellen_bearbeiten/lobby_erstellen_beitreten.md)
+  - 3.1.2.1 [Lobby erstellen und beitreten](lobby_management/lobby_erstellen_beitreten/lobby_erstellen_beitreten.md)
   - 3.1.2.2 [Match starten](lobby_management/REM match_starten/match_starten.md)
   - 3.1.2.3 [Rollenzuweisung](./lobby_management/leader_ehemalige_zuweisung/leader_ehemalige_zuweisung.md)
 
