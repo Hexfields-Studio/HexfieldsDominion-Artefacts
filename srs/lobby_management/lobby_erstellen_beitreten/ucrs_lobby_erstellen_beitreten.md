@@ -22,7 +22,7 @@
       - [Sequenzdiagramm (Mermaid) - Erstellen der Lobby](#sequenzdiagramm-mermaid---erstellen-der-lobby)
     - [2.2. Grundlegender Ablauf - Beitreten einer Lobby](#22-grundlegender-ablauf---beitreten-einer-lobby)
       - [Sequenzdiagramm (Mermaid) - Beitreten einer Lobby](#sequenzdiagramm-mermaid---beitreten-einer-lobby)
-  - [3. Derived Requirements {#derived-requirements}](#3-derived-requirements-derived-requirements)
+  - [3. Derived Requirements](#3-derived-requirements)
     - [Weitere Anforderungen](#weitere-anforderungen)
 
 ## 1. Introduction
@@ -135,7 +135,7 @@ activate Backend
   end
 ```
 
-## 3. Derived Requirements {#derived-requirements}
+## 3. Derived Requirements
 
 ### Weitere Anforderungen  
 
