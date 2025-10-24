@@ -20,6 +20,8 @@ Dieser Ablauf beschreibt den Prozess, der von einem Spieler (den Lobbyanführer)
 Im Falle eines Fehlers (sollte der Spieler nicht der Lobbyanführer sein) sollte eine entsprechende Fehlermeldung zurückgesendet werden.
 
 Das folgende Sequenzdiagramm beschreibt beide Abläufe:
+
+### Sequenzdiagramm
 ```mermaid
 sequenceDiagram
 title Match Starten
