@@ -34,7 +34,7 @@ title Login Prozess mit Account
 
 participant Spieler
 participant Frontend
-participant Timer
+participant Timeout
 participant Backend
 participant Datenbank
 
@@ -44,10 +44,10 @@ activate Frontend
 alt !areLoginCredentialsValid()
 Frontend-->Spieler:Fehlermeldung anzeigen: Bad Credentials
 else 
-Frontend->>Timer: resetTimeout(5s)
-activate Timer
-  Timer->>Frontend: serverTimeout()
-deactivate Timer
+Frontend->>Timeout: resetTimeout(5s)
+activate Timeout
+  Timeout->>Frontend: serverTimeout()
+deactivate Timeout
 activate Frontend
   Frontend->>Spieler: Fehlermeldung anzeigen: Keine Verbindung mit Server
 deactivate Frontend
@@ -80,10 +80,10 @@ end
 
 Spieler->Frontend:Schaltfläche "als Gast beitreten"\ngedrückt
 activate Frontend
-  Frontend->>Timer: resetTimeout(5s)
-  activate Timer
-    Timer->>Frontend: serverTimeout()
-  deactivate Timer
+  Frontend->>Timeout: resetTimeout(5s)
+  activate Timeout
+    Timeout->>Frontend: serverTimeout()
+  deactivate Timeout
   activate Frontend
     Frontend->>Spieler: Fehlermeldung anzeigen: Keine Verbindung mit Server
   deactivate Frontend
