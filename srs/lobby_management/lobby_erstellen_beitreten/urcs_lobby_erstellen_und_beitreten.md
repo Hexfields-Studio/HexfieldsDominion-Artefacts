@@ -2,20 +2,13 @@
 
 # **Use-Case-Realization Specification: Lobby erstellen und beitreten**
 
-# 
-
 # **Version 1.0**
-
-# 
 
 # **Revision History**
 
 | Date | Version | Description | Author |
 | ----- | ----- | ----- | ----- |
 | \<dd/mmm/yy\> | \<x.x\> | \<details\> | \<name\> |
-|  |  |  |  |
-|  |  |  |  |
-|  |  |  |  |
 
 # **Table of Contents**
 
@@ -69,7 +62,34 @@ Dieser Ablauf beschreibt den Prozess, der von einem Spieler für die Erstellung 
 3. Das Backend gibt die bereitgestellte Lobby und die ID zurück  
 4. Der User wird zur Lobby Seite weitergeleitet
 
-![][image1]
+```mermaid
+sequenceDiagram
+title Lobby erstellen
+
+participant Spieler
+participant Frontend
+participant Backend
+
+Spieler->Frontend: Klickt "Erstellen"
+activate Spieler
+activate Frontend
+Frontend->>Backend: GET /createLobby {configs: {...}}
+deactivate Frontend
+activate Backend
+  alt emptyLobbyIsAvailable()
+    Backend-->>Frontend: 200 OK {lobby_id: ..., code: ..., players:{...}, ...}
+    activate Frontend
+    Frontend --> Spieler: Lobby Raum anzeigen
+    deactivate Frontend
+  else
+    Backend-->>Frontend: 503 Service Unavailable
+    activate Frontend
+      Frontend --> Spieler: Fehlermeldung anzeigen
+    deactivate Frontend
+    deactivate Backend
+    deactivate Spieler
+  end
+```
 
 **Grundlegender Ablauf – Beitreten einer Lobby**  
 Dieser Ablauf beschreibt den Prozess, der von einem Spieler für den Beitritt einer existierenden Lobby ausgeführt  
@@ -80,7 +100,35 @@ wird. Der Prozess besteht aus diesen Schritten in dieser Reihenfolge:
 3. Das Backend gibt die zugehörige Lobby und die ID zurück  
 4. Der User wird zur Lobby Seite weitergeleitet
 
-![][image2]
+```mermaid
+sequenceDiagram
+title Lobby beitreten
+
+participant Spieler
+participant Frontend
+participant Backend
+
+activate Spieler
+Spieler->Frontend: Klickt "Beitreten" oder verwendet eine URL mit Code
+activate Frontend
+  Frontend->>Backend: GET /joinLobby {code: ...}
+  
+deactivate Frontend
+activate Backend
+  alt lobbyExistsWithCode(code)
+  Backend-->>Frontend: 200 OK {lobby_id: ..., code: ..., players:{...}, ...}
+  activate Frontend
+  Frontend --> Spieler: Lobby Raum anzeigen
+  deactivate Frontend
+  else
+  Backend-->>Frontend: 404 Not Found
+  deactivate Backend
+  activate Frontend
+  Frontend --> Spieler: Fehlermeldung anzeigen
+  deactivate Frontend
+  deactivate Spieler
+  end
+```
 
 3. # **Derived Requirements** {#derived-requirements}
 
