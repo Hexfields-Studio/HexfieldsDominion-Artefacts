@@ -114,13 +114,13 @@ n/a
 
 ## 4. Vorbedingungen
 
-- Die Startseite ist geöffnet.
+- Die Home Page ist geöffnet.
 - Der User ist mit keinem Konto angemeldet.
 
 ## 5. Nachbedingungen
 
 - Der User ist als Gast angemeldet.
-- Die Seite kehrt zur Startseite zurück.
+- Die Seite führt zum Start Menü.
 
 ## 6. Story Points
 
