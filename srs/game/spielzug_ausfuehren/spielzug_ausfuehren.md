@@ -24,6 +24,8 @@ n/a
 6. Wenn nein, soll das Backend das Zugrecht an den nächsten Spieler in der Reihe zuweisen, im folgenden wiederholt sich der Ablauf von Punkt 1.
 
 In dem folgenden Sequenzdiagram wird unteranderem auch den Ablauf für Spielzüge dargestellt:
+
+*Kopie aus [match_starten.md: Sequenzdiagramm](./../match_starten/match_starten.md#sequenzdiagramm)*
 ```mermaid
 sequenceDiagram
 title Match Starten
