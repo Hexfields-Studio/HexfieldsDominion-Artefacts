@@ -23,7 +23,11 @@ Dieser Ablauf beschreibt den vom Backend ausgeführten Prozess, um sicherzustell
 2. Der Server sendet das update an allen beteiligten Spielern
 3. Die Clients nehmen die neuen Daten auf, evtl. ändert sich die "Match Page"
 
+
+### Sequenzdiagramm
 Im folgenden Sequenzdiagram sind unteranderem auch die Funktionalitäten dieses Use-Case enthalten:
+
+*Kopie aus [match_starten.md: Sequenzdiagramm](./../match_starten/match_starten.md#sequenzdiagramm)*
 ```mermaid
 sequenceDiagram
 title Match Starten
