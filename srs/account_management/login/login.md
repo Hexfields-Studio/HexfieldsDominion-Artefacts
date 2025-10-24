@@ -16,7 +16,7 @@ n/a
 
 ## 2. Ablauf von Ereignissen
 
-## 2.2. Grundlegender Ablauf
+### 2.2. Grundlegender Ablauf
 
 Dieser Ablauf beschreibt den Prozess, der von einem Spieler für den Log In mit einem Account ausgeführt wird. Der Prozess besteht aus diesen Schritten in dieser Reihenfolge:
 
