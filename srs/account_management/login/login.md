@@ -153,13 +153,13 @@ flowchart TD
 
 ## 4. Vorbedingungen
 
-- Die Anmeldeseite ist geöffnet.
+- Die Home Page ist geöffnet.
 - Der User ist abgemeldet.
 
 ## 5. Nachbedingungen
 
 - Der User ist angemeldet.
-- Die Seite kehrt zur Startseite zurück.
+- Die Seite führt zum Start Menü.
 
 ## 6. Story Points
 
