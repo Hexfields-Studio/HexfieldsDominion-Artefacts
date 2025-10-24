@@ -28,7 +28,7 @@ participant Alle Frontends
 participant Spieler
 participant Frontend
 participant Backend
-participant Timer
+participant Timeout
 
 
 Spieler->>Frontend:"Match starten" Taste drücken
@@ -48,11 +48,11 @@ activate Frontend
         activate Backend
           Backend-->Backend:
         deactivate Backend
-        Backend->>Timer: resetTimer(60s)
-        activate Timer
-          note over Timer: Nach Ablauf des Timers\ndie nächste Schleifeniteration\nerzwingen.
-          Timer->>Backend: continue
-        deactivate Timer
+        Backend->>Timeout: resetTimeout(60s)
+        activate Timeout
+          note over Timeout: Nach Ablauf des Timeout\ndie nächste Schleifeniteration\nerzwingen.
+          Timeout->>Backend: continue
+        deactivate Timeout
         Backend ->> Alle Frontends: event: nextPlayerIsPlaying\ndata: {player: {...}}
         note over Alle Frontends: Darstellen, dass der nächste\nSpieler im "player" Feld\nam Spielzug ist.
         Backend->Backend: throwDiceAndDistributeRessources()
