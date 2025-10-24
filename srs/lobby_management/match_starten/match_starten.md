@@ -11,13 +11,16 @@ Dieses Use-Case dient dazu, dass ein User (der Lobbyanführer) ein Match starten
 # 2. Ablauf von Ereignissen
 
 ## 2.1 Grundlegender Ablauf
-1. Die User klicken auf "Match starten"
-2. Das Frontend fragt beim Backend an, dass ein Match auf Grundlage der Lobby erstellt wird
-3. Das Backend gibt das zugehörige Match und die ID zurück
-4. Alle Spieler in der Lobby werden zur Match Seite weitergeleitet
+Dieser Ablauf beschreibt den Prozess, der von einem Spieler (den Lobbyanführer) das starten eines Matches ausgeführt wird. Der Prozess besteht aus diesen Schritten in dieser Reihenfolge:
+1. Ein User klickt auf "Match starten"
+2. Das Frontend sendet eine Anfrage an das Backend um ein Match auf Grundlage der Lobby zu starten
+3. Solange das Match läuft, überträgt das Backend die Daten des matches an alle Clients innerhalb der Lobby
 
-### Sequenzdiagramm
-```
+## 2.2 Alternative Abläufe
+Im Falle eines Fehlers (sollte der Spieler nicht der Lobbyanführer sein) sollte eine entsprechende Fehlermeldung zurückgesendet werden.
+
+Das folgende Sequenzdiagramm beschreibt beide Abläufe:
+```mermaid
 sequenceDiagram
 title Match Starten
 
@@ -33,30 +36,30 @@ activate Frontend
   Frontend->Backend: POST /startMatch {...settings}
   activate Backend
     alt !player.isLobbyLeader()
-      Frontend<--Backend: 403 Forbidden
+      Backend-->Frontend: 403 Forbidden
     else
-      Frontend<--Backend: 200 OK
+      Backend-->Frontend: 200 OK
       deactivate Frontend
       note over Backend:Match Initialisieren
-      Alle Frontends<<-Backend: event: loadMatch\ndata: {players: {...}, map_layout: {...}}
+      Backend->>Alle Frontends: event: loadMatch\ndata: {players: {...}, map_layout: {...}}
         note over Alle Frontends:Zur "Match Page" welchseln über React Router,\ndie empfangenen Daten nutzen, um den\nSpielstand darzustellen.
       loop !anyPlayerHasWon()
         Backend->Backend: nextPlayerTheRightToMove()
         activate Backend
-          Backend<--Backend:
+          Backend-->Backend:
         deactivate Backend
         Backend->>Timer: resetTimer(60s)
         activate Timer
           note over Timer: Nach Ablauf des Timers\ndie nächste Schleifeniteration\nerzwingen.
-          Backend<<-Timer: continue
+          Timer->>Backend: continue
         deactivate Timer
-        Alle Frontends <<- Backend: event: nextPlayerIsPlaying\ndata: {player: {...}}
+        Backend ->> Alle Frontends: event: nextPlayerIsPlaying\ndata: {player: {...}}
         note over Alle Frontends: Darstellen, dass der nächste\nSpieler im "player" Feld\nam Spielzug ist.
         Backend->Backend: throwDiceAndDistributeRessources()
         activate Backend
-          Alle Frontends <<- Backend: event: currentPlayerRessources\ndata:{ressources:{...}}
+          Backend ->> Alle Frontends: event: currentPlayerRessources\ndata:{ressources:{...}}
           note over Alle Frontends:Die Ressourcenbestände\nder Spieler aktualisieren
-          Backend <-- Backend:
+          Backend --> Backend:
         deactivate Backend
         
         Spieler ->> Frontend: Einen beliebigen Spielzug\nausführen
@@ -66,41 +69,37 @@ activate Frontend
             alt hasRightForTurn(player) && moveIsValid(move)
               Backend->Backend: executeMove(move)
               activate Backend
-                Alle Frontends <<- Backend: event: newGameState\ndata: {...}
-                Backend<--Backend:
+                Backend ->> Alle Frontends: event: newGameState\ndata: {...}
+                Backend-->Backend:
                 
               deactivate Backend
               alt isMoveToEndTurn(move)
                 Backend->Backend: continue
               end
-              Frontend<--Backend: 200 Ok
+              Frontend-->Backend: 200 Ok
             else
-              Frontend<--Backend: 400 Bad Request
+              Frontend-->Backend: 400 Bad Request
               deactivate Backend
               deactivate Frontend
             end
       end
-      Alle Frontends<<-Backend: event:matchEnd\ndata:{}
+      Backend->>Alle Frontends: event:matchEnd\ndata:{}
       deactivate Backend
     end
-  deactivate Backend
-deactivate Frontend
 ```
-![Sequenzdiagramm Match starten](./MatchStartenSequenzdiagram.png)
-## 2.2 Alternative Abläufe
-n/a
 
 # 3. Spezielle Anforderungen
 n/a
 
 # 4. Vorbedingungen
-1. Die User haben die Anwendung geöffnet.
-2. Die User haben eine Lobby erstellt.
-3. Mindestens ein Mitspieler ist der Lobby beigetreten.
+Für das Starten des Matches gelten folgende Vorbedingungen:
+1. Der User hat die Rolle des Lobbyanführers
+2. Es befinden sich genügend Spieler innerhalb der Lobby
+3. Die Konfigurationen sind valide
 
 # 5. Nachbedingungen
-1. Ein Match wird auf Grundlage der Lobby erstellt.
-2. Alle Mitglieder der Lobby werden zu diesem Match weitergeleitet.
+1. Ein Match wurde auf Grundlage der Lobby erstellt.
+2. Alle Mitglieder der Lobby wurden zu diesem Match weitergeleitet und habe.
 
 # 6. Aufwandsschätzung
 Story Points: 8
