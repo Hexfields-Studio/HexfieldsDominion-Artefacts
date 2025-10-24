@@ -19,7 +19,32 @@ Dieses Use-Case dient dazu, dass User einer Lobby und damit einem Match beitrete
 
 #### Sequenzdiagramm
 
-![Sequenzdiagramm Start Menü 1](start_menü_seqdg1.png)
+```mermaid
+sequenceDiagram
+title Start Menü
+
+participant Spieler
+participant Frontend
+participant Backend
+
+Spieler->>Frontend: Klickt "Lobby erstellen"
+activate Spieler
+activate Frontend
+Frontend->>Backend: GET /freeLobbys
+deactivate Frontend
+activate Backend
+Backend-->>Frontend: freeLobbysCount
+deactivate Backend
+activate Frontend
+
+alt freeLobbysCount
+Frontend->>Spieler: Fenster für die Konfiguration der anschließend zugewiesenen Lobby anzeigen
+else
+Frontend->>Spieler: Fehlermeldung anzeigen: Keine Lobbys mehr frei
+deactivate Frontend
+deactivate Spieler
+end
+```
 
 ### 2.2 Alternative Abläufe
 
@@ -28,7 +53,20 @@ Dieses Use-Case dient dazu, dass User einer Lobby und damit einem Match beitrete
 
 #### Sequenzdiagramm
 
-![Sequenzdiagramm Start Menü 2](start_menü_seqdg2.png)
+```mermaid
+sequenceDiagram
+title Start Menü
+
+participant Spieler
+participant Frontend
+
+Spieler->>Frontend: Klickt "Lobby beitreten"
+activate Spieler
+activate Frontend
+Frontend->>Spieler: Fenster zum Beitritt einer Lobby anzeigen
+deactivate Frontend
+deactivate Spieler
+```
 
 ## 3. Spezielle Anforderungen
 
