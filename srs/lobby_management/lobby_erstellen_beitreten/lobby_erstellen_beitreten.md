@@ -3,8 +3,8 @@
 # 1. Lobby erstellen und beitreten
 
 ## 1.1 Kurze Beschreibung
-Dieses Use-Case dient dazu, dass User eine neue Lobby erstellen können. Dafür müssen sie mit einem Account angemeldet sein.  
-Außerdem sollen sie einer bestehenden Lobby beitreten können. Dabei ist egal, ob sie mit einem Account oder als Gast angemeldet sind, sie benötigen lediglich den entsprechenden Lobbycode.
+Dieses Use-Case dient dazu, dass User eine neue Lobby erstellen können. Außerdem sollen sie einer bestehenden Lobby beitreten können.  
+Dabei ist egal, ob sie mit einem Account oder als Gast angemeldet sind und für den Beitritt benötigen sie lediglich den entsprechenden Lobbycode.
 
 ## 1.2 Mockup
 ![Mockup Lobby erstellen](lobby_erstellen.png)
@@ -104,7 +104,7 @@ n/a
 
 # 4. Vorbedingungen
 1. Die User haben die Anwendung geöffnet.
-2. Die User haben sich mit einem Account angemeldet.
+2. Die User haben sich mit Account oder als Gast angemeldet.
 3. Die User haben im Start Menü auf "Lobby erstellen" geklickt.
 
 # 5. Nachbedingungen
