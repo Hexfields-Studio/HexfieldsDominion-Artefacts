@@ -16,13 +16,18 @@ n/a
 
 ## 2. Ablauf von Ereignissen
 
-### 2.1 Grundlegender Ablauf
+## 2.2. Grundlegender Ablauf
 
-- Der User ist abgemeldet und befindet sich auf der Anmeldeseite.
-- Der User gibt in den Feldern seine Anmeldedaten ein und klickt auf „Log in“.
-- Die Anmeldedaten des User werden geprüft.
-- Die Anmeldedaten werden gespeichert
-- Die App kehrt zur Startseite zurück.
+Dieser Ablauf beschreibt den Prozess, der von einem Spieler für den Log In mit einem Account ausgeführt wird. Der Prozess besteht aus diesen Schritten in dieser Reihenfolge:
+
+1. Der Spieler gibt seine Anmeldedaten im Client ein und betätigt die "Log in" Schaltfläche
+2. Der Client leitet die Anmeldedaten an den Server weiter und startet ein Timeout
+3. Der Server übermittelt die Anmeldedaten zur Überprüfung an die Datenbank
+4. Die Datenbank sucht nach einem User mit den angegebenen Anmeldedaten und bestätigt somit die Existenz
+5. Der Server benachrichtigt die erfolgreiche Anmeldung an den Client
+6. Der Client stoppt das Timeout, speichert den Anmeldetoken lokal und öffnet das "Start Menü"
+
+Sollte der Timeout ablaufen, soll der Client eine Fehlermeldung anzeigen, dass der Server momentan nicht verfügbar ist.
 
 #### Sequenzdiagramm (Mermaid)
 
@@ -55,7 +60,7 @@ deactivate Frontend
 Frontend->>Backend:POST /login {username: ..., password: ...}
 deactivate Frontend
 activate Backend
-  Backend->>Datenbank:SELECT COUNT(*) as user_count FROM users WHERE USERNAME = username AND PASSWORD = password;
+  Backend->>Datenbank:SELECT COUNT(-) as user_count FROM users WHERE USERNAME = username AND PASSWORD = password;
 deactivate Backend
 activate Datenbank
 
@@ -140,6 +145,7 @@ flowchart TD
 
 - **Server nicht erreichbar**: Fehlermeldung wird angezeigt und die Anmeldung schlägt fehl.
 - **Falsche Anmeldedaten**: Fehlermeldung wird angezeigt, User kann Daten erneut eingeben
+- **Gast-Anmeldung**: *[siehe Use-Case Gast-Login](../gast_login/gast_login.md)*
 
 ## 3. Besondere Anforderungen
 

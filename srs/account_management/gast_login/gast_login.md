@@ -18,43 +18,89 @@ n/a
 
 ### 2.1 Grundlegender Ablauf
 
-- Der User ist nicht angemeldet und befindet sich auf der Startseite.
-- Der User klickt auf den Knopf „Log in as guest“.
-- Die Anmeldedaten des User werden aus dem lokalen Speicher entfernt.
-- Die App kehrt zum Anmeldebildschirm zurück.
+Dieser Ablauf beschreibt den Prozess, der von einem Spieler für den Log In als Gast ausgeführt wird. Der Prozess besteht aus diesen Schritten in dieser Reihenfolge:
+
+1. Der Spieler drückt auf die "Als Gast beitreten" Schaltfläche  
+2. Der Client macht eine Anfrage für einen Gast Log In auf Server und startet ein Timeout  
+3. Der Server übermittelt einen Anmeldetoken für den Gastzugang an den Client  
+4. Der Client stoppt das Timeout, speichert den Anmeldetoken lokal und öffnet das „Start Menü“
+
+Sollte in beiden Abläufen das Timeout getriggert werden, soll der Client eine Fehlermeldung anzeigen, dass der Server momentan nicht verfügbar ist.  
 
 #### Sequenzdiagramm (Mermaid)
 
+*Kopie aus [login.md: Sequenzdiagramm (Mermaid)](../login/login.md#sequenzdiagramm-mermaid)*
+
 ```mermaid
 sequenceDiagram
-    title Gast-Login Sequenzdiagramm
+# Login Sequence Diagram
 
-    participant User
-    participant Client
-    participant Server
-    participant Datenbank
+title Login Prozess mit Account
 
-    User->>Client: "Als Gast anmelden" klicken
-    activate Client
-    Client->>Client: clearLocalStorage()
-    
-    Client->>Server: POST /api/auth/guest-login
-    activate Server
-    
-    Server->>Datenbank: generateGuestUser()
-    activate Datenbank
-    Datenbank->>Datenbank: createUser(role: "guest", temp: true)
-    Datenbank-->>Server: guestUser {id: "guest_123", temp: true}
-    deactivate Datenbank
-    
-    Server->>Server: createSession(guestUser.id)
-    Server-->>Client: HTTP 200 OK {sessionToken: "xyz", user: {id: "guest_123", role: "guest"}}
-    deactivate Server
-    
-    Client->>Client: localStorage.setItem("session", "xyz")
-    Client->>Client: redirectToHomepage()
-    Client-->>User: Startseite mit Gast-Status anzeigen
-    deactivate Client
+participant Spieler
+participant Frontend
+participant Timeout
+participant Backend
+participant Datenbank
+
+activate Spieler
+Spieler->Frontend:Anmeldedaten eingegeben und auf Schaltfläche "Log in" drücken
+activate Frontend
+alt !areLoginCredentialsValid()
+Frontend-->Spieler:Fehlermeldung anzeigen: Bad Credentials
+else 
+Frontend->>Timeout: resetTimeout(5s)
+activate Timeout
+  Timeout->>Frontend: serverTimeout()
+deactivate Timeout
+activate Frontend
+  Frontend->>Spieler: Fehlermeldung anzeigen: Keine Verbindung mit Server
+deactivate Frontend
+
+Frontend->>Backend:POST /login {username: ..., password: ...}
+deactivate Frontend
+activate Backend
+  Backend->>Datenbank:SELECT COUNT(-) as user_count FROM users WHERE USERNAME = username AND PASSWORD = password;
+deactivate Backend
+activate Datenbank
+
+
+Datenbank-->>Backend:user_count
+deactivate Datenbank
+activate Backend
+alt user_count
+Backend-->Frontend:200 OK (Token mitsenden?)
+activate Frontend
+  Frontend->Spieler:Start Menü anzeigen
+deactivate Frontend
+else
+Backend-->Frontend:400 Bad Request
+deactivate Backend
+activate Frontend
+Frontend->Spieler:Fehlermeldung anzeigen: Account mit den angegebenen Daten existiert nicht
+deactivate Frontend
+
+end
+end
+
+Spieler->Frontend:Schaltfläche "als Gast beitreten"\ngedrückt
+activate Frontend
+  Frontend->>Timeout: resetTimeout(5s)
+  activate Timeout
+    Timeout->>Frontend: serverTimeout()
+  deactivate Timeout
+  activate Frontend
+    Frontend->>Spieler: Fehlermeldung anzeigen: Keine Verbindung mit Server
+  deactivate Frontend
+  Frontend->>Backend:POST /login {username:"guest", password:"cookie"}
+  deactivate Frontend
+  activate Backend
+    Backend-->Frontend: 200 OK (Token mitsenden?)
+  deactivate Backend
+  activate Frontend
+  Frontend->Spieler: Start Menü anzeigen
+  deactivate Frontend
+deactivate Spieler
 ```
 
 ### 2.2 Alternative Abläufe

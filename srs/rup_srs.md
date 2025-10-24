@@ -1,23 +1,24 @@
-# **Software Requirements Specification (SRS) - Version 1.1**
+# Software Requirements Specification (SRS) - Version 1.1
 
-## **Revision History**
+## Revision History
 
 | Date | Version | Description | Author |
 |------|---------|-------------|--------|
 | 18/Oct/2025 | 0.9 | Dokumenten-Struktur | Alex, Jona, Marcel |
 | 20/Oct/2025 | 1.0 | Use-Cases hinzugefügt | Alex, Jona, Marcel |
 | 20/Oct/2025 | 1.1 | Diagramme hinzugefügt | Alex, Marcel |
+| 24/Oct/2025 | 1.2 | Use-Cases aktualisiert | Alex, Jona, Marcel |
 
-## **Inhaltsverzeichnis**
+## Inhaltsverzeichnis
 
-- [**Software Requirements Specification (SRS) - Version 1.1**](#software-requirements-specification-srs---version-11)
-  - [**Revision History**](#revision-history)
-  - [**Inhaltsverzeichnis**](#inhaltsverzeichnis)
+- [Software Requirements Specification (SRS) - Version 1.1](#software-requirements-specification-srs---version-11)
+  - [Revision History](#revision-history)
+  - [Inhaltsverzeichnis](#inhaltsverzeichnis)
   - [1. Einleitung](#1-einleitung)
     - [1.1 Zweck](#11-zweck)
     - [1.2 Umfang](#12-umfang)
-      - [**Akteure der Anwendung**](#akteure-der-anwendung)
-      - [**Geplante Subsysteme**](#geplante-subsysteme)
+      - [Akteure der Anwendung](#akteure-der-anwendung)
+      - [Geplante Subsysteme](#geplante-subsysteme)
     - [1.3 Definitionen, Akronyme und Abkürzungen](#13-definitionen-akronyme-und-abkürzungen)
     - [1.4 Referenzen](#14-referenzen)
     - [1.5 Übersicht](#15-übersicht)
@@ -25,14 +26,12 @@
     - [2.1 Vision](#21-vision)
     - [2.2 Use-Case-Diagramm](#22-use-case-diagramm)
     - [2.3 Technologie-Stack](#23-technologie-stack)
-      - [**Frontend**](#frontend)
-      - [**Backend**](#backend)
-      - [**Development \& Operations**](#development--operations)
+      - [Frontend](#frontend)
+      - [Backend](#backend)
+      - [Development \& Operations](#development--operations)
     - [2.4 Teamstruktur und Verantwortlichkeiten](#24-teamstruktur-und-verantwortlichkeiten)
   - [3. Spezifische Anforderungen](#3-spezifische-anforderungen)
     - [3.1 Funktionalität](#31-funktionalität)
-      - [Phase 1 (bis Dezember) - Kernfunktionalität](#phase-1-bis-dezember---kernfunktionalität)
-      - [Phase 2 (bis Juni) - Erweiterungen](#phase-2-bis-juni---erweiterungen)
     - [Funktionale Anforderungen im Detail](#funktionale-anforderungen-im-detail)
     - [3.2 Benutzbarkeit](#32-benutzbarkeit)
     - [3.3 Zuverlässigkeit](#33-zuverlässigkeit)
@@ -61,19 +60,19 @@ Diese Software-Anforderungsspezifikation dient zur Definition von funktionellen 
 
 Das Projekt wird als responsive Webanwendung realisiert, die in modernen Browsern läuft.
 
-#### **Akteure der Anwendung**
+#### Akteure der Anwendung
 
 - Spieler (registriert und als Gast)
 - Lobby-Ersteller (Host)
 - Administratoren
 
-#### **Geplante Subsysteme**
+#### Geplante Subsysteme
 
-- **Account-Management**: Registrierung, Login, Gast-Zugang, Profilverwaltung
-- **Lobby-Management**: Spielerstellung, Beitritt per Code, Rollenzuweisung, Spielstart
-- **Spiel-Engine**: Vollständige Implementierung der Siedler von Catan Spielmechaniken
-- **Echtzeit-Kommunikation**: Datenaustausch zwischen Frontend und Backend während des Spiels
-- **Benutzeroberfläche**: Responsive UI mit Spielfeld, Spielzustandsanzeige und Menüsystem
+- Account-Management: Registrierung, Login, Gast-Zugang, Profilverwaltung
+- Lobby-Management: Spielerstellung, Beitritt per Code, Rollenzuweisung, Spielstart
+- Spiel-Engine: Vollständige Implementierung der Siedler von Catan Spielmechaniken
+- Echtzeit-Kommunikation: Datenaustausch zwischen Frontend und Backend während des Spiels
+- Benutzeroberfläche: Responsive UI mit Spielfeld, Spielzustandsanzeige und Menüsystem
 
 ### 1.3 Definitionen, Akronyme und Abkürzungen
 
@@ -95,10 +94,10 @@ Das Projekt wird als responsive Webanwendung realisiert, die in modernen Browser
 
 | Titel | Änderungsdatum | Organisation |
 | :---- | :---- | :---- |
-| [GitHub Organisation & Blog](https://github.com/Hexfields-Studio) | 18/Oct/2025 | Hexfields Studio |
+| [GitHub Organisation & Blog](https://github.com/Hexfields-Studio) | 20/Oct/2025 | Hexfields Studio |
 | [GitHub Repository: Frontend](https://github.com/Hexfields-Studio/HexfieldsDominion) | 18/Oct/2025 | Hexfields Studio |
-| [GitHub Repository: Backend](https://github.com/Hexfields-Studio/HexfieldsDominion-Backend) | 18/Oct/2025 | Hexfields Studio |
-| [GitHub Repository: Artefakte](https://github.com/Hexfields-Studio/HexfieldsDominion-Artefacts) | 18/Oct/2025 | Hexfields Studio |
+| [GitHub Repository: Backend](https://github.com/Hexfields-Studio/HexfieldsDominion-Backend) | 20/Oct/2025 | Hexfields Studio |
+| [GitHub Repository: Artefakte](https://github.com/Hexfields-Studio/HexfieldsDominion-Artefacts) | 24/Oct/2025 | Hexfields Studio |
 | [GitHub Pages: Webseite](https://hexfields-studio.github.io/HexfieldsDominion/) | 18/Oct/2025 | Hexfields Studio |
 
 ### 1.5 Übersicht
@@ -119,19 +118,19 @@ Das Projekt wird als responsive Webanwendung realisiert, die in modernen Browser
 
 ### 2.3 Technologie-Stack
 
-#### **Frontend**
+#### Frontend
 
 - React mit TypeScript
 - Vite als Build-Tool
 - bun/npm als Package Manager
 
-#### **Backend**
+#### Backend
 
 - Java mit Spring Framework
 - Gradle als Build-Tool
 - PostgreSQL als Datenbank
 
-#### **Development & Operations**
+#### Development & Operations
 
 - IDEs: IntelliJ IDEA & VSCode
 - Versionsverwaltung: Git/GitHub/GH-Pages
@@ -142,77 +141,55 @@ Das Projekt wird als responsive Webanwendung realisiert, die in modernen Browser
 
 | Teammitglied | Rolle | Verantwortlichkeiten |
 |--------------|-------|---------------------|
-| **Alex ([A1exHorst](https://github.com/A1exHorst))** | Product Owner & Frontend Lead | Feature-Priorisierung, Frontend-Architektur, React-Entwicklung |
-| **Jona ([JaskerX](https://github.com/JaskerX))** | Use-Case-Reviewer & Backend Lead | Backend-Architektur, Technical Design, Java Spring Entwicklung |
-| **Marcel ([ultra-ms](https://github.com/ultra-ms))** | Scrum Master & Infrastructure | Projektorganisation, DevOps, Support, Dokumentation |
+| Alex ([A1exHorst](https://github.com/A1exHorst)) | Product Owner & Frontend Lead | Feature-Priorisierung, Frontend-Architektur, React-Entwicklung |
+| Jona ([JaskerX](https://github.com/JaskerX)) | Use-Case-Reviewer & Backend Lead | Backend-Architektur, Technical Design, Java Spring Entwicklung |
+| Marcel ([ultra-ms](https://github.com/ultra-ms)) | Scrum Master & Infrastructure | Projektorganisation, DevOps, Support, Dokumentation |
 
 ## 3. Spezifische Anforderungen
 
 ### 3.1 Funktionalität
 
-#### Phase 1 (bis Dezember) - Kernfunktionalität
-
-- **3.1.1 Account Management**  
-  Registrierung, Login, Passwort Reset, Gast-Zugang, Logout
-- **3.1.2 Lobby Management**  
-  Lobby erstellen und beitreten, Rollenzuweisung, Spiel starten
-- **3.1.3 Spielmechaniken**  
-  Vollständige Implementierung der Spielmechaniken und Mehrspieler-Logik
-- **3.1.4 Grundlegende UI**  
-  Start- und Spielbildschirm, Anmeldefenster/Homepage
-
-#### Phase 2 (bis Juni) - Erweiterungen
-
-- **3.1.5 Erweiterte UI-Komponenten**  
-  Pause-Menü, verbesserte Start- und Spielbildschirme
-- **3.1.6 Mods-System**  
-  Doppeltes Würfeln, Völker-Fähigkeiten, Riesiges Spielfeld
-- **3.1.7 Skins**  
-  Antike, Moderne, Magisch, Fliegende Inseln
-- **3.1.8 Design-Verbesserungen**  
-  Light/Dark Mode, verbesserte Visualisierung
-
 ### Funktionale Anforderungen im Detail
 
-- **3.1.1 Account Management**  
+- 3.1.1 Account Management  
   - 3.1.1.1 [Registrierung](./account_management/registration/registration.md)
   - 3.1.1.2 [Login](./account_management/login/login.md)
   - 3.1.1.3 [Passwort Reset](./account_management/password_reset/password_reset.md)
   - 3.1.1.4 [Gast-Login](./account_management/gast_login/gast_login.md)
   - 3.1.1.5 [Logout](./account_management/logout/logout.md)
 
-- **3.1.2 Lobby Management**  
+- 3.1.2 Lobby Management  
   - 3.1.2.1 [Lobby erstellen und beitreten](lobby_management/lobby_erstellen_beitreten/lobby_erstellen_beitreten.md)
-  - 3.1.2.2 [Match starten](lobby_management/REM match_starten/match_starten.md)
+  - 3.1.2.2 [Match starten](./lobby_management/REM match_starten/match_starten.md)
   - 3.1.2.3 [Rollenzuweisung](./lobby_management/leader_ehemalige_zuweisung/leader_ehemalige_zuweisung.md)
 
-- **3.1.3 Spielmechaniken**  
+- 3.1.3 Spielmechaniken  
   - 3.1.3.1 [Spielzug ausführen](./game/spielzug_ausfuehren/spielzug_ausfuehren.md)
   - 3.1.3.2 [Aktualisierung und Datenaustausch](./game/aktualisierung_und_datenaustausch/aktualisierung_und_datenaustausch.md)
   - 3.1.3.3 [Laufendes Match](./game/laufendes_match/laufendes_match.md)
 
-- **3.1.4 Grundlegende UI**  
+- 3.1.4 Grundlegende UI  
   - 3.1.4.1 [Startbildschirm](./user_interface/start_menü/start_menü.md)
   - 3.1.4.2 [Spielbildschirm](./user_interface/match_page/spiel_menue/spiel_menue.md)
   - 3.1.4.3 [Anmeldefenster/Homepage](./user_interface/home_page/home_page.md)
 
-- **3.1.5 Erweiterte UI-Komponenten** *(Anforderungen Work-in-progress)*
+- 3.1.5 Erweiterte UI-Komponenten *(Anforderungen Work-in-progress)*
   - 3.1.5.1 [Pause-Menü](-)
   - 3.1.5.2 [Verbessertes Startmenü](-)
   - 3.1.5.3 [Verbessertes Spielmenü](-)
 
-- **3.1.6 Mods-System** *(Anforderungen Work-in-progress)*
+- 3.1.6 Mods-System *(Anforderungen Work-in-progress)*
   - 3.1.6.1 [Doppeltes Würfeln](-)
   - 3.1.6.2 [Völker-Fähigkeiten](-)
   - 3.1.6.3 [Riesiges Spielfeld](-)
 
-- **3.1.7 Skins**  *(Anforderungen Work-in-progress)*
+- 3.1.7 Skins  *(Anforderungen Work-in-progress)*
   - 3.1.7.1 [Antike (Standard)](-)
   - 3.1.7.2 [Moderne](-)
   - 3.1.7.3 [Magisch](-)
   - 3.1.7.4 [Fliegende Inseln](-)
 
-- **3.1.8 Design-Verbesserungen**  
+- 3.1.8 Design-Verbesserungen  
   - 3.1.8.1 [Light/Dark Mode](./user_interface/light_dark_mode/light_dark_mode.md)
 
 ### 3.2 Benutzbarkeit
@@ -263,10 +240,10 @@ Aktuell sind keine gekauften Komponenten geplant.
 
 #### 3.9.1 Benutzerschnittstellen
 
-- **Home Page**: Lobby-Übersicht und Spielerstellung
-- **Match Page**: Spielfeld, Spielzustandsanzeige, Spielmenü (ESC)
-- **Account Management**: Login, Registrierung, Profilverwaltung
-- **Pause Menu**: Spielunterbrechung mit Fortsetzungsoption
+- Home Page: Lobby-Übersicht und Spielerstellung
+- Match Page: Spielfeld, Spielzustandsanzeige, Spielmenü (ESC)
+- Account Management: Login, Registrierung, Profilverwaltung
+- Pause Menu: Spielunterbrechung mit Fortsetzungsoption
 
 #### 3.9.2 Software-Schnittstellen
 
