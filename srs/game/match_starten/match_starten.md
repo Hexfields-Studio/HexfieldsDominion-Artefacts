@@ -43,7 +43,7 @@ activate Frontend
       Backend-->Frontend: 200 OK
       deactivate Frontend
       note over Backend:Match Initialisieren
-      Backend->>Alle Frontends: event: loadMatch\ndata: {players: {...}, map_layout: {...}}
+      Backend->>Alle Frontends: event: loadMatch data: {players: {...}, map_layout: {...}}
         note over Alle Frontends:Zur "Match Page" welchseln über React Router,\ndie empfangenen Daten nutzen, um den\nSpielstand darzustellen.
       loop !anyPlayerHasWon()
         Backend->Backend: nextPlayerTheRightToMove()
@@ -89,6 +89,7 @@ activate Frontend
       deactivate Backend
     end
 ```
+_Übrigens: Nachrichten wie "event: loadMatch data: {players: {...}, map_layout: {...}}" sind **S**erver **S**ent **E**vents **(SSE)**._
 
 # 3. Spezielle Anforderungen
 n/a
