@@ -1,4 +1,4 @@
-# Use Case Realization Specification: Lobby  - Version 1.0
+# Use Case Realization Specification: Lobby erstellen und beitreten - Version 1.0
 
 ## Revision History
 
@@ -8,7 +8,7 @@
 
 ## Table of Contents
 
-- [Use Case Realization Specification: Lobby  - Version 1.0](#use-case-realization-specification-lobby----version-10)
+- [Use Case Realization Specification: Lobby erstellen und beitreten - Version 1.0](#use-case-realization-specification-lobby-erstellen-und-beitreten---version-10)
   - [Revision History](#revision-history)
   - [Table of Contents](#table-of-contents)
   - [1. Introduction](#1-introduction)
