@@ -1,4 +1,4 @@
-# Software Requirements Specification (SRS) - Version 1.1
+# Software Requirements Specification (SRS) - Hexfields: Dominion - Version 1.1
 
 ## Revision History
 
