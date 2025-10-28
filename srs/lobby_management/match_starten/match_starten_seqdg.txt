@@ -1,6 +1,0 @@
-title Match starten
-
-Spieler->Frontend:Klickt "Match starten"
-Frontend->Backend:Anfragen, dass ein Match auf Grundlage der Lobby erstellt wird
-Backend->Frontend:Zugehöriges Match mit ID zurückgeben
-Frontend->Spieler:Alle Spieler in der Lobby zur Match Seite weiterleiten
