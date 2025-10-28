@@ -30,7 +30,7 @@ participant Alle Frontends
 participant Spieler
 participant Frontend
 participant Backend
-participant Timer
+participant Timeout
 
 
 Spieler->>Frontend:"Match starten" Taste drücken
@@ -43,18 +43,18 @@ activate Frontend
       Backend-->Frontend: 200 OK
       deactivate Frontend
       note over Backend:Match Initialisieren
-      Backend->>Alle Frontends: event: loadMatch data: {players: {...}, map_layout: {...}}
+      Backend->>Alle Frontends: event: loadMatch\ndata: {players: {...}, map_layout: {...}}
         note over Alle Frontends:Zur "Match Page" welchseln über React Router,\ndie empfangenen Daten nutzen, um den\nSpielstand darzustellen.
       loop !anyPlayerHasWon()
         Backend->Backend: nextPlayerTheRightToMove()
         activate Backend
           Backend-->Backend:
         deactivate Backend
-        Backend->>Timer: resetTimer(60s)
-        activate Timer
-          note over Timer: Nach Ablauf des Timers\ndie nächste Schleifeniteration\nerzwingen.
-          Timer->>Backend: continue
-        deactivate Timer
+        Backend->>Timeout: resetTimeout(60s)
+        activate Timeout
+          note over Timeout: Nach Ablauf des Timeout\ndie nächste Schleifeniteration\nerzwingen.
+          Timeout->>Backend: continue
+        deactivate Timeout
         Backend ->> Alle Frontends: event: nextPlayerIsPlaying\ndata: {player: {...}}
         note over Alle Frontends: Darstellen, dass der nächste\nSpieler im "player" Feld\nam Spielzug ist.
         Backend->Backend: throwDiceAndDistributeRessources()
@@ -88,6 +88,7 @@ activate Frontend
       Backend->>Alle Frontends: event:matchEnd\ndata:{}
       deactivate Backend
     end
+
 ```
 _Übrigens: Nachrichten wie "event: loadMatch data: {players: {...}, map_layout: {...}}" sind **S**erver **S**ent **E**vents **(SSE)**._
 
