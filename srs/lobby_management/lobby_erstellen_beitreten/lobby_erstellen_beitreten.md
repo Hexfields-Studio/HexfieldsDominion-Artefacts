@@ -70,7 +70,7 @@ participant Backend
 activate Spieler
 Spieler->Frontend: Klickt "Beitreten" oder verwendet eine URL mit Code
 activate Frontend
-  Frontend->>Backend: GET /joinLobby {code: ...}
+  Frontend->>Backend: GET /lobby/[code]
   
 deactivate Frontend
 activate Backend
