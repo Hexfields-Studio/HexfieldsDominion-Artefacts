@@ -37,7 +37,7 @@ classDiagram
 
 	class RessourceType{
 	<<enumeration>>
-	DynamischErzeugenHier
+	HierDynamischMitDatenAusDBFüllen
 	}
 
     class PlayerActionType{
@@ -54,6 +54,7 @@ classDiagram
     }
 
 	class CreateLobbyDTO{
+		-configs: String[]
     }
 
 	%%{"type": "BUILD", "sessionId":..., "pos": [[0,0],[1,0]], "structure": "HARBOUR"}
@@ -133,6 +134,7 @@ classDiagram
     TradeBankDTO --* "1" RessourceType: offered
     TradePlayerDTO --* "1..*" RessourceType: requests
     TradePlayerDTO --* "1..*" RessourceType: offers
+	LobbyManager ..> CreateLobbyDTO: use
 
     GameController ..> BuildActionDTO: use
     GameController ..> TradeBankDTO: use
