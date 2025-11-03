@@ -53,6 +53,9 @@ classDiagram
 	    -sessionId: String
     }
 
+	class CreateLobbyDTO{
+    }
+
 	%%{"type": "BUILD", "sessionId":..., "pos": [[0,0],[1,0]], "structure": "HARBOUR"}
     class BuildActionDTO{
 		-pos: Pair[]
