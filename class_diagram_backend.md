@@ -49,14 +49,14 @@ classDiagram
     }
 
     class PlayerActionDTO{
-        -PlayerActionType type
-	    -String sessionId
+        -type: PlayerActionType
+	    -sessionId: String
     }
 
 	%%{"type": "BUILD", "sessionId":..., "pos": [[0,0],[1,0]], "structure": "HARBOUR"}
     class BuildActionDTO{
-		-Pair[] pos
-		-StructureType structureType
+		-pos: Pair[]
+		-structureType: StructureType
 	}
 
 	class TradeBankDTO{
@@ -65,9 +65,7 @@ classDiagram
 
 	%%{"type":.., "sessionId":..., "destPublicId":..., "offered": [{"ressource": "STONE", "amount": 2}, {"ressource": "WOOD", "amount": 1}], "requested": [{"ressource": "GOLD", "amount": 1}]}
 	class TradePlayerDTO{
-		-String destPublicId
-		-List offered
-        -List requested
+		-destPublicId: String
 	}
 
 	class PickDicePairDTO{
@@ -75,38 +73,38 @@ classDiagram
     }
 
     class GameController{
-        -playerAction(PlayerActionDTO request)
+        -playerAction(request: PlayerActionDTO)
         -endTurn()
-        -buildStructure(BuildActionDTO dto)
-        -tradeWithBank(TradeBankDTO dto)
-        -tradeWithPlayer(TradePlayerDTO dto)
-        -pickDicePair(PickDicePairDTO dto)
+        -buildStructure(dto: BuildActionDTO)
+        -tradeWithBank(dto: TradeBankDTO)
+        -tradeWithPlayer(dto: TradePlayerDTO)
+        -pickDicePair(dto: PickDicePairDTO)
     }
 
     class Player{
-	-int id
-        -String username
-        -boolean isAccount
+		-id: int
+        -username: String
+        -isAccount: boolean
     }
 
     class Structure{
-        -String name
-        -Pair[] pos
+        -name: String
+        -pos: Pair[]
     }
 
     class Ressource{
-        -String name
+        -name: String
     }
 
     class Field{
-		-Pair pos
-        -int number
+		-pos: Pair
+        -number: int
     }
     
     class PlayerRepresentation{
-	-int publicId
-        -String sessionId
-	-Color color
+		-publicId: int
+        -sessionId: String
+		-color: Color
     }
 
     LobbyController --o "1" LobbyManager : lobbyManager
