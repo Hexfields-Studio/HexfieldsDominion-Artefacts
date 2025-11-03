@@ -52,9 +52,9 @@ classDiagram
 	    -String sessionId
     }
 
-	%%{"type": "BUILD", "sessionId":..., "coords": [[0,0],[1,0]], "structure": "HARBOUR"}
+	%%{"type": "BUILD", "sessionId":..., "pos": [[0,0],[1,0]], "structure": "HARBOUR"}
     class BuildActionDTO{
-		-Pair[] coords
+		-Pair[] pos
 		-StructureType structureType
 	}
 
@@ -90,7 +90,7 @@ classDiagram
 
     class Structure{
         -String name
-        -Pair[] coords
+        -Pair[] pos
     }
 
     class Ressource{
@@ -98,6 +98,7 @@ classDiagram
     }
 
     class Field{
+		-Pair pos
         -int number
     }
     
