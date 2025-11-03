@@ -69,7 +69,7 @@ classDiagram
 	}
 
 	class PickDicePairDTO{
-
+		-index: int
     }
 
     class GameController{
