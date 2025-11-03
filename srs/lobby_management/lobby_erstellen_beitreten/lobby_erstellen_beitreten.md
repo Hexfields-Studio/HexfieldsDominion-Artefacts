@@ -18,8 +18,7 @@ Dabei ist egal, ob sie mit einem Account oder als Gast angemeldet sind und für 
 ## 2.1 Grundlegender Ablauf
 1. Ein User klickt auf “Erstellen”
 2. Das Frontend fragt beim Backend an, um eine freie Lobby zu finden und die vom User angegebenen Konfigurationen anzuwenden.
-3. Das Backend gibt die bereitgestellte Lobby und die ID zurück
-4. Der User wird zur Lobby Seite weitergeleitet
+3. Der User wird zur Lobby Seite weitergeleitet
 
 ### Sequenzdiagramm
 ```mermaid
@@ -55,8 +54,7 @@ activate Backend
 ## 2.2 Alternative Abläufe
 1. Der User klickt auf "Beitreten"
 2. Das Frontend fragt beim Backend die zum Code zugehörige Lobby ab
-3. Das Backend gibt die zugehörige Lobby und die ID zurück
-4. Der User wird zur Lobby Seite weitergeleitet
+3. Der User wird zur Lobby Seite weitergeleitet
 
 ### Sequenzdiagramm
 ```mermaid
