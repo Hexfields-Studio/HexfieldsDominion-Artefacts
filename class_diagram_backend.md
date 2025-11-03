@@ -26,6 +26,7 @@ classDiagram
     class LobbyController{
         -createLobby()
         -joinLobby()
+		
     }
 
 	class StructureType{
