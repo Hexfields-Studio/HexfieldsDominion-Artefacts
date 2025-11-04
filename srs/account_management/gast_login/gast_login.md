@@ -57,7 +57,7 @@ activate Frontend
   Frontend->>Spieler: Fehlermeldung anzeigen: Keine Verbindung mit Server
 deactivate Frontend
 
-Frontend->>Backend:POST /login {username: ..., password: ...}
+Frontend->>Backend:POST /auth/login {username: ..., password: ...}
 deactivate Frontend
 activate Backend
   Backend->>Datenbank:SELECT COUNT(-) as user_count FROM users WHERE USERNAME = username AND PASSWORD = password;
@@ -92,7 +92,7 @@ activate Frontend
   activate Frontend
     Frontend->>Spieler: Fehlermeldung anzeigen: Keine Verbindung mit Server
   deactivate Frontend
-  Frontend->>Backend:POST /login {username:"guest", password:"cookie"}
+  Frontend->>Backend:POST /auth/login {username:"guest", password:"cookie"}
   deactivate Frontend
   activate Backend
     Backend-->Frontend: 200 OK (Token mitsenden?)

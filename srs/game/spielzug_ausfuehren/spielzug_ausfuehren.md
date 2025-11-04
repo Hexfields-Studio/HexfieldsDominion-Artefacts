@@ -70,7 +70,7 @@ activate Frontend
         
         Spieler ->> Frontend: Einen beliebigen Spielzug\nausführen
         activate Frontend
-          Frontend->Backend: POST /makeMove/{match_id}
+          Frontend->Backend: POST /games/{gameUUID}/makeMove
           activate Backend
             alt hasRightForTurn(player) && moveIsValid(move)
               Backend->Backend: executeMove(move)

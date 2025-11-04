@@ -41,7 +41,7 @@ sequenceDiagram
     User->>Client: Registrierungsdaten eingeben & "Registrieren" klicken
     activate Client
     
-    Client->>Server: POST /api/auth/register {username: "newuser", email: "new@example.com", password: "..."}
+    Client->>Server: POST /auth/register {username: "newuser", email: "new@example.com", password: "..."}
     activate Server
     
     Server->>Datenbank: checkExistingUser(username, email)

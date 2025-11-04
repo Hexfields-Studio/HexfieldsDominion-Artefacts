@@ -32,7 +32,7 @@ participant Backend
 Spieler->Frontend: Klickt "Erstellen"
 activate Spieler
 activate Frontend
-Frontend->>Backend: GET /createLobby {configs: {...}}
+Frontend->>Backend: PATCH /lobbies {configs: {...}}
 deactivate Frontend
 activate Backend
   alt emptyLobbyIsAvailable()
@@ -68,7 +68,7 @@ participant Backend
 activate Spieler
 Spieler->Frontend: Klickt "Beitreten" oder verwendet eine URL mit Code
 activate Frontend
-  Frontend->>Backend: GET /lobby/[code]
+  Frontend->>Backend: GET /lobbies/[code]
   
 deactivate Frontend
 activate Backend
