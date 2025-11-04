@@ -135,6 +135,7 @@ classDiagram
     TradePlayerDTO --* "1..*" RessourceType: requests
     TradePlayerDTO --* "1..*" RessourceType: offers
 	LobbyManager ..> CreateLobbyDTO: use
+	AccountController ..> Player: use
 
     GameController ..> BuildActionDTO: use
     GameController ..> TradeBankDTO: use
