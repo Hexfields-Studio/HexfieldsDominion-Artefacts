@@ -58,9 +58,9 @@ Dieses Use-Case besteht aus zwei verschiedenen Abläufen: die Erstellung einer L
 Dieser Ablauf beschreibt den Prozess, der von einem Spieler für die Erstellung einer Lobby ausgeführt wird. Der Prozess besteht aus diesen Schritten in dieser Reihenfolge:
 
 1. Ein User klickt auf "Erstellen"  
-2. Das Frontend fragt beim Backend an, um eine freie Lobby zu finden und die vom User angegebenen Konfigurationen anzuwenden.  
+2. Das Frontend fragt beim Backend an, um eine freie Lobby zu finden
 3. Das Backend gibt die bereitgestellte Lobby und die ID zurück  
-4. Der User wird zur Lobby Seite weitergeleitet
+4. Der User wird zur Lobby Seite weitergeleitet, wo er die Lobby auch konfigurieren kann
 
 #### Sequenzdiagramm (Mermaid) - Erstellen der Lobby
 

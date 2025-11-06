@@ -6,8 +6,8 @@
 Dieses Use-Case dient zur Anzeige des aktuellen Spielstandes auf der Seite des Clients. Demnach ist sie rein technisch basiert und wird im Hintergrund aktiviert. 
 Zu den Ereignissen, die die Aktualisierung auslösen, gehören unter anderem:
 - Den Wechsel des spielenden Spielers
-- Das erhalten von neuen Ressourcen nach dem Würfeln
-- Das ausführen eines Spielzugs
+- Das Erhalten von neuen Ressourcen nach dem Würfeln
+- Das Ausführen eines Spielzugs
 - Übertragung der Rolle des Spielleiters
 - Wenn ein Spieler das Match beitritt oder verlässt
 - etc.
@@ -20,7 +20,7 @@ n/a
 ## 2.1 Grundlegender Ablauf
 Dieser Ablauf beschreibt den vom Backend ausgeführten Prozess, um sicherzustellen, dass alle Clients immer den aktuellen Spielzustand anzeigen. Der Prozess besteht aus diesen Schritten in dieser Reihenfolge:
 1. Der Spielzustand ändert sich
-2. Der Server sendet das update an allen beteiligten Spielern
+2. Der Server sendet das Update an allen beteiligten Spielern
 3. Die Clients nehmen die neuen Daten auf, evtl. ändert sich die "Match Page"
 
 Im folgenden Sequenzdiagram sind unteranderem auch die Funktionalitäten dieses Use-Case enthalten:

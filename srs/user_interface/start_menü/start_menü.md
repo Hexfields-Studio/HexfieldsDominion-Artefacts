@@ -15,7 +15,7 @@ Dieses Use-Case dient dazu, dass User einer Lobby und damit einem Match beitrete
 ### 2.1 Ereignisse
 
 - Die User klicken auf "Lobby erstellen"
-- Das Frontend öffnet das Fenster zur Erstellung einer Lobby
+- Das Frontend leitet zu einer freien Lobby weiter
 
 #### Sequenzdiagramm
 
@@ -68,21 +68,23 @@ deactivate Frontend
 deactivate Spieler
 ```
 
+### Vorbedingungen
+1. Die User haben die Anwendung geöffnet.
+2. Die User haben sich mit Account oder als Gast angemeldet.
+
+### Nachbedingungen
+Den Usern wird die Seite einer freien Lobby mit Konfigurationsmöglichkeiten angezeigt
+
 ## 3. Spezielle Anforderungen
 
 n/a
 
 ## 4. Vorbedingungen
-
 1. Die User haben die Anwendung geöffnet.
 2. Die User haben sich mit Account oder als Gast angemeldet.
 
 ## 5. Nachbedingungen
-
-Usern wird je nach Auswahl das entsprechende Fenster angezeigt:
-
-- Menü zur Erstellung einer Lobby mit Einstellungsmöglichkeiten
-- Eingabemöglichkeit eines Lobbycodes, um einer bestehenden Lobby beizutreten
+Usern wird ein Fenster angezeigt, bei welchem ein Lobbycode eingegeben werden kann, um einer bestehenden Lobby beizutreten
 
 ## 6. Aufwandsschätzung
 

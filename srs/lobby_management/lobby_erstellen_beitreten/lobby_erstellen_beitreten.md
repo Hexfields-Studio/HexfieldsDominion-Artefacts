@@ -17,8 +17,9 @@ Dabei ist egal, ob sie mit einem Account oder als Gast angemeldet sind und für 
 
 ## 2.1 Grundlegender Ablauf
 1. Ein User klickt auf “Erstellen”
-2. Das Frontend fragt beim Backend an, um eine freie Lobby zu finden und die vom User angegebenen Konfigurationen anzuwenden.
+2. Das Frontend fragt beim Backend an, um eine freie Lobby zu finden
 3. Der User wird zur Lobby Seite weitergeleitet
+4. Die vom User angegebenen Konfigurationen werden bei Änderung dieser angewendet
 
 ### Sequenzdiagramm
 ```mermaid

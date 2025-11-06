@@ -8,7 +8,7 @@ Beispielsweise ermöglicht das Use-Case somit folgende Spielzüge:
 - Die Platzierung von neuen Gebäuden
 - Eine Tauschanfrage mit einem Spieler
 - Das Handeln mit der Bank
-- Das manuelle beenden eines Spielzugs
+- Das manuelle Beenden eines Spielzugs
 
 ## 1.2 Mockup 
 n/a
@@ -95,7 +95,7 @@ activate Frontend
 ```
 
 ## 2.2 Alternative Abläufe
-Unvalide bzw. unberechtigte Spielzüge die von einem Client gesendet werden, sollen abgelehnt und mit einer entsprechenden Fehlernachricht beantwortet werden.
+Unvalide bzw. unberechtigte Spielzüge, die von einem Client gesendet werden, sollen abgelehnt und mit einer entsprechenden Fehlernachricht beantwortet werden.
 
 # 3. Besondere Anforderungen
 n/a
