@@ -1,6 +1,6 @@
-# Software Requirements Specification (SRS) - Hexfields: Dominion - Version 1.1
+# Software Requirements Specification (SRS) - Hexfields: Dominion - Version 1.3
 
-## Revision History
+## Versionsverlauf
 
 | Date | Version | Description | Author |
 |------|---------|-------------|--------|
@@ -8,11 +8,12 @@
 | 20/Oct/2025 | 1.0 | Use-Cases hinzugefügt | Alex, Jona, Marcel |
 | 20/Oct/2025 | 1.1 | Diagramme hinzugefügt | Alex, Marcel |
 | 24/Oct/2025 | 1.2 | Use-Cases aktualisiert | Alex, Jona, Marcel |
+| 25/Nov/2025 | 1.3 | Markdown-Lint verbessert | Marcel |
 
 ## Inhaltsverzeichnis
 
-- [Software Requirements Specification (SRS) - Version 1.1](#software-requirements-specification-srs---version-11)
-  - [Revision History](#revision-history)
+- [Software Requirements Specification (SRS) - Hexfields: Dominion - Version 1.3](#software-requirements-specification-srs---hexfields-dominion---version-13)
+  - [Versionsverlauf](#versionsverlauf)
   - [Inhaltsverzeichnis](#inhaltsverzeichnis)
   - [1. Einleitung](#1-einleitung)
     - [1.1 Zweck](#11-zweck)
@@ -94,11 +95,11 @@ Das Projekt wird als responsive Webanwendung realisiert, die in modernen Browser
 
 | Titel | Änderungsdatum | Organisation |
 | :---- | :---- | :---- |
-| [GitHub Organisation & Blog](https://github.com/Hexfields-Studio) | 20/Oct/2025 | Hexfields Studio |
-| [GitHub Repository: Frontend](https://github.com/Hexfields-Studio/HexfieldsDominion) | 18/Oct/2025 | Hexfields Studio |
-| [GitHub Repository: Backend](https://github.com/Hexfields-Studio/HexfieldsDominion-Backend) | 20/Oct/2025 | Hexfields Studio |
-| [GitHub Repository: Artefakte](https://github.com/Hexfields-Studio/HexfieldsDominion-Artefacts) | 24/Oct/2025 | Hexfields Studio |
-| [GitHub Pages: Webseite](https://hexfields-studio.github.io/HexfieldsDominion/) | 18/Oct/2025 | Hexfields Studio |
+| [GitHub Organisation & Blog](https://github.com/Hexfields-Studio) | Nov/2025 | Hexfields Studio |
+| [GitHub Repository: Frontend](https://github.com/Hexfields-Studio/HexfieldsDominion) | Nov/2025 | Hexfields Studio |
+| [GitHub Repository: Backend](https://github.com/Hexfields-Studio/HexfieldsDominion-Backend) | Nov/2025 | Hexfields Studio |
+| [GitHub Repository: Artefakte](https://github.com/Hexfields-Studio/HexfieldsDominion-Artefacts) | Nov/2025 | Hexfields Studio |
+| [GitHub Pages: Webseite](https://hexfields-studio.github.io/HexfieldsDominion/) | Nov/2025 | Hexfields Studio |
 
 ### 1.5 Übersicht
 
