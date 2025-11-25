@@ -64,11 +64,11 @@ Diese Architekturspezifikation dient zur Erklärung der Architekturentscheidunge
 
 | Titel | Änderungsdatum | Organisation |
 | :---- | :---- | :---- |
-| [GitHub Organisation & Blog](https://github.com/Hexfields-Studio) | 20/Oct/2025 | Hexfields Studio |
-| [GitHub Repository: Frontend](https://github.com/Hexfields-Studio/HexfieldsDominion) | 18/Oct/2025 | Hexfields Studio |
-| [GitHub Repository: Backend](https://github.com/Hexfields-Studio/HexfieldsDominion-Backend) | 20/Oct/2025 | Hexfields Studio |
-| [GitHub Repository: Artefakte](https://github.com/Hexfields-Studio/HexfieldsDominion-Artefacts) | 24/Oct/2025 | Hexfields Studio |
-| [GitHub Pages: Webseite](https://hexfields-studio.github.io/HexfieldsDominion/) | 18/Oct/2025 | Hexfields Studio |
+| [GitHub Organisation & Blog](https://github.com/Hexfields-Studio) | Nov/2025 | Hexfields Studio |
+| [GitHub Repository: Frontend](https://github.com/Hexfields-Studio/HexfieldsDominion) | Nov/2025 | Hexfields Studio |
+| [GitHub Repository: Backend](https://github.com/Hexfields-Studio/HexfieldsDominion-Backend) | Nov/2025 | Hexfields Studio |
+| [GitHub Repository: Artefakte](https://github.com/Hexfields-Studio/HexfieldsDominion-Artefacts) | Nov/2025 | Hexfields Studio |
+| [GitHub Pages: Webseite](https://hexfields-studio.github.io/HexfieldsDominion/) | Nov/2025 | Hexfields Studio |
 
 ### 1.4 Übersicht
 
