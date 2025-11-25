@@ -1,14 +1,15 @@
-# Architecture Significant Requirements (ASR) - Hexfields: Dominion - Version 1.0
+# Architecture Significant Requirements (ASR) - Hexfields: Dominion - Version 1.1
 
 ## Revision History
 
 | Date | Version | Description | Author |
 |------|---------|-------------|--------|
 | 24/Nov/2025 | 1.0 | Dokument erstellt | Alex, Jona, Marcel |
+| 25/Nov/2025 | 1.1 | Kleine Verbesserungen | Marcel |
 
 ## Inhaltsverzeichnis
 
-- [Architecture Significant Requirements (ASR) - Hexfields: Dominion - Version 1.0](#architecture-significant-requirements-asr---hexfields-dominion---version-10)
+- [Architecture Significant Requirements (ASR) - Hexfields: Dominion - Version 1.1](#architecture-significant-requirements-asr---hexfields-dominion---version-11)
   - [Revision History](#revision-history)
   - [Inhaltsverzeichnis](#inhaltsverzeichnis)
   - [1. Einleitung](#1-einleitung)
@@ -203,9 +204,9 @@ Ressourcen und Baurezepte von Gebäuden werden in einer Datenbank gespeichert. D
 
 Clients sollen alle 5 Sekunden einen Heartbeat, der ihr Anmeldetoken beinhaltet, an das Backend senden, sodass das Backend erkennen kann, ob ein Client noch aktiv am Spiel beteiligt ist. Diese Information ist für das Schonen von Ressourcen relevant, weil dadurch z. B. Lobbies freigelegt oder Matches gelöscht werden können, in denen sowieso kein Client aktiv ist. Auf der Seite des Backends sollen also Account-Objekte, die für eine Zeit von 10 Sekunden keinen Heartbeat erhalten haben, gelöscht werden.  
 
-#### 2.4.5 DOS-Verteidigung
+#### 2.4.5 Caching von Anmeldetoken
 
-Zusätzlich verwaltet das Backend eine Hashmap, in der die öffentliche IP-Adresse eines Clients mit dem zuletzt über ein Heartbeat gesendeten Anmeldetoken verbunden wird. Wenn ein Client erneut einen Heartbeat sendet, kann mithilfe der Hashmap schnell sichergestellt werden, dass ein Client nur Heartbeats für einen Account sendet. Somit wird ein potenzieller DOS-Angriff vermieden, in dem sich ein Client z. B. mehrere Gastzugänge erstellen lassen und dann mit diesen mehreren Gastzugängen Lobbys erstellen, um unnötige Ressourcen zu verbrauchen. Den Angreifer würden wir hierbei jedoch erwischen, da wir einfach den zuletzt gesendeten Anmeldetoken aus der Hashmap erhalten und auf eine Differenz vergleichen können. Unterscheiden sich beide Tokens, schließt das Backend instantan die Verbindung mit dem Client.  
+Zusätzlich verwaltet das Backend eine Hashmap, in der die öffentliche IP-Adresse eines Clients mit dem zuletzt über ein Heartbeat gesendeten Anmeldetoken verbunden wird. Wenn ein Client erneut einen Heartbeat sendet, kann mithilfe der Hashmap schnell sichergestellt werden, dass ein Client nur Heartbeats für einen Account sendet. Somit wird ein potenzieller Angriffsvektor vermieden, in dem sich ein Client z. B. mehrere Gastzugänge erstellen lassen und dann mit diesen mehreren Gastzugängen Lobbys erstellen, um unnötige Ressourcen zu verbrauchen. Den Angreifer würden wir hierbei jedoch erwischen, da wir einfach den zuletzt gesendeten Anmeldetoken aus der Hashmap erhalten und auf eine Differenz vergleichen können. Unterscheiden sich beide Tokens, schließt das Backend sofortig die Verbindung mit dem Client, um eine Überladung des Backends zu vermeiden.
 
 #### 2.4.6 Arbeitsspeicher-Management von Matches
 
@@ -214,7 +215,7 @@ Wenn ein Match mit mindestens einem registrierten Spieler gestartet wird, dann w
 - a. Wenn es ein Spiel ohne registrierte Spieler ist, wird es nach dem Verbindungsabbruch und einem Countdown das Match beendet und die Lobby freigegeben.
 - b. Bei einem Spiel mit registrierten Spielern dagegen wird bei Verbindungsabbruch das Match abgespeichert und erst dann die Lobby freigegeben. Sofern dann der registrierte Spieler das Spiel wieder aufnimmt (durch Eingabe der UUID), werden die Daten des Matches aus der Datenbank auf der Server geladen und das Spiel kann weitergehen, wo es aufgehört hat. Die restlichen Spieler werden automatisch zugeordnet, sofern möglich. Sonst müssen die Spieler ihre Positionen selbst finden und einnehmen.
 
-#### 2.4.7 Spielzug TRADE_PLAYER
+#### 2.4.7 Tauschgeschäft-Spielzug
 
 Wenn als Spielzug ein Tausch von Ressourcen zwischen Spielern gewählt wird, so wird diese Handelsanfrage folgendermaßen festgehalten:
 
@@ -223,8 +224,8 @@ Wenn als Spielzug ein Tausch von Ressourcen zwischen Spielern gewählt wird, so 
     "type":...,
     "sessionId":...,
     "destPublicId":...,
-    "offered": [{"resource": "STONE", "amount": 2}, {"resource": "WOOD", "amount": 1}],
-    "requested": [{"resource": "GOLD", "amount": 1}]
+    "offered": [{"resource": "...", "amount": 2}, {"resource": "...", "amount": 1}],
+    "requested": [{"resource": "...", "amount": 1}]
 }
 ```
 
