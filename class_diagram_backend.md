@@ -5,12 +5,23 @@ classDiagram
         +main()
     }
 
+    class AppConfig{
+        -initialCapacity: int
+    }
+
+
+
     class LobbyManager{
-        +createLobby()
+        -occupiedLobbies: HashMap<String, Lobby>
+        -freeLobbies: Lobby[]
+        +LobbyManager(config: AppConfig)
+        +createLobby(configs: String[]): String
+        +joinLobby(lobbyCode: String, res: Map<String, Object>): boolean
     }
 
     class Lobby{
-
+        +players: Player[]
+        +addPlayer(player: Player)
     }
     
     class Match{
@@ -24,9 +35,18 @@ classDiagram
     }
 
     class LobbyController{
-        -createLobby()
-        -joinLobby()
+        -lobbyManager: LobbyManager
+        +LobbyController(lobbyManager: LobbyManager)
+        +createLobby(configs: CreateLobbyDTO): ResponseEntity<Map<String, String>>
+        +joinLobby(lobbyCode: String): ResponseEntity<Map<String, Object>>
 		
+    }
+
+    class LobbyCodeGenerator{
+        -CHARACTERS: String
+        -CODE_LENGTH: int
+        -random: Random
+        +generateCode(): String
     }
 
 	class StructureType{
@@ -42,10 +62,10 @@ classDiagram
 
     class PlayerActionType{
         <<enumeration>>
-	BUILD
-	TRADE_BANK
-	TRADE_PLAYER
-	PICK_DICE_PAIR
+        BUILD
+        TRADE_BANK
+        TRADE_PLAYER
+        PICK_DICE_PAIR
     }
 
     class PlayerActionDTO{
@@ -93,7 +113,8 @@ classDiagram
 
     class Structure{
         -name: String
-        -pos: Pair[]
+        -pos: Pair<Integer, Integer>[]
+        -recipe: Map<RessourceType, Integer>
     }
 
     class Ressource{
@@ -101,14 +122,17 @@ classDiagram
     }
 
     class Field{
-		-pos: Pair
+		-pos: Pair<Integer, Integer>
         -number: int
+        -ressource: Ressource
     }
     
     class PlayerRepresentation{
-		-publicId: int
+		-player: Player
+        -publicId: int
         -sessionId: String
 		-color: Color
+        -ressources: Map<Ressource, Integer>
     }
 
     LobbyController --o "1" LobbyManager : lobbyManager
@@ -116,9 +140,9 @@ classDiagram
     LobbyManager --> "0..*" Lobby: occupiedLobbies
     Match "0..1" --* Lobby
     Lobby --> "1..*" Player
-    Structure "0..*" --* Match
+    Structure "0..*" --* Match: structures
     Match --* Field
-    Match --* "2..*" PlayerRepresentation
+    Match --* "2..*" PlayerRepresentation: players
     PlayerRepresentation --> "0..1" Player: player
     Ressource "0..*" --* PlayerRepresentation: ressources
     Field --> "1" Ressource: ressource
@@ -136,7 +160,9 @@ classDiagram
     TradePlayerDTO --* "1..*" RessourceType: offers
 	LobbyManager ..> CreateLobbyDTO: use
 	AccountController ..> Player: use
-
+    LobbyManager ..> AppConfig: use
+    LobbyManager ..> LobbyCodeGenerator: use
+    
     GameController ..> BuildActionDTO: use
     GameController ..> TradeBankDTO: use
     GameController ..> TradePlayerDTO: use
