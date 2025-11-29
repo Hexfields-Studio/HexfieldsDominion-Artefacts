@@ -32,9 +32,9 @@
       - [2.4.2 Match-UUID in der URL](#242-match-uuid-in-der-url)
       - [2.4.3 Speichern von Ressourcen und Baurezepten](#243-speichern-von-ressourcen-und-baurezepten)
       - [2.4.4 Heatbeat](#244-heatbeat)
-      - [2.4.5 DOS-Verteidigung](#245-dos-verteidigung)
+      - [2.4.5 Caching von Anmeldetoken](#245-caching-von-anmeldetoken)
       - [2.4.6 Arbeitsspeicher-Management von Matches](#246-arbeitsspeicher-management-von-matches)
-      - [2.4.7 Spielzug TRADE\_PLAYER](#247-spielzug-trade_player)
+      - [2.4.7 Tauschgeschäft-Spielzug](#247-tauschgeschäft-spielzug)
   - [3. Unterstützende Informationen](#3-unterstützende-informationen)
 
 ## 1. Einleitung

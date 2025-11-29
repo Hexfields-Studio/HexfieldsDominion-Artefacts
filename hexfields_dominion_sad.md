@@ -1,14 +1,15 @@
-# Software Architecture Document (SAD) - Hexfields: Dominion - Version 1.0
+# Software Architecture Document (SAD) - Hexfields: Dominion - Version 1.1
 
 ## Versionsübersicht
 
 | Date | Version | Description | Author |
 | ----- | ----- | ----- | ----- |
 | 25/Nov/2025 | 1.0 | Dokument erstellt | Alex, Jona, Marcel |
+| 29/Nov/2025 | 1.0 | Inhalte 2., 4., 5., 7., 9. und 10. ergänzt | Alex, Jona, Marcel |
 
 ## Inhaltsverzeichnis
 
-- [Software Architecture Document (SAD) - Hexfields: Dominion - Version 1.0](#software-architecture-document-sad---hexfields-dominion---version-10)
+- [Software Architecture Document (SAD) - Hexfields: Dominion - Version 1.1](#software-architecture-document-sad---hexfields-dominion---version-11)
   - [Versionsübersicht](#versionsübersicht)
   - [Inhaltsverzeichnis](#inhaltsverzeichnis)
   - [1. Einleitung](#1-einleitung)
@@ -31,8 +32,12 @@
   - [4. Use-Case-Ansicht](#4-use-case-ansicht)
   - [5. Logische Ansicht](#5-logische-ansicht)
     - [5.1 Übersicht](#51-übersicht)
+      - [Frontend-Schicht](#frontend-schicht)
+      - [Backend-Schicht](#backend-schicht)
     - [5.2 Architektonisch Signifikante Designpakete](#52-architektonisch-signifikante-designpakete)
-    - [5.3 Use-Case-Realisierungen](#53-use-case-realisierungen)
+      - [Backend - Domain Package](#backend---domain-package)
+      - [Frontend - Game Package](#frontend---game-package)
+  - [5.3 Use-Case-Realisierungen](#53-use-case-realisierungen)
   - [6. Prozessansicht](#6-prozessansicht)
     - [Sequenzdiagramm: Login](#sequenzdiagramm-login)
     - [Sequenzdiagramm: Logout](#sequenzdiagramm-logout)
@@ -45,7 +50,7 @@
     - [Sequenzdiagramm: Start Menü](#sequenzdiagramm-start-menü)
   - [7. Einsatzansicht](#7-einsatzansicht)
   - [8. Implementationsansicht](#8-implementationsansicht)
-  - [9. Datenansicht *(optional)*](#9-datenansicht-optional)
+  - [9. Datenansicht](#9-datenansicht)
   - [10. Größe und Leistung](#10-größe-und-leistung)
   - [11. Qualität](#11-qualität)
   - [12. Unterstützende Informationen](#12-unterstützende-informationen)
@@ -106,7 +111,16 @@ Dieses Dokument enthält die Architekturanalyse und erläutert die begründeten 
 
 ## 2. Architektonische Repräsentation
 
-*[This section describes what software architecture is for the current system, and how it is represented. Of the Use-Case, Logical, Process, Deployment, and Implementation Views, it enumerates the views that are necessary, and for each view, explains what types of model elements it contains.]*
+Die Software-Architektur von Hexfields: Dominion folgt einer client-server-basierten Microservices-Architektur mit separatem Frontend, Backend und einer Datenbank. Folgende Ansichten sind für das architektonische Verständnis notwendig:
+
+- [Use-Case-Ansicht](#4-use-case-ansicht): Dokumentiert die wesentlichen Benutzerinteraktionen und Geschäftsprozesse
+- [Logische Ansicht](#5-logische-ansicht): Zeigt die strukturelle Zerlegung in Subsysteme und Komponenten
+- [Prozessansicht](#6-prozessansicht): Beschreibt die dynamischen Abläufe und Kommunikationssequenzen
+- [Einsatzansicht](#7-einsatzansicht): Definiert die physische Verteilung auf Hardware-Knoten
+- [Implementationsansicht](#8-implementationsansicht): Zeigt die Code-Organisation und Build-Struktur
+- [Datenansicht](#9-datenansicht): Zeigt die Datenstrukturen der Datenbank und die häufigsten Zugriffe darauf
+
+Jede Ansicht enthält spezifische Modellelemente wie Klassen, Komponenten, Prozesse und Knoten, die zusammen ein vollständiges Bild der Systemarchitektur ergeben.
 
 ## 3. Architektonische Ziele und Einschränkungen
 
@@ -155,27 +169,57 @@ Diese JSON-Struktur ermöglicht eindeutige Zuordnung und Bestimmung von den bete
 
 ## 4. Use-Case-Ansicht
 
-*[This section lists use cases or scenarios from the use-case model if they represent some significant, central functionality of the final system, or if they have a large architectural coverage - they exercise many architectural elements, or if they stress or illustrate a specific, delicate point of the architecture.]*
+Das [Use-Case-Diagramm](srs/use_case_diagram_new.jpg) visualisiert die Interaktionen zwischen den Akteuren und den zentralen Systemfunktionen wie Account-Management, Lobby-Management und Spielablauf:
+
+![Use-Case-Diagramm](srs/use_case_diagram_new.jpg)
 
 ## 5. Logische Ansicht
 
-*[This section describes the architecturally significant parts of the design model, such as its decomposition into subsystems and packages. And for each significant package, its decomposition into classes and class utilities. You should introduce architecturally significant classes and describe their responsibilities, as well as a few very important relationships, operations, and attributes.]*
-
 ### 5.1 Übersicht
 
-*[This subsection describes the overall decomposition of the design model in terms of its package hierarchy and layers.]*
+Das System ist in folgende Hauptschichten und Pakete unterteilt:
+
+#### Frontend-Schicht
+
+- UI-Komponenten (React)
+- State Management
+- API-Client
+
+#### Backend-Schicht
+
+- Controller-Layer (REST-Endpoints)
+- Service-Layer (Geschäftslogik)
+- Repository-Layer (Datenzugriff)
+- Domain-Model (Spielentitäten)
 
 ### 5.2 Architektonisch Signifikante Designpakete
 
-*[For each significant package, include a subsection with its name, its brief description, and a diagram with all significant classes and packages contained within the package. For each significant class in the package, include its name, brief description, and, optionally a description of some of its major responsibilities, operations and attributes.]*
+#### Backend - Domain Package
 
-### 5.3 Use-Case-Realisierungen
+- `Match`: Verwaltet Spielzustand und -logik
+- `Player`: Repräsentiert Spieler mit Ressourcen und Gebäuden
+- `Lobby`: Koordiniert Spielvorbereitung und Teilnehmer
+- `TradeOffer`: Modelliert Handelsangebote zwischen Spielern
 
-*[This section illustrates how the software actually works by giving a few selected use-case (or scenario) realizations, and explains how the various design model elements contribute to their functionality.]*
+#### Frontend - Game Package
+
+- `GameBoard`: Rendert das Hexfeld-Spielfeld
+- `PlayerUI`: Zeigt Spielerinformationen und Ressourcen
+- `TradeModal`: Verwaltet Handelsinteraktionen
+
+## 5.3 Use-Case-Realisierungen
+
+Beispiel: Use-Case "Spielzug ausführen":
+
+- `GameController` empfängt Spielzug
+- `MatchService` validiert und verarbeitet Zug
+- `PlayerService` aktualisiert Spielerressourcen
+- `NotificationService` informiert andere Spieler
+- `PersistenceService` speichert Spielstand
 
 ## 6. Prozessansicht
 
-*[Hier sind alle Sequenzdiagramme verlinkt. Sicher dass man hier noch etwas hinschreiben muss?]*
+Hier sind alle Sequenzdiagramme verlinkt. Sie beschreiben jeweils einen Prozess und stellen dabei jede beteiligte Schicht des Tech-Stack dar:
 
 ### [Sequenzdiagramm: Login](https://github.com/Hexfields-Studio/HexfieldsDominion-Artefacts/blob/main/srs/account_management/login/login.md#sequenzdiagramm-mermaid)
 
@@ -197,19 +241,54 @@ Diese JSON-Struktur ermöglicht eindeutige Zuordnung und Bestimmung von den bete
 
 ## 7. Einsatzansicht
 
-*[This section describes one or more physical network (hardware) configurations on which the software is deployed and run. It is a view of the Deployment Model. At a minimum for each configuration it should indicate the physical nodes (computers, CPUs) that execute the software, and their interconnections (bus, LAN, point-to-point, and so on.) Also include a mapping of the processes of the Process View onto the physical nodes.]*
+Physische Knotenkonfiguration:
+
+- Frontend-Server: GitHub Pages (Statische Hosting)
+- Backend-Server: Cloud-Instanz mit Spring Boot
+- Datenbank-Server: PostgreSQL-Instanz
+
+Prozess-Zuordnung:
+
+- Frontend-Prozesse: Ausgeführt im Client-Browser
+- Backend-Prozesse: Spring Boot Application auf Cloud-Server
+- Datenbank-Prozesse: PostgreSQL auf dediziertem Server
+- Heartbeat-Monitor: Backend-Service für Connection-Management
+
+Netzwerktopologie:
+
+- HTTPS-Verbindungen zwischen Client und Backend
+- Datenbank-Verbindungen über JDBC
+- Server-Sent Events für Echtzeit-Updates
 
 ## 8. Implementationsansicht
 
-[Klassendiagramm](https://github.com/Hexfields-Studio/HexfieldsDominion-Artefacts/blob/main/class_diagram_backend.md#klassendiagramm-des-backend)
+Die Implementationsansicht lässt sich dem [Klassendiagramm](https://github.com/Hexfields-Studio/HexfieldsDominion-Artefacts/blob/main/class_diagram_backend.md#klassendiagramm-des-backend) entnehmen.
 
-## 9. Datenansicht *(optional)*
+## 9. Datenansicht
 
-*[A description of the persistent data storage perspective of the system. This section is optional if there is little or no persistent data, or the translation between the Design Model and the Data Model is trivial.]*
+Das persistente Datenmodell der Datenbank beinhaltet:
+
+- Account: Benutzerkonten mit Authentifizierungsdaten
+- Match: Spielstände mit Spielerzuordnung und Ressourcen
+- Lobby: Lobby-Zustände mit Teilnehmerliste
+- GameConfig: Ressourcen-Definitionen und Baurezepte
+- Trades: Protokollierte Handelsaktionen
 
 ## 10. Größe und Leistung
 
-*[A description of the major dimensioning characteristics of the software that impact the architecture, as well as the target performance constraints.]*
+Dimensionierung in Standardkonfiguration:
+
+- Geschätzte 250 gleichzeitige Benutzer
+- Bis zu 50 parallele Matches
+- Durchschnittlich 4 Spieler pro Match
+- 50 MB RAM pro aktiven Match im Backend
+
+Leistungsziele:
+
+- Antwortzeiten < 100ms für Spielaktionen
+- Ladezeiten < 3 Sekunden für Match-Initialisierung
+- Heartbeat-Intervalle: 5 Sekunden
+- Connection-Timeout: 10 Sekunden
 
 ## 11. Qualität
 
