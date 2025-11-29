@@ -5,7 +5,7 @@
 | Date | Version | Description | Author |
 | ----- | ----- | ----- | ----- |
 | 25/Nov/2025 | 1.0 | Dokument erstellt | Alex, Jona, Marcel |
-| 29/Nov/2025 | 1.0 | Inhalte 2., 4., 5., 7., 9. und 10. ergänzt | Alex, Jona, Marcel |
+| 29/Nov/2025 | 1.1 | Bearbeitung restlicher Punkte | Alex, Jona, Marcel |
 
 ## Inhaltsverzeichnis
 
@@ -32,11 +32,7 @@
   - [4. Use-Case-Ansicht](#4-use-case-ansicht)
   - [5. Logische Ansicht](#5-logische-ansicht)
     - [5.1 Übersicht](#51-übersicht)
-      - [Frontend-Schicht](#frontend-schicht)
-      - [Backend-Schicht](#backend-schicht)
     - [5.2 Architektonisch Signifikante Designpakete](#52-architektonisch-signifikante-designpakete)
-      - [Backend - Domain Package](#backend---domain-package)
-      - [Frontend - Game Package](#frontend---game-package)
   - [5.3 Use-Case-Realisierungen](#53-use-case-realisierungen)
   - [6. Prozessansicht](#6-prozessansicht)
     - [Sequenzdiagramm: Login](#sequenzdiagramm-login)
@@ -113,14 +109,13 @@ Dieses Dokument enthält die Architekturanalyse und erläutert die begründeten 
 
 Die Software-Architektur von Hexfields: Dominion folgt einer client-server-basierten Microservices-Architektur mit separatem Frontend, Backend und einer Datenbank. Folgende Ansichten sind für das architektonische Verständnis notwendig:
 
-- [Use-Case-Ansicht](#4-use-case-ansicht): Dokumentiert die wesentlichen Benutzerinteraktionen und Geschäftsprozesse
-- [Logische Ansicht](#5-logische-ansicht): Zeigt die strukturelle Zerlegung in Subsysteme und Komponenten
-- [Prozessansicht](#6-prozessansicht): Beschreibt die dynamischen Abläufe und Kommunikationssequenzen
-- [Einsatzansicht](#7-einsatzansicht): Definiert die physische Verteilung auf Hardware-Knoten
-- [Implementationsansicht](#8-implementationsansicht): Zeigt die Code-Organisation und Build-Struktur
+- [Use-Case-Ansicht](#4-use-case-ansicht): Dokumentiert die wesentlichen Benutzerinteraktionen und Geschäftsprozesse in einem Use-Case-Diagramm
+- [Logische Ansicht](#5-logische-ansicht): Zeigt die strukturelle Zerlegung des Systems anhand eines gesamten Klassendiagramms
+- [Prozessansicht](#6-prozessansicht): Beschreibt die dynamischen Abläufe in Aktivitäts- und Sequenzdiagrammen
+- [Einsatzansicht](#7-einsatzansicht): Definiert die physische Verteilung auf Hardware. Der Frontend- und Backend-Programmcode wird in getrennten Repositories auf GitHub gespeichert. Das Frontend wird über GitHub Pages bereitgestellt und das Backend auf Web-Service Render. Die Datenbank wird voraussichtlich auf Neon deployed.
 - [Datenansicht](#9-datenansicht): Zeigt die Datenstrukturen der Datenbank und die häufigsten Zugriffe darauf
 
-Jede Ansicht enthält spezifische Modellelemente wie Klassen, Komponenten, Prozesse und Knoten, die zusammen ein vollständiges Bild der Systemarchitektur ergeben.
+Jede Ansicht enthält spezifische Modellelemente wie Klassen, Komponenten oder Prozesse, die zusammen ein vollständiges Bild der Systemarchitektur ergeben.
 
 ## 3. Architektonische Ziele und Einschränkungen
 
@@ -177,94 +172,58 @@ Das [Use-Case-Diagramm](srs/use_case_diagram_new.jpg) visualisiert die Interakti
 
 ### 5.1 Übersicht
 
-Das System ist in folgende Hauptschichten und Pakete unterteilt:
-
-#### Frontend-Schicht
-
-- UI-Komponenten (React)
-- State Management
-- API-Client
-
-#### Backend-Schicht
-
-- Controller-Layer (REST-Endpoints)
-- Service-Layer (Geschäftslogik)
-- Repository-Layer (Datenzugriff)
-- Domain-Model (Spielentitäten)
+Im Backend ist der Code mit Packages unterteilt, die nach den entprechenden Use-Case-Gruppen benannt sind. Es ergeben sich die Packages account, game und lobby. Für DTOs gibt es dann noch `dto`-Subpackages. Klassen mit Gemeinsamkeiten werden dann wiederum in weitere Subpackages unterteilt, wenn es logisch sinnvoll erscheint.
 
 ### 5.2 Architektonisch Signifikante Designpakete
 
-#### Backend - Domain Package
-
-- `Match`: Verwaltet Spielzustand und -logik
-- `Player`: Repräsentiert Spieler mit Ressourcen und Gebäuden
-- `Lobby`: Koordiniert Spielvorbereitung und Teilnehmer
-- `TradeOffer`: Modelliert Handelsangebote zwischen Spielern
-
-#### Frontend - Game Package
-
-- `GameBoard`: Rendert das Hexfeld-Spielfeld
-- `PlayerUI`: Zeigt Spielerinformationen und Ressourcen
-- `TradeModal`: Verwaltet Handelsinteraktionen
+|  | Packages | Libraries |
+| :---- | :---- | :---- |
+| Frontend | `components` - Beinhaltet wiederverwendbare JSX, das mit Design-Dateien in eigenen Subpackages gebündelt ist `pages` - Beinhaltet JSX, die gesamte Seiten definieren `constants` - Beinhaltet konstante, in verschiedenen Bereichen genutzte Variablen | `React` - Für das Rendern der gesamten Webseite `Konva` - Eine Canvas Bibliothek, um das Erstellen von Grafiken zu erleichtern |
+| Backend | `hexfieldsdominion.account` - REST-Endpunkte für die Authentizierung `hexfieldsdominion.game` - REST-Endpunkte für das Spiel inklusive Klassen für die Handhabung der Spielelogik `hexfieldsdominion.lobby` - REST-Endpunkte für das Lobbysystem inklusive Klassen für die Verwaltung von Lobbies. Jedes dieser Packages beinhaltet auch ein `.dto` Package, um die Datenaufnahme in den Endpunkten zu abstrahieren. | `Spring` - Hosten einer REST-API `JDBC` - Programmierschnittstelle für die Kommunikation mit Datenbanken über Java |
 
 ## 5.3 Use-Case-Realisierungen
 
-Beispiel: Use-Case "Spielzug ausführen":
+Erläuterung anhand des Use Case [“Lobby erstellen und beitreten”](srs/lobby_management/lobby_erstellen_beitreten/lobby_erstellen_beitreten.md):
 
-- `GameController` empfängt Spielzug
-- `MatchService` validiert und verarbeitet Zug
-- `PlayerService` aktualisiert Spielerressourcen
-- `NotificationService` informiert andere Spieler
-- `PersistenceService` speichert Spielstand
+Das `hexfieldsdominion.lobby`-Package auf dem Backend inklusive dem `.dto`-Package tragen beide zur die Lobbyerstellung und für das Beitreten bei. Die `Controller` Klasse im Lobby-Package beinhaltet zwei Endpunkte, jeweils für das Erstellen (`PATCH /lobbies`) und für das Beitreten (`GET /lobbies/{lobbyCode}`).
+Auf der Seite des Frontends ist im `pages`-Package die JSX für die “Start Menü” Seite definiert. Auf dieser Seite befindet sich Programmcode für das Ausführen von HTTP-Requests an beiden Endpunkten. Dabei wird unter anderem auf `dialog.tsx` aus dem Package `components.dialog` zurückgegriffen.
 
 ## 6. Prozessansicht
 
 Hier sind alle Sequenzdiagramme verlinkt. Sie beschreiben jeweils einen Prozess und stellen dabei jede beteiligte Schicht des Tech-Stack dar:
 
-### [Sequenzdiagramm: Login](https://github.com/Hexfields-Studio/HexfieldsDominion-Artefacts/blob/main/srs/account_management/login/login.md#sequenzdiagramm-mermaid)
+### [Sequenzdiagramm: Login](srs/account_management/login/login.md#sequenzdiagramm-mermaid)
 
-### [Sequenzdiagramm: Logout](https://github.com/Hexfields-Studio/HexfieldsDominion-Artefacts/blob/main/srs/account_management/logout/logout.md#sequenzdiagramm-mermaid)
+### [Sequenzdiagramm: Logout](srs/account_management/logout/logout.md#sequenzdiagramm-mermaid)
 
-### [Sequenzdiagramm: Passwort-Reset](https://github.com/Hexfields-Studio/HexfieldsDominion-Artefacts/blob/main/srs/account_management/password_reset/password_reset.md#sequenzdiagramm-mermaid)
+### [Sequenzdiagramm: Passwort-Reset](srs/account_management/password_reset/password_reset.md#sequenzdiagramm-mermaid)
 
-### [Sequenzdiagramm: Registration](https://github.com/Hexfields-Studio/HexfieldsDominion-Artefacts/blob/main/srs/account_management/registration/registration.md#sequenz-diagramm)
+### [Sequenzdiagramm: Registration](srs/account_management/registration/registration.md#sequenz-diagramm)
 
-### [Sequenzdiagramm: Match Starten](https://github.com/Hexfields-Studio/HexfieldsDominion-Artefacts/blob/main/srs/game/match_starten/match_starten.md#sequenzdiagramm)
+### [Sequenzdiagramm: Match Starten](srs/game/match_starten/match_starten.md#sequenzdiagramm)
 
-### [Sequenzdiagramm: Lobby erstellen](https://github.com/Hexfields-Studio/HexfieldsDominion-Artefacts/blob/main/srs/lobby_management/lobby_erstellen_beitreten/lobby_erstellen_beitreten.md#sequenzdiagramm)
+### [Sequenzdiagramm: Lobby erstellen](srs/lobby_management/lobby_erstellen_beitreten/lobby_erstellen_beitreten.md#sequenzdiagramm)
 
-### [Sequenzdiagramm: Lobby beitreten](https://github.com/Hexfields-Studio/HexfieldsDominion-Artefacts/blob/main/srs/lobby_management/lobby_erstellen_beitreten/lobby_erstellen_beitreten.md#sequenzdiagramm)
+### [Sequenzdiagramm: Lobby beitreten](srs/lobby_management/lobby_erstellen_beitreten/lobby_erstellen_beitreten.md#sequenzdiagramm)
 
-### [Sequenzdiagramm: Light/Dark Mode](https://github.com/Hexfields-Studio/HexfieldsDominion-Artefacts/blob/main/srs/user_interface/light_dark_mode/light_dark_mode.md#sequenz-diagramm)
+### [Sequenzdiagramm: Light/Dark Mode](srs/user_interface/light_dark_mode/light_dark_mode.md#sequenz-diagramm)
 
-### [Sequenzdiagramm: Start Menü](https://github.com/Hexfields-Studio/HexfieldsDominion-Artefacts/blob/main/srs/user_interface/start_men%C3%BC/start_men%C3%BC.md#sequenzdiagramm)
+### [Sequenzdiagramm: Start Menü](srs/user_interface/start_men%C3%BC/start_men%C3%BC.md#sequenzdiagramm)
 
 ## 7. Einsatzansicht
 
-Physische Knotenkonfiguration:
-
-- Frontend-Server: GitHub Pages (Statische Hosting)
-- Backend-Server: Cloud-Instanz mit Spring Boot
-- Datenbank-Server: PostgreSQL-Instanz
-
-Prozess-Zuordnung:
-
-- Frontend-Prozesse: Ausgeführt im Client-Browser
-- Backend-Prozesse: Spring Boot Application auf Cloud-Server
-- Datenbank-Prozesse: PostgreSQL auf dediziertem Server
-- Heartbeat-Monitor: Backend-Service für Connection-Management
-
-Netzwerktopologie:
-
-- HTTPS-Verbindungen zwischen Client und Backend
-- Datenbank-Verbindungen über JDBC
-- Server-Sent Events für Echtzeit-Updates
+Das Frontend wird über GitHub Pages bereitgestellt und das Backend auf Web-Service Render. Die Datenbank wird voraussichtlich auf Neon deployed. Das Backend und Frontend-Repository beinhalten eigene Konfigurationsdateien. Das Backend die `application.yml` und das Frontend die `.env.development` und `.env.production`.
 
 ## 8. Implementationsansicht
 
 Die Implementationsansicht lässt sich dem [Klassendiagramm](https://github.com/Hexfields-Studio/HexfieldsDominion-Artefacts/blob/main/class_diagram_backend.md#klassendiagramm-des-backend) entnehmen.
 
 ## 9. Datenansicht
+
+Das Backend implementiert das Repository-Pattern.
+
+![Schaubild Repository-Pattern von norberteder.com](https://www.norberteder.com/wp-content/uploads/images/image_thumb_36.png)
+*[Bildquelle](https://norberteder.com/das-repository-pattern-anhand-eines-beispiels-inkl-tests/); Letzter Zugriff: 29.11.2025 20:00*
 
 Das persistente Datenmodell der Datenbank beinhaltet:
 
@@ -276,19 +235,7 @@ Das persistente Datenmodell der Datenbank beinhaltet:
 
 ## 10. Größe und Leistung
 
-Dimensionierung in Standardkonfiguration:
-
-- Geschätzte 250 gleichzeitige Benutzer
-- Bis zu 50 parallele Matches
-- Durchschnittlich 4 Spieler pro Match
-- 50 MB RAM pro aktiven Match im Backend
-
-Leistungsziele:
-
-- Antwortzeiten < 100ms für Spielaktionen
-- Ladezeiten < 3 Sekunden für Match-Initialisierung
-- Heartbeat-Intervalle: 5 Sekunden
-- Connection-Timeout: 10 Sekunden
+Für eine höhere Sicherheit soll das Backend nur eine begrenzte Anzahl an Lobbies ermöglichen. Wir legen zudem einen höheren Wert auf Effizienz statt auf Performance, da Ressourcen von Cloudanbeitern begrenzt sind.
 
 ## 11. Qualität
 
