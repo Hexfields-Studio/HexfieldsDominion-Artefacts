@@ -24,7 +24,7 @@ n/a
 - Der User klickt auf "Light Mode" bzw. "Dark Mode".
 - Das Farbschema der Applikation wechselt sofort.
 - Die Einstellung wird gespeichert.
-- Das Einstellungsmenü schließt sich automatisch nach kurzer Zeit oder nach Klick außerhalb.
+- Das Einstellungsmenü schließt sich automatisch.
 
 #### Sequenz-Diagramm
 
@@ -33,54 +33,39 @@ sequenceDiagram
     title Light-Dark Mode Wechsel - Detaillierte Implementierung
 
     participant User
-    participant Client
-    participant Theme as Theme-Manager
-    participant Local as Lokaler Speicher
-    participant DOM as DOM-Manipulator
+    participant UI as Benutzeroberfläche
+    participant Storage as Lokaler Speicher
 
-    User->>Client: Einstellungs-Icon klicken
-    activate Client
+    User->>UI: Seitenaufruf
+    activate UI
+    UI->>Storage: getItem('theme')
+    activate Storage
+    Storage-->>UI: theme ("light"/"dark"/null)
+    deactivate Storage
     
-    Client->>Client: showSettingsMenu()
-    Client->>Local: getItem("themePreference")
-    activate Local
-    Local-->>Client: "dark" | "light" | null
-    deactivate Local
-    
-    alt Theme gespeichert
-        Client->>Client: setToggleState(savedTheme)
-    else Kein Theme gespeichert
-        Client->>Client: setToggleState("system")
-        Client->>Theme: getSystemPreference()
-        activate Theme
-        Theme->>Theme: window.matchMedia('(prefers-color-scheme: dark)')
-        Theme-->>Client: systemTheme
-        deactivate Theme
-        Client->>DOM: applyTheme(systemTheme)
+    alt theme = "light"/"dark"
+        UI->>UI: Zeigt gespeicherten Modus an
+    else theme = null
+        UI->>UI: Ermittelt System-Präferenz
+        UI->>UI: Wendet System-Präferenz an
     end
+    deactivate UI
+
+    User->>UI: Klickt Einstellungs-Icon
+    activate UI
+    UI-->>User: Einstellungsmenü öffnen
+
+    User->>UI: Wählt hellen/dunklen Modus
+    UI->>UI: Farbschema wechseln
+    UI-->>User: Neues Farbschema angezeigt
+    UI->>Storage: setItem('theme', newTheme)
+    activate Storage
+    Storage-->>UI: (OK)
+    deactivate Storage
     
-    User->>Client: Light-Dark Mode Schalter betätigen
-    Client->>Client: toggleTheme()
-    Client->>Theme: getNewThemeState(currentTheme)
-    activate Theme
-    Theme-->>Client: newTheme
-    deactivate Theme
-    
-    Client->>DOM: document.documentElement.setAttribute('data-theme', newTheme)
-    activate DOM
-    DOM->>DOM: updateCSSVariables(newTheme)
-    DOM-->>Client: themeApplied
-    deactivate DOM
-    
-    Client->>Local: setItem("themePreference", newTheme)
-    activate Local
-    Local-->>Client: "OK"
-    deactivate Local
-    
-    Client->>Client: showVisualConfirmation()
-    Client->>Client: closeSettingsMenuAfterDelay()
-    Client-->>User: Aktualisiertes Farbschema anzeigen
-    deactivate Client
+    User->>UI: Klickt Einstellungs-Icon
+    UI-->>User: Einstellungsmenü schließen
+    deactivate UI
 ```
 
 #### Aktivitäts-Diagramm (Mermaid)
@@ -94,17 +79,15 @@ flowchart TD
     B --> C[Einstellungsmenü öffnen]
     C --> D{Modus bereits gespeichert?}
     D -- Ja --> E[Gespeicherten Modus anzeigen]
-    D -- Nein --> F[Standard-Modus anzeigen]
+    D -- Nein --> F[System-Modus anzeigen]
     E --> G{Useraktion}
     F --> G
-    G --> H[Light Mode auswählen]
-    G --> I[Dark Mode auswählen]
+    G --> H[Hellen Modus auswählen]
+    G --> I[Dunklen Modus auswählen]
     H --> K[Farbschema sofort wechseln]
-    I --> K
-    K --> M[Einstellung lokal speichern]
-    M --> N[Visuelle Bestätigung anzeigen]
-    N --> O[Einstellungsmenü schließen]
-    O --> P([Ende])
+    I --> K[Einstellung lokal speichern]
+    K --> M[Einstellungsmenü schließen]
+    M --> N([Ende])
 ```
 
 ### 2.2 Alternative Abläufe
