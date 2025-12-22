@@ -9,6 +9,7 @@
 | 20/Oct/2025 | 1.1 | Diagramme hinzugefügt | Alex, Marcel |
 | 24/Oct/2025 | 1.2 | Use-Cases aktualisiert | Alex, Jona, Marcel |
 | 25/Nov/2025 | 1.3 | Markdown-Lint verbessert | Marcel |
+| 22/Dec/2025 | 1.4 | Finalisierung | Alex, Jona, Marcel |
 
 ## Inhaltsverzeichnis
 
@@ -86,7 +87,6 @@ Das Projekt wird als responsive Webanwendung realisiert, die in modernen Browser
 | Spielfeld | Das Spielfeld besteht aus mehreren Feldern, die direkt aneinander zusammengefügt sind.  |
 | Siegespunkt | Ein Spieler sammelt Siegpunkte durch das Erreichen von Zielen. Erreicht ein Spieler eine festgelegte Anzahl von Siegespunkten, gewinnt dieser das Spiel. |
 | Ziel | Jedes Ziel besteht aus einer festgelegten Bedingung. Solange ein Spieler diese Bedingung erfüllt, erhält er für das Erreichen des Ziels Siegpunkte. |
-| Entwicklung |  |
 | Modus | Ein Satz von Spielregeln, es wird beim Starten des Spiels ausgewählt. |
 | Würfeln | Jeder Spieler würfelt automatisch am Anfang seines Zuges zwei Würfel. |
 | Spielzugphase | Einteilung der aufeinander folgenden Aktionen, wenn ein neuer Spieler am Zug ist. Es gibt die Ertrags-, Handels- und Bauphase. |
@@ -161,7 +161,7 @@ Das Projekt wird als responsive Webanwendung realisiert, die in modernen Browser
 
 - 3.1.2 Lobby Management  
   - 3.1.2.1 [Lobby erstellen und beitreten](lobby_management/lobby_erstellen_beitreten/lobby_erstellen_beitreten.md)
-  - 3.1.2.2 [Match starten](./lobby_management/REM match_starten/match_starten.md)
+  - 3.1.2.2 [Match starten](./game/match_starten/match_starten.md)
   - 3.1.2.3 [Rollenzuweisung](./lobby_management/leader_ehemalige_zuweisung/leader_ehemalige_zuweisung.md)
 
 - 3.1.3 Spielmechaniken  
