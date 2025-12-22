@@ -168,9 +168,14 @@ Das [Use-Case-Diagramm](srs/use_case_diagram_new.jpg) visualisiert die Interakti
 
 ![Use-Case-Diagramm](srs/use_case_diagram_new.jpg)
 
+Hier sind noch unsere Use-Case-Realization Specifications (UCRS):
+- [UCRS_login](./srs/account_management/login/ucrs_login.md)
+- [UCRS_lobby_erstellen_beitreten](./srs/lobby_management/lobby_erstellen_beitreten/ucrs_lobby_erstellen_beitreten.md)
+
 ## 5. Logische Ansicht
 
 ### 5.1 Übersicht
+[Klassendiagramm](https://github.com/Hexfields-Studio/HexfieldsDominion-Artefacts/blob/main/class_diagram_backend.md#klassendiagramm-des-backend)
 
 Im Backend ist der Code mit Packages unterteilt, die nach den entprechenden Use-Case-Gruppen benannt sind. Es ergeben sich die Packages account, game und lobby. Für DTOs gibt es dann noch `dto`-Subpackages. Klassen mit Gemeinsamkeiten werden dann wiederum in weitere Subpackages unterteilt, wenn es logisch sinnvoll erscheint.
 
