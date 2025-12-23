@@ -1,12 +1,9 @@
 # Klassendiagramm des Backend
+*Info zum <ins>Zwischenstand</ins>: User und Player sind aktuell unabhängig voneinander implementiert, sollen aber noch zusammengeführt werden. Player ist daher gleichbedeutend oder als Erweiterung von User zu betrachten.*
 ```mermaid
 classDiagram
     class Application{
         +main()
-    }
-
-    class AppConfig{
-        -initialCapacity: int
     }
 
 
@@ -28,10 +25,73 @@ classDiagram
         
     }
 
+    class AppConfig{
+        -initialCapacity: int
+        -playerRepository: PlayerRepository
+        +userDetailsService()
+        +authenticationProvider()
+        +authenticationManager()
+        +passwordEncoder()
+    }
+
     class AccountController{
-        -login()
-        -register()
-        -guest()
+        -service: AuthenticationService
+        +login(request: LoginRequest)
+        +register(request: RegisterRequest)
+        +guest(request: LoginRequest?)
+    }
+
+    class PlayerRepository{
+        +findByEmail(email: String)
+    }
+
+    class LoginRequest{
+        -email: String
+        -password: String
+    }
+
+    class RegisterRequest{
+        -email: String
+        -password: String
+    }
+
+    class AuthenticationResponse{
+        -token: String
+    }
+
+    class AuthenticationService{
+        -playerRepository: PlayerRepository
+        -passwordEncoder: PasswordEncoder
+        -jwtService: JwtService
+        -authenticationManager: AuthenticationManager
+        +register(request: RegisterRequest)
+        +login(request: LoginRequest)
+    }
+
+    class JwtAuthenticationFilter{
+        -doFilterInternal(request: HttpServletRequest, reponse: HttpServletResponse, filterChain: FilterChain)
+    }
+
+    class JwtService{
+        -SECRET_KEY: String
+        +extractUsername(token: String)
+        +extractClaim(token:String, claimsResolver: Function<Claims, T>)
+        +generateToken(userDetails: UserDetails)
+        +generateToken(userDetails: UserDetails, extractClaims: Map<String, Object>)
+        +isTokenValid(token: String, userDetails: UserDetails)
+        -isTokenExpired(token: String)
+        -extractExpiration(token: String)
+        -extractAllClaims(token: String)
+        -getSecretKey()
+    }
+
+    class SecurityConfig{
+        -frontendHost: String
+        -frontendBasePath: String
+        -jwtAuthFilter: JwtAuthenticationFilter
+        -authenticationProvider: AuthenticationProvider
+        +corsConfigurationSource()
+        +securityFilterChain(http: HttpSecurity)
     }
 
     class LobbyController{
@@ -144,6 +204,7 @@ classDiagram
     Match --* Field
     Match --* "2..*" PlayerRepresentation: players
     PlayerRepresentation --> "0..1" Player: player
+    PlayerRepository ..> Player: use
     Ressource "0..*" --* PlayerRepresentation: ressources
     Field --> "1" Ressource: ressource
     Structure --> "1" Ressource: ressourceRecipe
@@ -159,13 +220,24 @@ classDiagram
     TradePlayerDTO --* "1..*" RessourceType: requests
     TradePlayerDTO --* "1..*" RessourceType: offers
 	LobbyManager ..> CreateLobbyDTO: use
-	AccountController ..> Player: use
     LobbyManager ..> AppConfig: use
     LobbyManager ..> LobbyCodeGenerator: use
+    AppConfig ..> PlayerRepository: use
     
     GameController ..> BuildActionDTO: use
     GameController ..> TradeBankDTO: use
     GameController ..> TradePlayerDTO: use
     GameController ..> PickDicePairDTO: use
 
+    AccountController ..> AuthenticationService: use
+    AccountController ..> LoginRequest: use
+    AccountController ..> RegisterRequest: use
+    AuthenticationService ..> PlayerRepository: use
+    AuthenticationService ..> JwtService: use
+    AuthenticationService ..> AuthenticationResponse: use
+    AuthenticationService ..> AppConfig: use
+    SecurityConfig ..> JwtAuthenticationFilter: use
+    SecurityConfig ..> AppConfig: use
+    JwtAuthenticationFilter ..> JwtService: use
+    JwtAuthenticationFilter ..> AppConfig: use
 ```
