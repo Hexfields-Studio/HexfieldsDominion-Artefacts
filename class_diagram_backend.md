@@ -321,8 +321,8 @@ classDiagram
 
     AccountController ..> AuthenticationService: use
     AccountController ..> AuthenticationResult: use
-    AccountController ..> LoginRequest: use
-    AccountController ..> RegisterRequest: use
+	AccountController ..> LoginDTO: use
+	AccountController ..> RegisterDTO: use
     AuthenticationResult ..> AuthenticationResponse: use
     AuthenticationService ..> AllUserRepository: use
     AuthenticationService ..> JwtService: use
@@ -331,6 +331,8 @@ classDiagram
     AuthenticationService ..> AuthenticationResult: use
     AuthenticationService ..> AuthenticationResponse: use
     AuthenticationService ..> AuthTokens: use
+	AuthenticationService ..> LoginDTO: use
+	AuthenticationService ..> RegisterDTO: use
     CookieService ..> JwtService: use
     CookieService ..> AuthTokens: use
     JwtService ..> User: use
