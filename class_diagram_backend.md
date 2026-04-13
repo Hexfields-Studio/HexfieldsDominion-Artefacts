@@ -1,97 +1,25 @@
 # Klassendiagramm des Backend
-*Info zum <ins>Zwischenstand</ins>: User und Player sind aktuell unabhängig voneinander implementiert, sollen aber noch zusammengeführt werden. Player ist daher gleichbedeutend oder als Erweiterung von User zu betrachten.*
 ```mermaid
 classDiagram
-    class Application{
+    class HexfieldsDominionApplication{
         +main()
     }
 
-
-
-    class LobbyManager{
-        -occupiedLobbies: HashMap<String, Lobby>
-        -freeLobbies: Lobby[]
-        +LobbyManager(config: AppConfig)
-        +createLobby(configs: String[]): String
-        +joinLobby(lobbyCode: String, res: Map<String, Object>): boolean
+    class RootController{
+        +root()
     }
 
+    %% lobby
     class Lobby{
         +players: Player[]
         +addPlayer(player: Player)
     }
-    
-    class Match{
-        
-    }
 
-    class AppConfig{
-        -initialCapacity: int
-        -playerRepository: PlayerRepository
-        +userDetailsService()
-        +authenticationProvider()
-        +authenticationManager()
-        +passwordEncoder()
-    }
-
-    class AccountController{
-        -service: AuthenticationService
-        +login(request: LoginRequest)
-        +register(request: RegisterRequest)
-        +guest(request: LoginRequest?)
-    }
-
-    class PlayerRepository{
-        +findByEmail(email: String)
-    }
-
-    class LoginRequest{
-        -email: String
-        -password: String
-    }
-
-    class RegisterRequest{
-        -email: String
-        -password: String
-    }
-
-    class AuthenticationResponse{
-        -token: String
-    }
-
-    class AuthenticationService{
-        -playerRepository: PlayerRepository
-        -passwordEncoder: PasswordEncoder
-        -jwtService: JwtService
-        -authenticationManager: AuthenticationManager
-        +register(request: RegisterRequest)
-        +login(request: LoginRequest)
-    }
-
-    class JwtAuthenticationFilter{
-        -doFilterInternal(request: HttpServletRequest, reponse: HttpServletResponse, filterChain: FilterChain)
-    }
-
-    class JwtService{
-        -SECRET_KEY: String
-        +extractUsername(token: String)
-        +extractClaim(token:String, claimsResolver: Function<Claims, T>)
-        +generateToken(userDetails: UserDetails)
-        +generateToken(userDetails: UserDetails, extractClaims: Map<String, Object>)
-        +isTokenValid(token: String, userDetails: UserDetails)
-        -isTokenExpired(token: String)
-        -extractExpiration(token: String)
-        -extractAllClaims(token: String)
-        -getSecretKey()
-    }
-
-    class SecurityConfig{
-        -frontendHost: String
-        -frontendBasePath: String
-        -jwtAuthFilter: JwtAuthenticationFilter
-        -authenticationProvider: AuthenticationProvider
-        +corsConfigurationSource()
-        +securityFilterChain(http: HttpSecurity)
+    class LobbyCodeGenerator{
+        -CHARACTERS: String
+        -CODE_LENGTH: int
+        -random: Random
+        +generateCode(): String
     }
 
     class LobbyController{
@@ -102,58 +30,29 @@ classDiagram
 		
     }
 
-    class LobbyCodeGenerator{
-        -CHARACTERS: String
-        -CODE_LENGTH: int
-        -random: Random
-        +generateCode(): String
+    class LobbyManager{
+        -occupiedLobbies: HashMap<String, Lobby>
+        -freeLobbies: Lobby[]
+        +LobbyManager(config: AppConfig)
+        +createLobby(configs: String[]): String
+        +joinLobby(lobbyCode: String, res: Map<String, Object>): boolean
     }
 
-	class StructureType{
-	<<enumeration>>
-	TOWN
-	HARBOUR
-	}
-
-	class RessourceType{
-	<<enumeration>>
-	HierDynamischMitDatenAusDBFüllen
-	}
-
-    class PlayerActionType{
-        <<enumeration>>
-        BUILD
-        TRADE_BANK
-        TRADE_PLAYER
-        PICK_DICE_PAIR
-    }
-
-    class PlayerActionDTO{
-        -type: PlayerActionType
-	    -sessionId: String
-    }
-
-	class CreateLobbyDTO{
+    %% lobby/dto
+    class CreateLobbyDTO{
 		-configs: String[]
     }
 
-	%%{"type": "BUILD", "sessionId":..., "pos": [[0,0],[1,0]], "structure": "HARBOUR"}
-    class BuildActionDTO{
-		-pos: Pair[]
-		-structureType: StructureType
-	}
+    class LobbyDTO{
+		-lobbyId: int
+        -players: Player[]
+    }
 
-	class TradeBankDTO{
-
-	}
-
-	%%{"type":.., "sessionId":..., "destPublicId":..., "offered": [{"ressource": "STONE", "amount": 2}, {"ressource": "WOOD", "amount": 1}], "requested": [{"ressource": "GOLD", "amount": 1}]}
-	class TradePlayerDTO{
-		-destPublicId: String
-	}
-
-	class PickDicePairDTO{
-		-index: int
+    %% game
+    class Field{
+		-pos: Pair<Integer, Integer>
+        -number: int
+        -ressource: Ressource
     }
 
     class GameController{
@@ -165,10 +64,12 @@ classDiagram
         -pickDicePair(dto: PickDicePairDTO)
     }
 
-    class Player{
-		-id: int
-        -username: String
-        -isAccount: boolean
+    class Match{
+        
+    }
+
+    class Ressource{
+        -name: String
     }
 
     class Structure{
@@ -177,16 +78,38 @@ classDiagram
         -recipe: Map<RessourceType, Integer>
     }
 
-    class Ressource{
-        -name: String
-    }
+    %% game/dto
+    %% {"type": "BUILD", "sessionId":..., "pos": [[0,0],[1,0]], "structure": "HARBOUR"}
+    class BuildActionDTO{
+		-pos: Pair[]
+		-structureType: StructureType
+	}
 
-    class Field{
-		-pos: Pair<Integer, Integer>
-        -number: int
-        -ressource: Ressource
+	class PickDicePairDTO{
+		-index: int
     }
     
+    class PlayerActionDTO{
+        -type: PlayerActionType
+	    -sessionId: String
+    }
+
+	class TradeBankDTO{
+        
+    }
+
+	%% {"type":.., "sessionId":..., "destPublicId":..., "offered": [{"ressource": "STONE", "amount": 2}, {"ressource": "WOOD", "amount": 1}], "requested": [{"ressource": "GOLD", "amount": 1}]}
+	class TradePlayerDTO{
+		-destPublicId: String
+	}
+
+    %% game/player
+    class Player{
+		-id: int
+        -username: String
+        -isAccount: boolean
+    }
+
     class PlayerRepresentation{
 		-player: Player
         -publicId: int
@@ -195,49 +118,232 @@ classDiagram
         -ressources: Map<Ressource, Integer>
     }
 
+    %% game/types
+    class PlayerActionType{
+        <<enumeration>>
+        BUILD
+        TRADE_BANK
+        TRADE_PLAYER
+        PICK_DICE_PAIR
+    }
+
+	class RessourceType{
+        <<enumeration>>
+        HierDynamischMitDatenAusDBFüllen
+	}
+
+    class StructureType{
+        <<enumeration>>
+        TOWN
+        HARBOUR
+	}
+
+    %% config
+    class AppConfig{
+        -initialCapacity: int
+        +passwordEncoder()
+    }
+
+    class SecurityConfig{
+        -frontendHost: String
+        -accessTokenAuthenticationFilter: AccessTokenAuthenticationFilter
+        -refreshTokenAuthenticationFilter: RefreshTokenAuthenticationFilter
+        +corsConfigurationSource()
+        +securityFilterChain(http: HttpSecurity)
+    }
+
+    %% config/filter
+    class AccessTokenAuthenticationFilter{
+        -shouldNotFilter(request: HttpServletRequest)
+        -doFilterInternal(request: HttpServletRequest, reponse: HttpServletResponse, filterChain: FilterChain)
+    }
+
+    class RefreshTokenAuthenticationFilter{
+        +doesFilter(path: String)
+        -shouldNotFilter(request: HttpServletRequest)
+        -doFilterInternal(request: HttpServletRequest, reponse: HttpServletResponse, filterChain: FilterChain)
+    }
+
+    %% account
+    class AccountController{
+        -authenticationService: AuthenticationService
+        +guest(response: HttpServletResponse)
+        +register(request: RegisterDTO, response: HttpServletResponse)
+        +login(request: LoginDTO, response: HttpServletResponse)
+        +refresh(oldRefreshToken: String, response: HttpServletResponse)
+        +logout(oldRefreshToken: String, response: HttpServletResponse)
+    }
+
+    class AuthenticationResponse{
+        -accessToken: String
+    }
+
+    class AuthenticationResult{
+        -authenticationResponse: AuthenticationResponse
+        -refreshTokenCookie: Cookie
+    }
+
+    class AuthenticationService{
+        -userRepository: AllUserRepository
+        -passwordEncoder: PasswordEncoder
+        -jwtService: JwtService
+        -cookieService: CookieService
+        -validRefreshTokensService: ValidRefreshTokensService
+        +guest()
+        +register(request: RegisterDTO)
+        +login(request: LoginDTO)
+        +refresh(refreshToken: String)
+        +logout(oldRefreshToken: String)
+    }
+
+    %% account/dto
+    class LoginDTO{
+        -email: String
+        -password: String
+    }
+
+    class RegisterDTO{
+        -email: String
+        -password: String
+    }
+
+    %% account/token
+    class AuthTokens{
+        +ACCESS_TOKEN_MAX_AGE: int
+        +REFRESH_TOKEN_NAME: String
+        +REFRESH_TOKEN_MAX_AGE: int
+    }
+
+    class CookieService{
+        -jwtService: JwtService
+        +createRefreshTokenCookie(user: User)
+        +createDeleteRefreshTokenCookie()
+    }
+
+    class JwtService{
+        -SECRET_KEY: String
+        +extractUsername(token: String)
+        +extractClaim(token: String, claimsResolver: Function<Claims, T>)
+        +generateToken(user: User, maxAge: int)
+        +generateToken(extraClaims: Map<String,Object>, user: User, maxAgeSeconds: int)
+        +isTokenValid(token: String)
+        -extractExpiration(token: String)
+        -extractAllClaims(token: String)
+        -getSecretKey()
+    }
+
+    class ValidRefreshTokensService{
+        -usersValidTokens: Map<String,String>
+        +store(user: User, refreshToken: String)
+        +invalidate(user: User)
+        +isValid(refreshToken: String)
+    }
+
+    %% account/user
+    class AccountUserRepository{
+        +save(user: User)
+    }
+
+    class AllUserRepository{
+        +save(user: User)
+        +findByEmail(email: String)
+        -getRepositoryByUser(user: User)
+    }
+
+    class GuestUserRepository{
+        -guestUsers: Map<String,User>
+        +save(user: User)
+        +findByEmail(email: String)
+    }
+
+    class Role{
+        <<enumeration>>
+        PLAYER
+        GUEST
+	}
+
+    class User{
+        -id: Integer
+        -email: String
+        -password: String
+        -role: Role
+        +getAuthorities()
+        +getUsername()
+    }
+
+    class UserRepository{
+        <<Interface>>
+        +save(user: User)
+        +findByEmail(email: String)
+    }
+
+    %% RELATIONS
     LobbyController --o "1" LobbyManager : lobbyManager
     LobbyManager --> "0..*" Lobby: freeLobbies
     LobbyManager --> "0..*" Lobby: occupiedLobbies
-    Match "0..1" --* Lobby
-    Lobby --> "1..*" Player
-    Structure "0..*" --* Match: structures
-    Match --* Field
-    Match --* "2..*" PlayerRepresentation: players
-    PlayerRepresentation --> "0..1" Player: player
-    PlayerRepository ..> Player: use
-    Ressource "0..*" --* PlayerRepresentation: ressources
-    Field --> "1" Ressource: ressource
-    Structure --> "1" Ressource: ressourceRecipe
-    GameController --> "0..*" Match: matches
-    BuildActionDTO --|> PlayerActionDTO
-    PickDicePairDTO --|> PlayerActionDTO
-    TradeBankDTO --|> PlayerActionDTO
-    TradePlayerDTO --|> PlayerActionDTO
-    PlayerActionDTO ..> PlayerActionType: use
-    BuildActionDTO ..> StructureType: use
-    TradeBankDTO --* "1" RessourceType: requested
-    TradeBankDTO --* "1" RessourceType: offered
-    TradePlayerDTO --* "1..*" RessourceType: requests
-    TradePlayerDTO --* "1..*" RessourceType: offers
 	LobbyManager ..> CreateLobbyDTO: use
     LobbyManager ..> AppConfig: use
     LobbyManager ..> LobbyCodeGenerator: use
-    AppConfig ..> PlayerRepository: use
-    
+    Lobby --> "1..*" Player
+
     GameController ..> BuildActionDTO: use
     GameController ..> TradeBankDTO: use
     GameController ..> TradePlayerDTO: use
     GameController ..> PickDicePairDTO: use
+    GameController --> "0..*" Match: matches
+    Match "0..1" --* Lobby
+    Match --* Field
+    Match --* "2..*" PlayerRepresentation: players
+    Structure "0..*" --* Match: structures
+    Structure --> "1" Ressource: ressourceRecipe
+    PlayerRepresentation --> "0..1" Player: player
+    Ressource "0..*" --* PlayerRepresentation: ressources
+    Field --> "1" Ressource: ressource
+    BuildActionDTO --|> PlayerActionDTO
+    BuildActionDTO ..> StructureType: use
+    PickDicePairDTO --|> PlayerActionDTO
+    TradeBankDTO --|> PlayerActionDTO
+    TradePlayerDTO --|> PlayerActionDTO
+    PlayerActionDTO ..> PlayerActionType: use
+    TradeBankDTO --* "1" RessourceType: requested
+    TradeBankDTO --* "1" RessourceType: offered
+    TradePlayerDTO --* "1..*" RessourceType: requests
+    TradePlayerDTO --* "1..*" RessourceType: offers
+
+    SecurityConfig ..> AccessTokenAuthenticationFilter: use
+    SecurityConfig ..> RefreshTokenAuthenticationFilter: use
+    AccessTokenAuthenticationFilter ..> JwtService: use
+    AccessTokenAuthenticationFilter ..> AllUserRepository: use
+    AccessTokenAuthenticationFilter ..> RefreshTokenAuthenticationFilter: use
+    RefreshTokenAuthenticationFilter ..> JwtService: use
+    RefreshTokenAuthenticationFilter ..> ValidRefreshTokensService: use
+    RefreshTokenAuthenticationFilter ..> AllUserRepository: use
 
     AccountController ..> AuthenticationService: use
+    AccountController ..> AuthenticationResult: use
     AccountController ..> LoginRequest: use
     AccountController ..> RegisterRequest: use
-    AuthenticationService ..> PlayerRepository: use
+    AuthenticationResult ..> AuthenticationResponse: use
+    AuthenticationService ..> AllUserRepository: use
     AuthenticationService ..> JwtService: use
+    AuthenticationService ..> CookieService: use
+    AuthenticationService ..> ValidRefreshTokensService: use
+    AuthenticationService ..> AuthenticationResult: use
     AuthenticationService ..> AuthenticationResponse: use
-    AuthenticationService ..> AppConfig: use
-    SecurityConfig ..> JwtAuthenticationFilter: use
-    SecurityConfig ..> AppConfig: use
-    JwtAuthenticationFilter ..> JwtService: use
-    JwtAuthenticationFilter ..> AppConfig: use
+    AuthenticationService ..> AuthTokens: use
+    CookieService ..> JwtService: use
+    CookieService ..> AuthTokens: use
+    JwtService ..> User: use
+    ValidRefreshTokensService ..> User: use
+    AccountUserRepository ..> User: use
+    AccountUserRepository ..|> UserRepository
+    AllUserRepository ..> AccountUserRepository: use
+    AllUserRepository ..> GuestUserRepository: use
+    AllUserRepository ..> User: use
+    AllUserRepository ..> Role: use
+    AllUserRepository ..|> UserRepository
+    GuestUserRepository ..> User: use
+    GuestUserRepository ..|> UserRepository
+    User ..> Role: use
+    UserRepository ..> User: use
 ```
