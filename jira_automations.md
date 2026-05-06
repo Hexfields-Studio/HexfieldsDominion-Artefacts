@@ -3,14 +3,18 @@ Falls als "berücksichtigte Workitems" 100 angezeigt wird, existieren vmtl. mehr
 Die Ausführung muss mindestens initial direkt über ein Workitem und nicht über den Automations-Button über dem Bord erfolgen, damit Automations angezeigt werden.
 
 # Zeiterfassung
-## Summe Zeiterfassung pro Phase
+## [alltime] Summe Zeiterfassung pro Phase
 *Argumente*: Name der Phase, z.B. "construction" (also nicht der ganze Tag wie "phase-construction")
-## Summe Zeiterfassung pro Workflow
+## [4. Sem.] Summe Zeiterfassung pro Phase
+-> Siehe Automation für "alltime", aber begrenzt auf Workitems, deren Status innerhalb von 2026 auf "Fertig" geändert wurde.
+## [alltime] Summe Zeiterfassung pro Workflow
 *Argumente*: Name des Workflows, z.B. "implementation" (also nicht der ganze Tag wie "workflow-implementation")
-## (NUR ASSIGNED) [alltime] Summe von "Zeiterfassung" pro User
+## [4. Sem.] Summe Zeiterfassung pro Workflow
+-> Siehe Automation für "alltime", aber begrenzt auf Workitems, deren Status innerhalb von 2026 auf "Fertig" geändert wurde.
+## [alltime] (NUR ASSIGNED) Summe von "Zeiterfassung" pro User
 *Argumente*: Name des Users  
 Summe der getrackten Zeit aller Workitems, die dem angegebenen User zugewiesen sind.
-## (NUR ASSIGNED) [4. Sem.] Summe von "Zeiterfassung" pro User
+## [4. Sem.] (NUR ASSIGNED) Summe von "Zeiterfassung" pro User
 -> Siehe Automation für "alltime", aber begrenzt auf Workitems, deren Status innerhalb von 2026 auf "Fertig" geändert wurde.
 
 # Sonstige
