@@ -5,6 +5,7 @@
 | Datum | Version | Beschreibung | Autor |
 |-------|---------|-------------|--------|
 | 28/Apr/2026 | 1.0 | Dokument erstellt | Alex, Jona, Marcel |
+| 06/May/2026 | 1.1 | Aktualisierung Metriken | Marcel |
 
 ## Inhaltsverzeichnis
 
@@ -73,14 +74,16 @@ Die Testabdeckung erfolgt in folgenden Phasen:
 
 #### Testabdeckungsziele
 
-- Backend: 50% Gesamtabdeckung mit Fokus auf:
-  - Spiellogik und Regelverarbeitung
+- Backend: Nahe 100% Abdeckung mit Fokus auf:
+  - Spiellogik, Regelverarbeitung
   - Authentifizierungssystem (Login, Logout, Token-Validierung)
-  - Lobbyverwaltung und Zugriffskontrolle
+  - Zugriffskontrolle
+  - Lobbyverwaltung
 
-- Frontend: 10% Abdeckung zu Lernzwecken
+- Frontend: Etwa 10-20% Abdeckung
   - Fokus auf Grundmuster und Best Practices
   - Vereinfachte Tests für Funktionen, die schwer zu testen sind
+  - v.A. Authentifizierung zum Backend
 
 #### Zu testende Funktionen
 
@@ -92,7 +95,7 @@ Die Testabdeckung erfolgt in folgenden Phasen:
 
 #### Nicht zu testende Funktionen
 
-- Komplexe visuelle Rendering-Tests
+- Komplexe Rendering-Tests
 - Browser-spezifische Kompatibilität (wird manuell bewertet)
 
 #### Annahmen
