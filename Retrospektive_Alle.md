@@ -48,4 +48,4 @@ Teilnehmer: @ultra-ms, @A1exHorst, @JaskerX
 - Die Priorität sollte auf den MVP gesetzt werden (alle zusätzlichen Features auslassen, Fokus auf Kern-Features). [@ultra-ms]
 - Es sollte abgewogen werden, ob Priorität auf das Lernen für Klausuren oder auf die Perfektionierung des Projekts gelegt wird. [@A1exHorst]
 - Es sollte definiert werden, wann das Projekt als "fertig" gilt und welche Features dazu gehören. [@A1exHorst]
-- Für den nächsten Blogpost sollte jetzt entschieden werden, ob jeder dem Ersteller schickt oder der Ersteller nachfragt. [@JaskerX]
+- Für den nächsten Blogpost sollte jetzt entschieden werden, ob jeder dem Ersteller schickt oder der Ersteller nachfragt. -> nachfragen [@JaskerX]
