@@ -42,8 +42,8 @@ Das Use-Case "Lobby erstellen und beitreten" ist mit den Use-Cases "Start Menü"
 
 ### 1.4. References
 
-- [Use-Case Spezifikation Lobby erstellen und beitreten, Sequenzdiagramm](https://github.com/Hexfields-Studio/HexfieldsDominion-Artefacts/blob/main/srs/lobby_management/lobby_erstellen_bearbeiten/lobby_erstellen_beitreten.md)  
-- [Aktivitätsdiagramm](https://github.com/Hexfields-Studio/HexfieldsDominion-Artefacts/blob/main/srs/lobby_management/lobby_erstellen_bearbeiten/aktivit%C3%A4tsdiagramm.png)
+- [Use-Case Spezifikation Lobby erstellen und beitreten, Sequenzdiagramm](https://github.com/Hexfields-Studio/HexfieldsDominion-Artefacts/blob/main/diagrams-usecases/lobby_management/lobby_erstellen_bearbeiten/lobby_erstellen_beitreten.md)  
+- [Aktivitätsdiagramm](https://github.com/Hexfields-Studio/HexfieldsDominion-Artefacts/blob/main/diagrams-usecases/lobby_management/lobby_erstellen_bearbeiten/aktivit%C3%A4tsdiagramm.png)
 
 ### 1.5. Overview
 

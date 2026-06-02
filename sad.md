@@ -164,18 +164,18 @@ Diese JSON-Struktur ermöglicht eindeutige Zuordnung und Bestimmung von den bete
 
 ## 4. Use-Case-Ansicht
 
-Das [Use-Case-Diagramm](srs/use_case_diagram_new.jpg) visualisiert die Interaktionen zwischen den Akteuren und den zentralen Systemfunktionen wie Account-Management, Lobby-Management und Spielablauf:
+Das [Use-Case-Diagramm](diagrams-usecases/use_case_diagram_new.jpg) visualisiert die Interaktionen zwischen den Akteuren und den zentralen Systemfunktionen wie Account-Management, Lobby-Management und Spielablauf:
 
-![Use-Case-Diagramm](srs/use_case_diagram_new.jpg)
+![Use-Case-Diagramm](diagrams-usecases/use_case_diagram_new.jpg)
 
 Hier sind noch unsere Use-Case-Realization Specifications (UCRS):
-- [UCRS_login](./srs/account_management/login/ucrs_login.md)
-- [UCRS_lobby_erstellen_beitreten](./srs/lobby_management/lobby_erstellen_beitreten/ucrs_lobby_erstellen_beitreten.md)
+- [UCRS_login](./diagrams-usecases/account_management/login/ucrs_login.md)
+- [UCRS_lobby_erstellen_beitreten](./diagrams-usecases/lobby_management/lobby_erstellen_beitreten/ucrs_lobby_erstellen_beitreten.md)
 
 ## 5. Logische Ansicht
 
 ### 5.1 Übersicht
-[Klassendiagramm](https://github.com/Hexfields-Studio/HexfieldsDominion-Artefacts/blob/main/class_diagram_backend.md#klassendiagramm-des-backend)
+[Klassendiagramm](https://github.com/Hexfields-Studio/HexfieldsDominion-Artefacts/blob/main/diagrams-usecases/class_diagram_backend.md#klassendiagramm-des-backend)
 
 Im Backend ist der Code mit Packages unterteilt, die nach den entprechenden Use-Case-Gruppen benannt sind. Es ergeben sich die Packages account, game und lobby. Für DTOs gibt es dann noch `dto`-Subpackages. Klassen mit Gemeinsamkeiten werden dann wiederum in weitere Subpackages unterteilt, wenn es logisch sinnvoll erscheint.
 
@@ -188,7 +188,7 @@ Im Backend ist der Code mit Packages unterteilt, die nach den entprechenden Use-
 
 ## 5.3 Use-Case-Realisierungen
 
-Erläuterung anhand des Use Case [“Lobby erstellen und beitreten”](srs/lobby_management/lobby_erstellen_beitreten/lobby_erstellen_beitreten.md):
+Erläuterung anhand des Use Case [“Lobby erstellen und beitreten”](diagrams-usecases/lobby_management/lobby_erstellen_beitreten/lobby_erstellen_beitreten.md):
 
 Das `hexfieldsdominion.lobby`-Package auf dem Backend inklusive dem `.dto`-Package tragen beide zur die Lobbyerstellung und für das Beitreten bei. Die `Controller` Klasse im Lobby-Package beinhaltet zwei Endpunkte, jeweils für das Erstellen (`PATCH /lobbies`) und für das Beitreten (`GET /lobbies/{lobbyCode}`).
 Auf der Seite des Frontends ist im `pages`-Package die JSX für die “Start Menü” Seite definiert. Auf dieser Seite befindet sich Programmcode für das Ausführen von HTTP-Requests an beiden Endpunkten. Dabei wird unter anderem auf `dialog.tsx` aus dem Package `components.dialog` zurückgegriffen.
@@ -197,23 +197,23 @@ Auf der Seite des Frontends ist im `pages`-Package die JSX für die “Start Men
 
 Hier sind alle Sequenzdiagramme verlinkt. Sie beschreiben jeweils einen Prozess und stellen dabei jede beteiligte Schicht des Tech-Stack dar:
 
-### [Sequenzdiagramm: Login](srs/account_management/login/login.md#sequenzdiagramm-mermaid)
+### [Sequenzdiagramm: Login](diagrams-usecases/account_management/login/login.md#sequenzdiagramm-mermaid)
 
-### [Sequenzdiagramm: Logout](srs/account_management/logout/logout.md#sequenzdiagramm-mermaid)
+### [Sequenzdiagramm: Logout](diagrams-usecases/account_management/logout/logout.md#sequenzdiagramm-mermaid)
 
-### [Sequenzdiagramm: Passwort-Reset](srs/account_management/password_reset/password_reset.md#sequenzdiagramm-mermaid)
+### [Sequenzdiagramm: Passwort-Reset](diagrams-usecases/account_management/password_reset/password_reset.md#sequenzdiagramm-mermaid)
 
-### [Sequenzdiagramm: Registration](srs/account_management/registration/registration.md#sequenz-diagramm)
+### [Sequenzdiagramm: Registration](diagrams-usecases/account_management/registration/registration.md#sequenz-diagramm)
 
-### [Sequenzdiagramm: Match Starten](srs/game/match_starten/match_starten.md#sequenzdiagramm)
+### [Sequenzdiagramm: Match Starten](diagrams-usecases/game/match_starten/match_starten.md#sequenzdiagramm)
 
-### [Sequenzdiagramm: Lobby erstellen](srs/lobby_management/lobby_erstellen_beitreten/lobby_erstellen_beitreten.md#sequenzdiagramm)
+### [Sequenzdiagramm: Lobby erstellen](diagrams-usecases/lobby_management/lobby_erstellen_beitreten/lobby_erstellen_beitreten.md#sequenzdiagramm)
 
-### [Sequenzdiagramm: Lobby beitreten](srs/lobby_management/lobby_erstellen_beitreten/lobby_erstellen_beitreten.md#sequenzdiagramm)
+### [Sequenzdiagramm: Lobby beitreten](diagrams-usecases/lobby_management/lobby_erstellen_beitreten/lobby_erstellen_beitreten.md#sequenzdiagramm)
 
-### [Sequenzdiagramm: Light/Dark Mode](srs/user_interface/light_dark_mode/light_dark_mode.md#sequenz-diagramm)
+### [Sequenzdiagramm: Light/Dark Mode](diagrams-usecases/user_interface/light_dark_mode/light_dark_mode.md#sequenz-diagramm)
 
-### [Sequenzdiagramm: Start Menü](srs/user_interface/start_men%C3%BC/start_men%C3%BC.md#sequenzdiagramm)
+### [Sequenzdiagramm: Start Menü](diagrams-usecases/user_interface/start_men%C3%BC/start_men%C3%BC.md#sequenzdiagramm)
 
 ## 7. Einsatzansicht
 
@@ -221,7 +221,7 @@ Das Frontend wird über GitHub Pages bereitgestellt und das Backend auf Web-Serv
 
 ## 8. Implementationsansicht
 
-Die Implementationsansicht lässt sich dem [Klassendiagramm](https://github.com/Hexfields-Studio/HexfieldsDominion-Artefacts/blob/main/class_diagram_backend.md#klassendiagramm-des-backend) entnehmen.
+Die Implementationsansicht lässt sich dem [Klassendiagramm](https://github.com/Hexfields-Studio/HexfieldsDominion-Artefacts/blob/main/diagrams-usecases/class_diagram_backend.md#klassendiagramm-des-backend) entnehmen.
 
 ## 9. Datenansicht
 
