@@ -1,31 +1,27 @@
-# Use-Case Anforderung: Spielzug Ausführen
+# Use-Case Anforderung: Match starten
 
-# 1. Spielzug Ausführen
+# 1. Match starten
 
 ## 1.1 Kurze Beschreibung
-Dieses Use-Case ermöglicht einem Spieler das Ausführen seines/ihres Spielzuges innerhalb eines Matches.
-Beispielsweise ermöglicht das Use-Case somit folgende Spielzüge:
-- Die Platzierung von neuen Gebäuden
-- Eine Tauschanfrage mit einem Spieler
-- Das Handeln mit der Bank
-- Das manuelle Beenden eines Spielzugs
+Dieses Use-Case dient dazu, dass ein User (der Lobbyanführer) ein Match starten kann. Dabei wird eine bestehende Lobby benötigt, auf der das Match aufbaut.
 
-## 1.2 Mockup 
-n/a
+## 1.2 Mockup
+![Mockup Match starten](mockup_match_starten.png)
 
 # 2. Ablauf von Ereignissen
 
 ## 2.1 Grundlegender Ablauf
-1. Das Backend erteilt einem Spieler das Zugrecht, ein Timeout wird gestartet
-2. Es wird automatisch gewürfelt, basierend auf der gewürfelten Zahl erhalten die Spieler Ressourcen von den Feldern.
-3. Solange der Timeout nicht getriggert wurde und der Spieler seinen Zug nicht beendet, kann der Spieler beliebig viele Spielzüge spielen, solange sie valide sind.
-4. Nachdem der zugewiesene Spieler seinen Spielzug beendet hat, wird geprüft, ob irgendein Spieler innerhalb des Matches genügend Siegespunkte erreicht hat
-5. Wenn ja, beende das Match
-6. Wenn nein, soll das Backend das Zugrecht an den nächsten Spieler in der Reihe zuweisen, im folgenden wiederholt sich der Ablauf von Punkt 1.
+Dieser Ablauf beschreibt den Prozess, der von einem Spieler (den Lobbyanführer) das starten eines Matches ausgeführt wird. Der Prozess besteht aus diesen Schritten in dieser Reihenfolge:
+1. Ein User klickt auf "Match starten"
+2. Das Frontend sendet eine Anfrage an das Backend um ein Match auf Grundlage der Lobby zu starten
+3. Solange das Match läuft, überträgt das Backend die Daten des matches an alle Clients innerhalb der Lobby
 
-In dem folgenden Sequenzdiagram wird unteranderem auch den Ablauf für Spielzüge dargestellt:
+## 2.2 Alternative Abläufe
+Im Falle eines Fehlers (sollte der Spieler nicht der Lobbyanführer sein) sollte eine entsprechende Fehlermeldung zurückgesendet werden.
 
-*Kopie aus [match_starten.md: Sequenzdiagramm](./../match_starten/match_starten.md#sequenzdiagramm)*
+Das folgende Sequenzdiagramm beschreibt beide Abläufe:
+
+### Sequenzdiagramm
 ```mermaid
 sequenceDiagram
 title Match Starten
@@ -70,7 +66,7 @@ activate Frontend
         
         Spieler ->> Frontend: Einen beliebigen Spielzug\nausführen
         activate Frontend
-          Frontend->Backend: POST /games/{gameUUID}/makeMove
+          Frontend->Backend: POST /makeMove/{match_id}
           activate Backend
             alt hasRightForTurn(player) && moveIsValid(move)
               Backend->Backend: executeMove(move)
@@ -92,22 +88,22 @@ activate Frontend
       Backend->>Alle Frontends: event:matchEnd\ndata:{}
       deactivate Backend
     end
+
 ```
+_Übrigens: Nachrichten wie "event: loadMatch data: {players: {...}, map_layout: {...}}" sind **S**erver **S**ent **E**vents **(SSE)**._
 
-## 2.2 Alternative Abläufe
-Unvalide bzw. unberechtigte Spielzüge, die von einem Client gesendet werden, sollen abgelehnt und mit einer entsprechenden Fehlernachricht beantwortet werden.
-
-# 3. Besondere Anforderungen
+# 3. Spezielle Anforderungen
 n/a
 
 # 4. Vorbedingungen
-Es gelten folgende Vorbedingungen:
-- Der Spieler muss sich in einem Match befinden
-- Der Spieler muss an der Reihe sein
-- Der Spielzug muss valide sein
+Für das Starten des Matches gelten folgende Vorbedingungen:
+1. Der User hat die Rolle des Lobbyanführers
+2. Es befinden sich genügend Spieler innerhalb der Lobby
+3. Die Konfigurationen sind valide
 
 # 5. Nachbedingungen
-- Der Spielzug muss ausgeführt werden
-- Jede änderung des Spielzustandes muss an alle Clients gesendet werden, sodass sie den neuen Zustand anzeigen können
-- 
-# 6. Story Points
+1. Ein Match wurde auf Grundlage der Lobby erstellt.
+2. Alle Mitglieder der Lobby wurden zu diesem Match weitergeleitet und habe.
+
+# 6. Aufwandsschätzung
+Story Points: 8

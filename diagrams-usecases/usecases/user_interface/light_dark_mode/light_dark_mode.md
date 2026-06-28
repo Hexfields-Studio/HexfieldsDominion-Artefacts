@@ -8,7 +8,7 @@ Dieses Use-Case ermöglicht es dem User, zwischen Hell- und Dunkelmodus der Appl
 
 ### 1.2 Mockup
 
-![light_dark_mode_mockup](./light_dark_mode_mockup.drawio.png "light_dark_mode_mockup")
+![light_dark_mode_mockup](light_dark_mode_mockup.drawio.png "light_dark_mode_mockup")
 
 ### 1.3 Screenshot
 

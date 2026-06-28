@@ -8,7 +8,7 @@ Dieses Use-Case ermöglicht es einem neuen User, sich ein Konto zu erstellen.
 
 ### 1.2 Mockup
 
-![registration_mockup](./registration_mockup.drawio.png "registration_mockup")
+![registration_mockup](registration_mockup.drawio.png "registration_mockup")
 
 ### 1.3 Screenshot
 

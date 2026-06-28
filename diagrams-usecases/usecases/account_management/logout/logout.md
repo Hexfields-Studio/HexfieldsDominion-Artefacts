@@ -8,7 +8,7 @@ Dieses Use-Case ermöglicht es einem angemeldeten User, sich auf der Startseite 
 
 ### 1.2 Mockup
 
-![logout_mockup](./logout_mockup.drawio.png "logout_mockup")
+![logout_mockup](logout_mockup.drawio.png "logout_mockup")
 
 ### 1.3 Screenshot
 

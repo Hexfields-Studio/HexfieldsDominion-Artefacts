@@ -8,7 +8,7 @@ Dieses Use-Case ermöglicht es einem User, sich mit seinem Konto anzumelden.
 
 ### 1.2 Mockup
 
-![login_mockup](./login_mockup.drawio.png "login_mockup")
+![login_mockup](login_mockup.drawio.png "login_mockup")
 
 ### 1.3 Screenshot
 

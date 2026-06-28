@@ -113,9 +113,9 @@ Das Projekt wird als responsive Webanwendung realisiert, die in modernen Browser
 
 ### 2.2 Use-Case-Diagramm
 
-*![Use-Case-Diagramm des gesamten Projekts](./diagrams-usecases/use_case_diagram_new.jpg "Use-Case-Diagramm des gesamten Projekts")*
+*![Use-Case-Diagramm des gesamten Projekts](diagrams-usecases/usecases/use_case_diagram_new.jpg "Use-Case-Diagramm des gesamten Projekts")*
 
-*Anmerkung: Die alte Version des Use-Case Diagramms ist im Verzeichnis als "[use_case_diagram_old.jpg](./diagrams-usecases/use_case_diagram_old.jpg)" verfügbar.*
+*Anmerkung: Die alte Version des Use-Case Diagramms ist im Verzeichnis als "[use_case_diagram_old.jpg](diagrams-usecases/usecases/use_case_diagram_old.jpg)" verfügbar.*
 
 ### 2.3 Technologie-Stack
 
@@ -153,26 +153,26 @@ Das Projekt wird als responsive Webanwendung realisiert, die in modernen Browser
 ### Funktionale Anforderungen im Detail
 
 - 3.1.1 Account Management  
-  - 3.1.1.1 [Registrierung](./diagrams-usecases/account_management/registration/registration.md)
-  - 3.1.1.2 [Login](./diagrams-usecases/account_management/login/login.md)
-  - 3.1.1.3 [Passwort Reset](./diagrams-usecases/account_management/password_reset/password_reset.md)
-  - 3.1.1.4 [Gast-Login](./diagrams-usecases/account_management/gast_login/gast_login.md)
-  - 3.1.1.5 [Logout](./diagrams-usecases/account_management/logout/logout.md)
+  - 3.1.1.1 [Registrierung](diagrams-usecases/usecases/account_management/registration/registration.md)
+  - 3.1.1.2 [Login](diagrams-usecases/usecases/account_management/login/login.md)
+  - 3.1.1.3 [Passwort Reset](diagrams-usecases/usecases/account_management/password_reset/password_reset.md)
+  - 3.1.1.4 [Gast-Login](diagrams-usecases/usecases/account_management/gast_login/gast_login.md)
+  - 3.1.1.5 [Logout](diagrams-usecases/usecases/account_management/logout/logout.md)
 
 - 3.1.2 Lobby Management  
   - 3.1.2.1 [Lobby erstellen und beitreten](lobby_management/lobby_erstellen_beitreten/lobby_erstellen_beitreten.md)
-  - 3.1.2.2 [Match starten](./diagrams-usecases/game/match_starten/match_starten.md)
-  - 3.1.2.3 [Rollenzuweisung](./diagrams-usecases/lobby_management/leader_ehemalige_zuweisung/leader_ehemalige_zuweisung.md)
+  - 3.1.2.2 [Match starten](diagrams-usecases/usecases/game/match_starten/match_starten.md)
+  - 3.1.2.3 [Rollenzuweisung](diagrams-usecases/usecases/lobby_management/leader_ehemalige_zuweisung/leader_ehemalige_zuweisung.md)
 
 - 3.1.3 Spielmechaniken  
-  - 3.1.3.1 [Spielzug ausführen](./diagrams-usecases/game/spielzug_ausfuehren/spielzug_ausfuehren.md)
-  - 3.1.3.2 [Aktualisierung und Datenaustausch](./diagrams-usecases/game/aktualisierung_und_datenaustausch/aktualisierung_und_datenaustausch.md)
-  - 3.1.3.3 [Laufendes Match](./diagrams-usecases/game/laufendes_match/laufendes_match.md)
+  - 3.1.3.1 [Spielzug ausführen](diagrams-usecases/usecases/game/spielzug_ausfuehren/spielzug_ausfuehren.md)
+  - 3.1.3.2 [Aktualisierung und Datenaustausch](diagrams-usecases/usecases/game/aktualisierung_und_datenaustausch/aktualisierung_und_datenaustausch.md)
+  - 3.1.3.3 [Laufendes Match](diagrams-usecases/usecases/game/laufendes_match/laufendes_match.md)
 
 - 3.1.4 Grundlegende UI  
-  - 3.1.4.1 [Startbildschirm](./diagrams-usecases/user_interface/start_menü/start_menü.md)
-  - 3.1.4.2 [Spielbildschirm](./diagrams-usecases/user_interface/match_page/spiel_menue/spiel_menue.md)
-  - 3.1.4.3 [Anmeldefenster/Homepage](./diagrams-usecases/user_interface/home_page/home_page.md)
+  - 3.1.4.1 [Startbildschirm](diagrams-usecases/usecases/user_interface/start_menü/start_menü.md)
+  - 3.1.4.2 [Spielbildschirm](diagrams-usecases/usecases/user_interface/match_page/spiel_menue/spiel_menue.md)
+  - 3.1.4.3 [Anmeldefenster/Homepage](diagrams-usecases/usecases/user_interface/home_page/home_page.md)
 
 - 3.1.5 Erweiterte UI-Komponenten *(Anforderungen Work-in-progress)*
   - 3.1.5.1 [Pause-Menü](-)
@@ -191,7 +191,7 @@ Das Projekt wird als responsive Webanwendung realisiert, die in modernen Browser
   - 3.1.7.4 [Fliegende Inseln](-)
 
 - 3.1.8 Design-Verbesserungen  
-  - 3.1.8.1 [Light/Dark Mode](./diagrams-usecases/user_interface/light_dark_mode/light_dark_mode.md)
+  - 3.1.8.1 [Light/Dark Mode](diagrams-usecases/usecases/user_interface/light_dark_mode/light_dark_mode.md)
 
 ### 3.2 Benutzbarkeit
 

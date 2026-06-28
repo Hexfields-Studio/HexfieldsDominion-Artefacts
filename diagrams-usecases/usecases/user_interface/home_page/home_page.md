@@ -8,11 +8,11 @@ Dieses Use-Case ermöglicht es einem User, auf die Webseite zu gelangen.
 
 ### 1.2 Mockup
 
-![home_page_mockup](./home_page_mockup.drawio.png "home_page_mockup")
+![home_page_mockup](home_page_mockup.drawio.png "home_page_mockup")
 
 ### 1.3 Screenshot
 
-![home_page_screenshot](./home_page_screenshot.png "home_page_screenshot")
+![home_page_screenshot](home_page_screenshot.png "home_page_screenshot")
 
 ## 2. Ablauf von Ereignissen
 

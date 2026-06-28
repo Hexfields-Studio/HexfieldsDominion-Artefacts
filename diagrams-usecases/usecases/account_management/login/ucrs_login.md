@@ -49,9 +49,9 @@ Dieses UCRS deckt den Login-Prozess ab und ist Teil der Überkategorie "Account 
 
 ### 1.4. References
 
-- Use-Case Spezifikation des Login: [login.md](./login.md)
+- Use-Case Spezifikation des Login: [login.md](login.md)
 - Use-Case Spezifikation des Gast-Login: [login_guest.md](../gast_login/gast_login.md)
-- Sequenzdiagramm: [login.md: Sequenzdiagramm (Mermaid)](./login.md#sequenzdiagramm-mermaid)
+- Sequenzdiagramm: [login.md: Sequenzdiagramm (Mermaid)](login.md#sequenzdiagramm-mermaid)
 
 ### 1.5. Overview
 
@@ -63,7 +63,7 @@ Der Login-Use-Case wird durch die Zusammenarbeit mehrerer Komponenten realisiert
 
 ### Sequenzdiagramm (Mermaid)
 
-*Kopie aus [login.md: Sequenzdiagramm (Mermaid)](./login.md#sequenzdiagramm-mermaid)*
+*Kopie aus [login.md: Sequenzdiagramm (Mermaid)](login.md#sequenzdiagramm-mermaid)*
 
 ```mermaid
 sequenceDiagram

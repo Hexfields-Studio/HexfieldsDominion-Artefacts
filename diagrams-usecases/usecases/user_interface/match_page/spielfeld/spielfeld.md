@@ -8,7 +8,7 @@ Ein Feld besteht aus einer Zahl und Ressource, die beide beim start des Spiels d
 Nachdem eine Zahl gewürfelt wurde, übergibt jedes Feld, das diese Zahl trägt, seine Ressourcen an jeden Spieler unter der Bedingung, dass der Spieler die richtigen Gebäude an den Ecken des Feldes gebaut hat. 
 
 ## 1.2 Mockup 
-![Match Page Mockup](./match_page.drawio.png)
+![Match Page Mockup](match_page.drawio.png)
 
 # 2. Ablauf von Ereignissen
 

@@ -25,7 +25,7 @@ Dieser Ablauf beschreibt den vom Backend ausgeführten Prozess, um sicherzustell
 
 Im folgenden Sequenzdiagram sind unteranderem auch die Funktionalitäten dieses Use-Case enthalten:
 
-*Kopie aus [match_starten.md: Sequenzdiagramm](./../match_starten/match_starten.md#sequenzdiagramm)*
+*Kopie aus [match_starten.md: Sequenzdiagramm](../match_starten/match_starten.md#sequenzdiagramm)*
 ```mermaid
 sequenceDiagram
 title Match Starten
