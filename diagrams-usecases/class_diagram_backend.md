@@ -9,33 +9,69 @@ classDiagram
         +root()
     }
 
+    class SseSender~T~{
+        <<abstract>>
+        -groupsEmitters: Map
+        -createEmitter(username: String, group: T)
+        -sendEvent(emitters: Map<String, SseEmitter>, name: String, data: Object, group: T)
+        -allEmitters(group: T)
+        -allEmittersExcept(group: T, user: User)
+        -emittersOfOnly(group: T, user: User)
+        -unsubscribe(group: T, username: String)
+        -onUnsubscribe(group: T, username: String)
+        +[abstract] subscribe(group: T, username: String)
+    }
+
     %% lobby
     class Lobby{
-        +players: Player[]
-        +addPlayer(player: Player)
+        -heartbeatHandler: HeartbeatHandler
+        -players: List<Player>
+        -hasAccountPlayer: boolean
+        -nextPlayerId: int
+        -lobbyCode: String
+        -match: Match
+        -owner: String
+        +Lobby(config: AppConfig)
+        +addPlayer(user: User, lobbyManager: LobbyManager)
+        +removePlayer(username: String)
+        +removePlayer(id: int)
+        +isOwner(username: String)
+        +onNoHeartbeat(lobby: Lobby, playerId: int)
     }
 
     class LobbyCodeGenerator{
         -CHARACTERS: String
         -CODE_LENGTH: int
         -random: Random
-        +generateCode(): String
+        +generateCode()
     }
 
     class LobbyController{
         -lobbyManager: LobbyManager
         +LobbyController(lobbyManager: LobbyManager)
-        +createLobby(configs: CreateLobbyDTO): ResponseEntity<Map<String, String>>
-        +joinLobby(lobbyCode: String): ResponseEntity<Map<String, Object>>
+        +createLobby(dto: CreateLobbyDTO)
+        +joinLobby(lobbyCode: String)
+        +doesLobbyWithCodeExist(lobbyCode: String, response: HttpServletResponse)
+        +heartbeat(lobbyCode: String, dto: HeartbeatDTO, response: HttpServletResponse)
+        +lobbyEvents(lobbyCode: String)
+        +match(lobbyCode: String)
 		
     }
 
     class LobbyManager{
         -occupiedLobbies: HashMap<String, Lobby>
-        -freeLobbies: Lobby[]
+        -freeLobbies: List<Lobby>
         +LobbyManager(config: AppConfig)
-        +createLobby(configs: String[]): String
-        +joinLobby(lobbyCode: String, res: Map<String, Object>): boolean
+        +createLobby(configs: String[], owner: String)
+        +joinLobby(lobbyCode: String, User user)
+        +findOccupiedLobbyOrThrow(lobbyCode: String)
+        -checkLobbyCleanup(lobbyCode: String, lobby: Lobby)
+        -notifyLobbyUpdate(lobby: Lobby)
+        +createMatchForLobby(lobby: Lobby, user: User)
+        +findLobbyByMatch(matchUUID: UUID)
+        -subscribe(lobbyCode: String, username: String)
+        -onUnsubscribe(lobbyCode: String, username: String)
+        +onNoHeartbeat(lobby: Lobby, playerId: int)
     }
 
     %% lobby/dto
@@ -43,9 +79,41 @@ classDiagram
 		-configs: String[]
     }
 
+    class HeartbeatDTO{
+        -playerId: int
+    }
+
     class LobbyDTO{
 		-lobbyId: int
         -players: Player[]
+    }
+
+    %% lobby/error
+    class InvalidRadiusException{
+        +InvalidRadiusException(boardRadius: int)
+    }
+    
+    class LobbyNotFoundException{
+        +LobbyNotFoundException(lobbyCode: String)
+    }
+
+    class NotOwnerOfLobbyException{
+        +NotOwnerOfLobbyException()
+    }
+
+    %% lobby/heartbeat
+    class HeartbeatHandler{
+        -lobby: Lobby
+        -heartbeatCheckIntervalSeconds: long
+        -executorService: ExecutorService
+        -playerIdsExecutors: Map<Integer, HeartbeatExecutor>
+        +registerNoHeartbeat(player: Player, listener: NoHeartbeatListener)
+        +resetTimer(playerId: int)
+    }
+
+    class NoHeartbeatListener{
+        <<Interface>>
+        +onNoHeartbeat(lobby: Lobby, playerId: int)
     }
 
     %% game
@@ -141,6 +209,7 @@ classDiagram
     %% config
     class AppConfig{
         -initialCapacity: int
+        -heartbeatCheckIntervalSeconds: long
         +passwordEncoder()
     }
 
@@ -148,30 +217,72 @@ classDiagram
         -frontendHost: String
         -accessTokenAuthenticationFilter: AccessTokenAuthenticationFilter
         -refreshTokenAuthenticationFilter: RefreshTokenAuthenticationFilter
+        -sseTokenAuthenticationFilter: SseTokenAuthenticationFilter
         +corsConfigurationSource()
         +securityFilterChain(http: HttpSecurity)
     }
 
     %% config/filter
     class AccessTokenAuthenticationFilter{
+        -jwtService: JwtService
+        -userRepository: AllUserRepository
         -shouldNotFilter(request: HttpServletRequest)
         -doFilterInternal(request: HttpServletRequest, reponse: HttpServletResponse, filterChain: FilterChain)
     }
 
     class RefreshTokenAuthenticationFilter{
+        -jwtService: JwtService
+        -refreshTokensService: RefreshTokensService
+        -userRepository: AllUserRepository
         +doesFilter(path: String)
         -shouldNotFilter(request: HttpServletRequest)
         -doFilterInternal(request: HttpServletRequest, reponse: HttpServletResponse, filterChain: FilterChain)
     }
 
+    class SseTokenAuthenticationFilter{
+        -jwtService: JwtService
+        -sseTokenService: SseTokenService
+        -userRepository: AllUserRepository
+        +doesFilter(path: String)
+        -shouldNotFilter(request: HttpServletRequest)
+        -doFilterInternal(request: HttpServletRequest, reponse: HttpServletResponse, filterChain: FilterChain)
+        -extractSseToken(queryString: String)
+    }
+
+    %% error
+    class ControllerExceptionHandler{
+        +handleNotFound(exception: Exception)
+        +handleForbidden(exception: Exception)
+        +handleBadRequest(exception: Exception)
+        -responseOf(status: int, exception: Exception)
+    }
+
+    class BadRequestException{
+        +BadRequestException(message: String)
+    }
+
+    class ForbiddenException{
+        +ForbiddenException(message: String)
+    }
+
+    class InvalidDtoException{
+        +InvalidDtoException(message: String)
+    }
+
+    class NotFoundException{
+        +NotFoundException(message: String)
+    }
+
     %% account
     class AccountController{
         -authenticationService: AuthenticationService
+        -sseTokenService: SseTokenService
         +guest(response: HttpServletResponse)
         +register(request: RegisterDTO, response: HttpServletResponse)
         +login(request: LoginDTO, response: HttpServletResponse)
         +refresh(oldRefreshToken: String, response: HttpServletResponse)
         +logout(oldRefreshToken: String, response: HttpServletResponse)
+        +sseToken()
     }
 
     class AuthenticationResponse{
@@ -188,12 +299,17 @@ classDiagram
         -passwordEncoder: PasswordEncoder
         -jwtService: JwtService
         -cookieService: CookieService
-        -validRefreshTokensService: ValidRefreshTokensService
+        -refreshTokensService: RefreshTokensService
         +guest()
         +register(request: RegisterDTO)
         +login(request: LoginDTO)
         +refresh(refreshToken: String)
         +logout(oldRefreshToken: String)
+        -createNewTokensAndGetResult(user: User)
+    }
+
+    class AuthUtils{
+        +getAuthenticatedUser()
     }
 
     %% account/dto
@@ -207,11 +323,25 @@ classDiagram
         -password: String
     }
 
+    %% account/error
+    class InvalidCharactersException{
+        +InvalidCharactersException()
+    }
+
+    class InvalidCredentialsException{
+        +InvalidCredentialsException()
+    }
+
+    class UserAlreadyExistsException{
+        +UserAlreadyExistsException()
+    }
+
     %% account/token
     class AuthTokens{
         +ACCESS_TOKEN_MAX_AGE: int
         +REFRESH_TOKEN_NAME: String
         +REFRESH_TOKEN_MAX_AGE: int
+        +SSE_TOKEN_MAX_AGE: int
     }
 
     class CookieService{
@@ -224,7 +354,7 @@ classDiagram
         -SECRET_KEY: String
         +extractUsername(token: String)
         +extractClaim(token: String, claimsResolver: Function<Claims, T>)
-        +generateToken(user: User, maxAge: int)
+        +generateToken(user: User, maxAgeSeconds: int)
         +generateToken(extraClaims: Map<String,Object>, user: User, maxAgeSeconds: int)
         +isTokenValid(token: String)
         -extractExpiration(token: String)
@@ -232,28 +362,41 @@ classDiagram
         -getSecretKey()
     }
 
-    class ValidRefreshTokensService{
-        -usersValidTokens: Map<String,String>
-        +store(user: User, refreshToken: String)
-        +invalidate(user: User)
-        +isValid(refreshToken: String)
+    class RefreshTokensService{
+        -passwordEncoder: PasswordEncoder
+        +store(user: User, refreshTokenCookie: Cookie, userRepository: UserRepository)
+        +invalidate(user: User, userRepository: UserRepository)
+        +isValid(user: User, refreshToken: String)
+    }
+
+    class SseTokenService{
+        -jwtService: JwtService
+        -usernamesTokens: Map<String, String>
+        +createToken(user: User)
+        +getValidTokenAndInvalidate(user: User)
     }
 
     %% account/user
     class AccountUserRepository{
+        <<Interface>>
         +save(user: User)
     }
 
     class AllUserRepository{
+        -accountUserRepository: AccountUserRepository
+        -guestUserRepository: GuestUserRepository
         +save(user: User)
-        +findByEmail(email: String)
+        +findByUsername(username: String)
+        +findByUsernameIgnoreCase(username: String)
         -getRepositoryByUser(user: User)
+        +deleteAll()
     }
 
     class GuestUserRepository{
-        -guestUsers: Map<String,User>
-        +save(user: User)
-        +findByEmail(email: String)
+        -guestUsers: Map<String, User>
+        +findByUsername(username: String)
+        +findByUsernameIgnoreCase(username: String)
+        +deleteAll()
     }
 
     class Role{
@@ -264,17 +407,23 @@ classDiagram
 
     class User{
         -id: Integer
-        -email: String
+        -username: String
         -password: String
+        -email: String
         -role: Role
+        -refreshToken: String
         +getAuthorities()
         +getUsername()
+        +setPassword(password: String, passwordEncoder: PasswordEncoder)
+        +setRefreshToken(refreshToken: String, passwordEncoder: PasswordEncoder)
     }
 
     class UserRepository{
         <<Interface>>
         +save(user: User)
-        +findByEmail(email: String)
+        +findByUsername(username: String)
+        +findByUsernameIgnoreCase(username: String)
+        +deleteAll()
     }
 
     %% RELATIONS
