@@ -1,5 +1,25 @@
 ## Retrospektive des Projekts **Hexfields: Dominion**
 
+## Zusammenfassung:
+
+Da die Anzahl der "weiter" Punkte deutlich größer ist als die der "stopp" Punkte, haben wir insgesamt eher einen positiven Blick auf die Arbeit am Projekt. Dazu gehören beispielsweise Arbeitsverteilung/-suche oder die Einbindung des Jira Boards.
+Andererseits haben wir zu Beginn des Projekts zu wenig am Projekt gearbeitet, sodass wir nun viel Zeit in die Fertigstellung stecken müssen. Auch fehlende Transparenz/Statuseinbindung von Tools (Logs des Backend sind nicht für alle einsehbar, teilweise fehlende Benachrichtigungen zu neuen PRs/Kommentaren usw.) haben die Arbeit erschwert oder verlangsamt.
+
+Ändern könnte man, dass früher mit dem Bearbeiten von Aufgaben begonnen werden könnte. Auch gäbe es die Möglichkeit, dass alle für PR-Updates die GitHub-App installieren, E-Mail Benachrichigungen aktivieren oder ein Discord-Webhook erstellt wird.
+
+Daraus haben sich folgende ToDos ergeben:
+
+    1. Die Priorität sollte auf den MVP gesetzt werden (alle zusätzlichen Features auslassen, Fokus auf Kern-Features)
+    -> siehe 3.
+    2. Es sollte abgewogen werden, ob Priorität auf das Lernen für Klausuren oder auf die Perfektionierung des Projekts gelegt wird
+    -> Ergebnis: Mittelding, aber wegen begrenzter Zeit steht Projekt mglw. eher im Vordergrund
+    3. Es sollte definiert werden, wann das Projekt als "fertig" gilt und welche Features dazu gehören
+    -> Ergebnis: Es fehlen noch Siegpunkte (Basis fast fertig), Bauen von Straßen und Siedlungen, Ressourcenvergabe nach Würfeln
+    4. Für den nächsten Blogpost sollte jetzt entschieden werden, ob jeder dem Ersteller schickt oder der Ersteller nachfragt
+    -> Ergebnis: Postersteller fragt nach (wurde für diesen Blogpost bereits umgesetzt)
+
+## Langfassung
+
 Datum: Dienstag, 25.05.2026
 Uhrzeit: 19:30-20:30 Uhr
 Teilnehmer: @ultra-ms, @A1exHorst, @JaskerX
