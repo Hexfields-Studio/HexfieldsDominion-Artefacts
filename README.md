@@ -3,18 +3,18 @@
 Dies ist der Speicherort aller Artefakte des Softwareprojekts [Hexfields: Dominion](https://github.com/Hexfields-Studio/HexfieldsDominion).
 
 Dokumentation:
-- [Projekthandout](https://github.com/Hexfields-Studio/HexfieldsDominion-Artefacts/blob/main/presentation-final/SoftwareEngineering-Final-Handout.pdf)
-- [Präsentationsfolien](https://github.com/Hexfields-Studio/HexfieldsDominion-Artefacts/blob/main/presentation-final/SoftwareEngineering-Final-Slides.pdf)
-- [RUP SRS Dokument](https://github.com/Hexfields-Studio/HexfieldsDominion-Artefacts/blob/main/srs.md)
-- [RUP SAD Dokument](https://github.com/Hexfields-Studio/HexfieldsDominion-Artefacts/blob/main/sad.md)
+- [Projekthandout](./presentation-final/SoftwareEngineering-Final-Handout.pdf)
+- [Präsentationsfolien](./presentation-final/SoftwareEngineering-Final-Slides.pdf)
+- [RUP SRS Dokument](./srs.md)
+- [RUP SAD Dokument](./sad.md)
 - Qualitätsbericht
   - TODO [Refactoring Zusammenfassung]()
-  - [Technical Review Meetingbericht](https://github.com/Hexfields-Studio/HexfieldsDominion-Artefacts/blob/main/Technical_Review.md)
-  - TODO [Test Report]()
-  - TODO [Softwaremetriken]()
-- TODO [CI/CD Setup]()
+  - [Technical Review Meetingbericht](./Technical_Review.md)
+  - [Test Report](./test_plan.md)
+  - [Softwaremetriken](./metrics_summary.md)
+  - [CI/CD Setup](./ci_cd_summary.md)
 - TODO [Risk Management Table]()
-- [Zusammenfassung Retrospektive](https://github.com/Hexfields-Studio/HexfieldsDominion-Artefacts/blob/main/project_retrospective.md#zusammenfassung)
+- [Zusammenfassung Retrospektive](./project_retrospective.md#zusammenfassung)
 
 Weitere Links:
 - [Repository Frontend](https://github.com/Hexfields-Studio/HexfieldsDominion)

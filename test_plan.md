@@ -1,4 +1,4 @@
-﻿# Test Plan - Hexfields: Dominion - Version 1.0
+﻿# Test Plan - Hexfields: Dominion - Version 1.2
 
 ## Versionsübersicht
 
@@ -6,10 +6,11 @@
 |-------|---------|-------------|--------|
 | 28/Apr/2026 | 1.0 | Dokument erstellt | Alex, Jona, Marcel |
 | 06/May/2026 | 1.1 | Aktualisierung Metriken | Marcel |
+| 29/Jun/2026 | 1.2 | Ergänzung Kennzahlen | Marcel |
 
 ## Inhaltsverzeichnis
 
-- [Test Plan - Hexfields: Dominion - Version 1.0](#test-plan---hexfields-dominion---version-10)
+- [Test Plan - Hexfields: Dominion - Version 1.2](#test-plan---hexfields-dominion---version-12)
   - [Versionsübersicht](#versionsübersicht)
   - [Inhaltsverzeichnis](#inhaltsverzeichnis)
   - [1. Einleitung](#1-einleitung)
@@ -39,6 +40,10 @@
     - [Testmodelle und Testergebnisse](#testmodelle-und-testergebnisse)
     - [Testausgaben](#testausgaben)
     - [Defekt-Berichte](#defekt-berichte)
+  - [6. Kennzahlen aus finaler Präsentation (Handout)](#6-kennzahlen-aus-finaler-präsentation-handout)
+    - [6.1 Backend (implementiert)](#61-backend-implementiert)
+    - [6.2 Frontend (nicht implementiert)](#62-frontend-nicht-implementiert)
+    - [6.3 Verwendung der Kennzahlen im Entwicklungsprozess](#63-verwendung-der-kennzahlen-im-entwicklungsprozess)
 
 ---
 
@@ -80,10 +85,10 @@ Die Testabdeckung erfolgt in folgenden Phasen:
   - Zugriffskontrolle
   - Lobbyverwaltung
 
-- Frontend: Etwa 10-20% Abdeckung
+- Frontend: Teststruktur vorgesehen, aktuell nicht implementiert
+  - Zielbild: 10-20% Abdeckung als Einstieg
   - Fokus auf Grundmuster und Best Practices
-  - Vereinfachte Tests für Funktionen, die schwer zu testen sind
-  - v.A. Authentifizierung zum Backend
+  - v. A. Schnittstellenverhalten bei Authentifizierung zum Backend
 
 #### Zu testende Funktionen
 
@@ -139,12 +144,12 @@ Die Testanforderungen sind direkt mit den folgenden Use Cases und funktionalen A
 | Komponente | Werkzeug | Beschreibung |
 |-----------|----------|-------------|
 | Backend | Gradle, JUnit | Automatisierte Unit- und Integrationstests |
-| Frontend | Gherkin / Jest | BDD und Unit-Tests (optional) |
+| Frontend | (geplant) Jest/Vitest + Testing Library | Teststruktur vorgesehen, aktuell noch nicht umgesetzt |
 
 #### Test-Verwaltung
 
-- Automatisierte Pipeline: GitHub Actions führt Tests bei jedem Push automatisch aus
-- Lokale Entwicklung: Tests können lokal in IntelliJ ausgeführt werden
+- Automatisierte Pipeline: GitHub Actions führt Backend-Tests bei jedem Push automatisch aus
+- Lokale Entwicklung: Backend-Tests können lokal in IntelliJ/Gradle ausgeführt werden
 - Fehlerbehandlung: Unkorrekte Commits können durch Revert von Main rückgängig gemacht werden
 - Testausführung: Im Falle von unbehobenen Fehlern kann zu vorherigen Versionen zurückgegangen werden
 
@@ -156,27 +161,27 @@ Spiellogik - Regelverarbeitung
 
 | Testziel | Technik | Abschluss-Kriterium | Besonderheiten |
 |---------|--------|-----------------|-----------------|
-| Die Spiellogik hält die festgelegten Spielregeln bei der Fortsetzung des Spielverlaufs ein | Verschiedene Eingabedaten abdecken verschiedene Szenarien, z.B. Versuch eines Spielzugs wenn der Spieler nicht am Zug ist vs. wenn er am Zug ist | Alle Tests erfolgreich ausgeführt | Keine |
+| Die Spiellogik hält die festgelegten Spielregeln bei der Fortsetzung des Spielverlaufs ein | Verschiedene Eingabedaten decken verschiedene Szenarien ab (inkl. ungültiger Spielzüge) | Alle definierten Regeltests laufen erfolgreich durch | Fokus auf Kernregeln und Grenzfälle |
 
 Benutzer-Authentifizierung
 
 | Testziel | Technik | Abschluss-Kriterium | Besonderheiten |
 |---------|--------|-----------------|-----------------|
-| Nutzer können sich mit einem Account oder als Gast authentifizieren | Verschiedene Eingabedaten abdecken Szenarien mit validen/invaliden Refresh- und Access Tokens | Alle Tests erfolgreich ausgeführt | Token-Validierung auf Gültigkeit prüfen |
+| Nutzer können sich mit einem Account oder als Gast authentifizieren | Szenarien mit validen/invaliden Access- und Refresh-Token | Alle Auth-Tests erfolgreich | Token-Lebenszyklus und Fehlerpfade werden mit geprüft |
 
 #### 3.2.2 Security and Access Control Testing
 
-Authentifiziertes Spielzugriff (Application-Level Security)
+Authentifizierter Spielzugriff (Application-Level Security)
 
 | Testziel | Technik | Abschluss-Kriterium | Besonderheiten |
 |---------|--------|-----------------|-----------------|
-| Nutzer können nur mit dem Spiel interagieren, solange sie authentifiziert sind | Unterscheidung zwischen authentifizierten und unauthentifizierten Nutzern (invalide AccessToken oder fehlender Token). Unauthentifizierte Nutzer haben keinen Zugriff auf Spielfunktionen | Alle Akteure haben Zugriff auf für sie freigegebene Daten und Funktionen | Nutzer werden vom Backend als Akteure zugewiesen |
+| Nutzer können nur mit dem Spiel interagieren, solange sie authentifiziert sind | Trennung zwischen authentifizierten und unauthentifizierten Requests | Unautorisierte Zugriffe werden zuverlässig abgeblockt | Fokus auf API-/Endpoint-Schutz |
 
 Lobbyadmin-Privilegien
 
 | Testziel | Technik | Abschluss-Kriterium | Besonderheiten |
 |---------|--------|-----------------|-----------------|
-| Nutzer innerhalb einer Lobby dürfen nur die Lobbyregeln ändern, wenn sie der Lobbyadmin sind | Unterscheidung zwischen Lobby-Admins und Mitspielern. Der Lobbyadmin hat spezielle Rechte (Spielregeln modifizieren, Spiel starten, Mitspieler rauswerfen, Admin-Status weitergeben) | Alle Akteure haben Zugriff auf für sie freigegebene Funktionen | Nutzer werden vom Backend als Akteure zugewiesen |
+| Nur Lobbyadmins dürfen Lobbyregeln ändern | Rollenspezifische Testfälle (Admin vs. Mitspieler) | Nicht-Admins können keine Admin-Aktionen ausführen | Berechtigungen auf Aktionsniveau geprüft |
 
 #### 3.2.3 Configuration Testing
 
@@ -184,7 +189,7 @@ Lobbies - Maximale Anzahl
 
 | Testziel | Technik | Abschluss-Kriterium | Besonderheiten |
 |---------|--------|-----------------|-----------------|
-| Bestätigung, dass die festgelegte maximale Anzahl an existierenden Lobbies eingehalten wird | Wiederholtes Erstellen von Lobbies über die Grenze hinaus | Neue Lobbies können nicht erstellt werden, wenn das Limit erreicht wurde | Das Lobbylimit gilt nur für Gäste. Es verhindert DOS-Attacken durch Arbeitsspeicher-Überlastung |
+| Bestätigung, dass die festgelegte maximale Anzahl an existierenden Lobbies eingehalten wird | Wiederholtes Erstellen von Lobbies über die Grenze hinaus | Neue Lobbies werden oberhalb der Grenze blockiert | Grenzwertverhalten unter Last-sequenziellen Requests |
 
 #### 3.2.4 User Interface Testing
 
@@ -192,7 +197,7 @@ Optionsmenü
 
 | Testziel | Technik | Abschluss-Kriterium | Besonderheiten |
 |---------|--------|-----------------|-----------------|
-| Bestätigung, dass alle Nutzer das Optionsmenü öffnen können | Simuliertes Klicken auf das Zahnrad-Symbol; Anwendung der Optionen im Dialog | Optionsdialog wurde geöffnet; Vorgenommene Änderungen wurden umgesetzt | Initial ist das Theme vom Browser abhängig. Außer auf der Startseite befindet sich ein "Logout"-Knopf im Dialog |
+| Bestätigung, dass alle Nutzer das Optionsmenü öffnen können | Simuliertes Öffnen des Dialogs und Anwenden der Optionen | Optionsdialog öffnet und übernimmt Änderungen | Frontend-Tests hierfür aktuell noch nicht implementiert |
 
 ---
 
@@ -203,16 +208,16 @@ Optionsmenü
 | Rolle | Verantwortlichkeiten |
 |------|---------------------|
 | Testleiter | Übersicht über Testplanung und -ausführung |
-| Entwickler (Backend) | Implementierung und Unit-Tests für Backend-Logik |
-| Entwickler (Frontend) | Implementierung und Integration-Tests für UI |
+| Entwickler (Backend) | Implementierung und Pflege von Unit-/Integrationstests |
+| Entwickler (Frontend) | Vorbereitung und spätere Implementierung der Frontend-Teststruktur |
 | QA-Ingenieur | Durchführung von Integrationstests und Validierung |
 
 ### 4.2 Testumgebung
 
 - Backend-Testumgebung: Lokale Gradle-Build-Umgebung mit JUnit
-- Frontend-Testumgebung: Node.js mit Jest / Gherkin
+- Frontend-Testumgebung: vorgesehen, aktuell nicht in Betrieb
 - Datenbank: Konfigurierte Test-Datenbank mit kontrollierten Daten
-- Continuous Integration: GitHub Actions Pipeline für automatisierte Testausführung
+- Continuous Integration: GitHub Actions Pipeline für automatisierte Backend-Testausführung
 
 ---
 
@@ -221,7 +226,7 @@ Optionsmenü
 ### Testmodelle und Testergebnisse
 
 - Unit-Test-Suites für Backend-Komponenten
-- Integrations-Test-Suites
+- Integrations-Test-Suites (Backend)
 - Test-Berichte aus der GitHub CI/CD Pipeline
 
 ### Testausgaben
@@ -235,3 +240,38 @@ Optionsmenü
 - Detaillierte Defektbeschreibungen mit Severity-Einstufung
 - Reproduktionsschritte und erwartetes Verhalten
 - Zugeordnete Prioritäten und Zuständige
+
+---
+
+## 6. Kennzahlen aus finaler Präsentation (Handout)
+
+Die final präsentierten Kennzahlen werden als Referenz für den Projektabschluss und als Ausgangspunkt für Folgeiteration verwendet.
+
+### 6.1 Backend (implementiert)
+
+- Metrik-/Testauswertung basiert auf der CI-Ausführung mit:
+  - `test`
+  - `jacocoTestReport`
+  - `sonar`
+- Die [im Handout ausgewiesenen (siehe Abschnitt **e. Metriken**)](./presentation-final/SoftwareEngineering-Final-Handout.pdf) Backend-Werte (Teststatus, Coverage, Qualitätsindikatoren) sind maßgeblich für die Bewertung des aktuellen Stands.
+- Interpretation im Team erfolgt kombiniert:
+  1. Testerfolg (grün/rot in CI),
+  2. Coverage-Entwicklung (JaCoCo),
+  3. Qualitätsbewertung (SonarQube/SonarCloud).
+
+### 6.2 Frontend (nicht implementiert)
+
+- [Im Handout ausgewiesene (siehe Abschnitt **e. Metriken**)](./presentation-final/SoftwareEngineering-Final-Handout.pdf) Frontend-Testkennzahlen sind als Ziel-/Planwerte zu lesen.
+- Aktuell besteht keine operative Frontend-Testpipeline im selben Reifegrad wie im Backend.
+- Für die nächste Ausbaustufe sind vorgesehen:
+  - initiale Unit-/Komponententests,
+  - schrittweise Erhöhung der Abdeckung,
+  - Integration in die bestehende Frontend-CI.
+
+### 6.3 Verwendung der Kennzahlen im Entwicklungsprozess
+
+- Kennzahlen dienen als Entscheidungsgrundlage für:
+  - Refactoring-Priorisierung,
+  - Testausbau,
+  - Freigabeentscheidungen vor Merge/Release.
+- Änderungen an Metrik- oder Testzielen werden versionsgeführt in diesem Dokument nachgetragen.
