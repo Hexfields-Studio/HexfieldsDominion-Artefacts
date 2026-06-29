@@ -117,40 +117,127 @@ classDiagram
     }
 
     %% game
-    class Field{
-		-pos: Pair<Integer, Integer>
-        -number: int
-        -ressource: Ressource
+    class AxialPosition{
+        -q: int
+        -r: int
+    }
+
+    class BuildingABuildingValidator{
+        -corners: Set
+        -cornerOffsetToAdjacentFields: List
+        -edges: Set
+        -edgeOffsetToAdjacentField: List
+        -edgeNeighboursOffsets: Map
+        +BuildingABuildingValidator(fields: List)
+        +validate(user: User, match: Match, buildActionDTO: BuildActionDTO)
+        -canUpgradeASettlementHere(user: User, match: Match, buildActionDTO: BuildActionDTO)
+        -playerHasEnoughResourcesToBuild(user: User, match: Match, buildActionDTO: BuildActionDTO)
+        -canPlayerBuildHere(user: User, match: Match, buildActionDTO: BuildActionDTO)
+        -getNeighboursToCorner(match: Match, buildActionDTO: BuildActionDTO)
+        -getNeighboursToEdge(match: Match, buildActionDTO: BuildActionDTO)
+        -isBuildingSpotFree(match: Match, buildActionDTO: BuildActionDTO)
+        -precomputeUniqueEdges(fields: List)
+        -getSortedPosition(pos: List)
     }
 
     class GameController{
-        -playerAction(request: PlayerActionDTO)
-        -endTurn()
-        -buildStructure(dto: BuildActionDTO)
-        -tradeWithBank(dto: TradeBankDTO)
-        -tradeWithPlayer(dto: TradePlayerDTO)
-        -pickDicePair(dto: PickDicePairDTO)
+        -lobbyManager: LobbyManager
+        -gameManager: GameManager
+        -lobby(gameUUID: UUID)
+        +fields(gameUUID: UUID)
+        +recipes()
+        +gameEvents(gameUUID: UUID)
+        +rollDice(gameUUID: UUID)
+        +endTurn(gameUUID: UUID)
+        +grantedResources(gameUUID: UUID, response: HttpServletResponse)
+        -playerAction(gameUUID: UUID, request: PlayerActionDTO)
+    }
+
+    class GameManager{
+        -DICE_MIN_VALUE: int
+        -DICE_MAX_VALUE: int
+        -POINTS_REQUIRED_TO_WIN: int
+        -lobbyManager: LobbyManager
+        +rollDice(gameUUID: UUID, user: User)
+        +nextPlayersTurn(gameUUID: UUID, user: User)
+        +addPoints(match: Match, user: User, points: int)
+        +handlePlayerAction(gameUUID: UUID, user: User, request: PlayerActionDTO)
+        +buildBuilding(user: User, match: Match, buildActionDTO: BuildActionDTO)
+        +getGrantedResources(gameUUID: UUID, user: User)
+        +subscribe(gameUUID: UUID, username: String)
+        +onUnsubscribe(matchUUID: UUID, username: String)
+        -sendMatchData(emitters: Map, match: Match)
+        -sendPlayerTrades(emitters: Map, match: Match)
     }
 
     class Match{
-        
+        -AMOUNT_GRANTED_RESOURCES_PER_STRUCTURE_AND_FIELD: int
+        -uuid: UUID
+        -gameBoard: GameBoard
+        -players: GamePlayers
+        -grantedResourcesThisTurn: Map
+        -currentDiceResult: Integer[]
+        -rolledDiceThisTurn: boolean
+        -validator: BuildingABuildingValidator
+        -tradingHandler: TradingHandler
+        +Match(uuid: UUID, boardRadius: int, lobby: Lobby)
+        +nextPlayersTurn()
+        +grantInitialResources()
+        +grantResourcesForDiceResult(diceResult: int)
+        -setOrAddResource(resources: Map, fields: Field)
+        +buildBuilding(player: PlayerRepresentation, buildActionDTO: BuildActionDTO)
+        +buildBuilding(user: User, buildActionDTO: BuildActionDTO)
+        +upgradeSettlementToTown(user: User, buildActionDTO: BuildActionDTO)
+        +upgradeSettlementToTown(player: PlayerRepresentation, buildActionDTO: BuildActionDTO)
+        +letPlayerPayRecipe(user: User, recipe: Map)
     }
 
-    class Ressource{
-        -name: String
+    %% game/board
+    class Field{
+		-pos: AxialPosition
+        -numberChip: int
+        -resource: ResourceType
+    }
+
+    class FieldFactory{
+        +generateFields(boardRadius: int, ratios: Map)
+        -calculateTotalResourceFields(boardRadius: int)
+        -generateNumberChips(boardRadius: int)
+        -generateAvailableResourceTypes(boardRadius: int, ratios: Map)
+    }
+
+    class GameBoard{
+        -RATIOS: Map
+        -fields: List
+        -structures: List
+        +GameBoard(boardRadius: int)
+        +addStructure(player: PlayerRepresentation, buildActionDTO: BuildActionDTO)
+        +upgradeSettlementToTown(player: PlayerRepresentation, buildActionDTO: BuildActionDTO)
+        +getFieldsAt(positions: List)
+        +getStructureAt(pos: List)
+        +getFieldsByNumberChip(numberChip: int)
     }
 
     class Structure{
-        -name: String
-        -pos: Pair<Integer, Integer>[]
-        -recipe: Map<RessourceType, Integer>
+        -type: StructureType
+        -pos: List
+        -ownerId: int
+        -recipe: Map
+    }
+
+    class StructureFactory{
+        -settlementRecipe: EnumMap
+        -streetRecipe: EnumMap
+        -townRecipe: EnumMap
+        +randomlyBuildInitialStructures(match: Match, validator: BuildingABuildingValidator)
+        +getRecipeForStructureType(type: StructureType)
+        +buildStructureFromDTO(player: PlayerRepresentation, dto: BuildActionDTO)
     }
 
     %% game/dto
-    %% {"type": "BUILD", "sessionId":..., "pos": [[0,0],[1,0]], "structure": "HARBOUR"}
     class BuildActionDTO{
-		-pos: Pair[]
 		-structureType: StructureType
+        -pos: List
 	}
 
 	class PickDicePairDTO{
@@ -159,31 +246,125 @@ classDiagram
     
     class PlayerActionDTO{
         -type: PlayerActionType
-	    -sessionId: String
     }
 
 	class TradeBankDTO{
-        
+        -resourceOffered: ResourceType
+        -amountOffered: int
+        -resourceRequested: ResourceType
+        -amountRequested: int
     }
 
-	%% {"type":.., "sessionId":..., "destPublicId":..., "offered": [{"ressource": "STONE", "amount": 2}, {"ressource": "WOOD", "amount": 1}], "requested": [{"ressource": "GOLD", "amount": 1}]}
 	class TradePlayerDTO{
-		-destPublicId: String
+		-id: Integer
+        -status: TradingStatus
+        -target: TradingTarget
+        -offered: Map
+        -requested: Map
 	}
 
+    %% game/error
+
+    class InvalidBuildRequestException{
+        +InvalidBuildRequestException()
+    }
+
+    class MatchNotFoundException{
+        +MatchNotFoundException(matchUUID: UUID)
+    }
+
+    class MissingAxialPositionsException{
+        +MissingAxialPositionsException(type: StructureType, receivedAxialPositions: int)
+    }
+
+    class MoveHasntBeenImplementedException{
+        +MoveHasntBeenImplementedException(type: PlayerActionType)
+    }
+
+    class NotEnoughResourcesException{
+        +NotEnoughResourcesException()
+    }
+
+    class NotPlayersTurnException{
+        +NotPlayersTurnException()
+    }
+
+    class TooLittleSpaceException{
+        +TooLittleSpaceException()
+    }
+
     %% game/player
+    class GamePlayers{
+        -players: List
+        -playersTurnOrder: List
+        -winner: PlayerRepresentation
+        +GamePlayers(lobby: Lobby)
+        -createPlayerRepresentationsForLobby(lobby: Lobby)
+        -generatePlayersTurnOrder()
+        +rotateNextPlayer()
+        +getPlayerCurrentTurn()
+        +isPlayersTurn(user: User)
+        +getPlayerForUser(user: User)
+        +getPlayerById(id: int)
+    }
+
     class Player{
 		-id: int
-        -username: String
         -isAccount: boolean
+        -user: User
+        +Player(user: User, id: int)
+        +getUsername()
+    }
+
+    class PlayerHueFactory{
+        +generateHueFromHash(username: String)
     }
 
     class PlayerRepresentation{
 		-player: Player
+        -username: String
         -publicId: int
         -sessionId: String
-		-color: Color
-        -ressources: Map<Ressource, Integer>
+		-playerHue: int
+        -resources: Map
+        -chosenPortrait: String
+        -points: int
+        +PlayerRepresentation(player: Player)
+        +addPoints(points: int)
+    }
+
+    %% game/trading
+
+    class PlayerTrade{
+        -id: int
+        -predecessorId: Integer
+        -status: TradingStatus
+        -target: TradingTarget
+        -createdBy: int
+        -offered: Map
+        -requested: Map
+    }
+
+    class TradingHandler{
+        +GIVE_GET_RATIO: int
+        -playerTrades: Map
+        -nextId: int
+        +handlePlayerTrade(user: User, match: Match, dto: TradePlayerDTO)
+        +createTrade(user: User, match: Match, dto: TradePlayerDTO)
+        -createTradeForPlayerId(predecessorId: Integer, status: TradingStatus, target: TradingTarget, createdBy: int, offered: Map, requested: Map)
+        +editTrade(user: User, match: Match, dto: TradePlayerDTO)
+        +acceptTrade(user: User, match: Match, dto: TradePlayerDTO)
+        +denyTrade(dto: TradePlayerDTO)
+        +cancelTrade(dto: TradePlayerDTO)
+        +tradeBank(user: User, match: Match, dto: TradeBankDTO)
+        +clearTrades()
+    }
+
+    class TradingTarget{
+        -allPlayers: boolean
+        -playerId: Integer
+        +TradingTarget(playerId: Integer)
+        +ofPlayer(playerId: Integer)
     }
 
     %% game/types
@@ -195,15 +376,30 @@ classDiagram
         PICK_DICE_PAIR
     }
 
-	class RessourceType{
+	class ResourceType{
         <<enumeration>>
-        HierDynamischMitDatenAusDBFüllen
+        WHEAT
+        WOOD
+        BRICK
+        SHEEP
+        DUNES
 	}
 
     class StructureType{
         <<enumeration>>
-        TOWN
-        HARBOUR
+        SETTLEMENT(3)
+        TOWN(3)
+        HARBOUR(2)
+        +StructureType(posAmount: int)
+	}
+
+    class TradingStatus{
+        <<enumeration>>
+        OFFERED
+        CHANGED
+        ACCEPTED
+        DENIED
+        CANCELLED
 	}
 
     %% config
