@@ -40,7 +40,7 @@ Ziel ist die nachvollziehbare Dokumentation von Motivation, technischer Umsetzun
 
 Dokumentiert werden zwei konkrete Refactorings:
 1. Umstellung von Repository-Subscriptions im Frontend auf React-native Hook-Mechanik.
-2. Entfernung redundanter Authentikationslogik im Backend durch Funktions-Extraktion.
+2. Entfernung redundanter Authentifizierungslogik im Backend durch Funktions-Extraktion.
 
 * * *
 
@@ -87,22 +87,22 @@ Komponenten verwenden nun einfache, selbsterklärende Custom-Hooks statt manuell
 
 * * *
 
-## Refactoring 2: Redundanzen in der Backend-Authentikation entfernen
+## Refactoring 2: Redundanzen in der Backend-Authentifizierung entfernen
 
 ### Ausgangslage
 
-In der Authentikation des Backend-Repositories war mehrfach verwendete Logik redundant an mehreren Stellen vorhanden.
+In der Authentifizierung des Backend-Repositories war mehrfach verwendete Logik redundant an mehreren Stellen vorhanden.
 
 ### Umsetzung
 
 Im Commit  
-`7db20c2b958ed56a1587bc57f510598a5d565f09`  
-wurde die wiederkehrende Authentikationslogik in eine gemeinsame Funktion extrahiert und zentralisiert.
+[`7db20c2b958ed56a1587bc57f510598a5d565f09`](https://github.com/Hexfields-Studio/HexfieldsDominion-Backend/commit/7db20c2b958ed56a1587bc57f510598a5d565f09)  
+wurde die wiederkehrende Authentifizierungslogik in eine gemeinsame Funktion extrahiert und zentralisiert.
 
 ### Technische Auswirkungen
 
 - Reduktion des Quellcodes um **24 Zeilen**.
-- Einheitlichere Implementierung der Authentikationsschritte.
+- Einheitlichere Implementierung der Authentifizierungsschritte.
 - Verbesserte Wartbarkeit bei zukünftigen Änderungen.
 - Geringeres Risiko für inkonsistente Fehlerbehebungen in duplizierten Codepfaden.
 
