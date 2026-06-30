@@ -79,7 +79,7 @@ Die Testabdeckung erfolgt in folgenden Phasen:
 
 #### Testabdeckungsziele
 
-- Backend: Nahe 100% Abdeckung mit Fokus auf:
+- Backend: Etwa 80% Abdeckung mit Fokus auf:
   - Spiellogik, Regelverarbeitung
   - Authentifizierungssystem (Login, Logout, Token-Validierung)
   - Zugriffskontrolle
