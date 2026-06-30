@@ -253,7 +253,7 @@ Die final präsentierten Kennzahlen werden als Referenz für den Projektabschlus
   - `test`
   - `jacocoTestReport`
   - `sonar`
-- Die [im Handout ausgewiesenen (siehe Abschnitt **e. Metriken**)](./presentation-final/SoftwareEngineering-Final-Handout.pdf) Backend-Werte (Teststatus, Coverage, Qualitätsindikatoren) sind maßgeblich für die Bewertung des aktuellen Stands.
+- Die [im Handout ausgewiesenen (siehe Abschnitt **e. Metriken**)](./presentation-final/SoftwareEngineering-Final-Handout.pdf) Backend-Werte (Teststatus, Coverage, Qualitätsindikatoren) sind maßgeblich für die Bewertung des aktuellen Stands. Mittlerweile beträgt die Testabdeckung etwa 50%, weiter steigend.
 - Interpretation im Team erfolgt kombiniert:
   1. Testerfolg (grün/rot in CI),
   2. Coverage-Entwicklung (JaCoCo),
