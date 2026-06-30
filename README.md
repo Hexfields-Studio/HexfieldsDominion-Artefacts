@@ -12,7 +12,7 @@ Dokumentation:
   - [Technical Review Meetingbericht](./Technical_Review.md)
   - [Test Report](./test_plan.md)
   - [Softwaremetriken](./metrics_summary.md)
-  - [CI/CD Setup](./ci_cd_summary.md)
+- [CI/CD Setup](./ci_cd_summary.md)
 - TODO [Risk Management Table]()
 - [Zusammenfassung Retrospektive](./project_retrospective.md#zusammenfassung)
 
