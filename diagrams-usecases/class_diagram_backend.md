@@ -31,7 +31,6 @@ classDiagram
         -lobbyCode: String
         -match: Match
         -owner: String
-        +Lobby(config: AppConfig)
         +addPlayer(user: User, lobbyManager: LobbyManager)
         +removePlayer(username: String)
         +removePlayer(id: int)
@@ -48,7 +47,6 @@ classDiagram
 
     class LobbyController{
         -lobbyManager: LobbyManager
-        +LobbyController(lobbyManager: LobbyManager)
         +createLobby(dto: CreateLobbyDTO)
         +joinLobby(lobbyCode: String)
         +doesLobbyWithCodeExist(lobbyCode: String, response: HttpServletResponse)
@@ -61,7 +59,6 @@ classDiagram
     class LobbyManager{
         -occupiedLobbies: HashMap<String, Lobby>
         -freeLobbies: List<Lobby>
-        +LobbyManager(config: AppConfig)
         +createLobby(configs: String[], owner: String)
         +joinLobby(lobbyCode: String, User user)
         +findOccupiedLobbyOrThrow(lobbyCode: String)
@@ -90,15 +87,12 @@ classDiagram
 
     %% lobby/error
     class InvalidRadiusException{
-        +InvalidRadiusException(boardRadius: int)
     }
     
     class LobbyNotFoundException{
-        +LobbyNotFoundException(lobbyCode: String)
     }
 
     class NotOwnerOfLobbyException{
-        +NotOwnerOfLobbyException()
     }
 
     %% lobby/heartbeat
@@ -128,7 +122,6 @@ classDiagram
         -edges: Set
         -edgeOffsetToAdjacentField: List
         -edgeNeighboursOffsets: Map
-        +BuildingABuildingValidator(fields: List)
         +validate(user: User, match: Match, buildActionDTO: BuildActionDTO)
         -canUpgradeASettlementHere(user: User, match: Match, buildActionDTO: BuildActionDTO)
         -playerHasEnoughResourcesToBuild(user: User, match: Match, buildActionDTO: BuildActionDTO)
@@ -180,7 +173,6 @@ classDiagram
         -rolledDiceThisTurn: boolean
         -validator: BuildingABuildingValidator
         -tradingHandler: TradingHandler
-        +Match(uuid: UUID, boardRadius: int, lobby: Lobby)
         +nextPlayersTurn()
         +grantInitialResources()
         +grantResourcesForDiceResult(diceResult: int)
@@ -210,7 +202,6 @@ classDiagram
         -RATIOS: Map
         -fields: List
         -structures: List
-        +GameBoard(boardRadius: int)
         +addStructure(player: PlayerRepresentation, buildActionDTO: BuildActionDTO)
         +upgradeSettlementToTown(player: PlayerRepresentation, buildActionDTO: BuildActionDTO)
         +getFieldsAt(positions: List)
@@ -266,31 +257,24 @@ classDiagram
     %% game/error
 
     class InvalidBuildRequestException{
-        +InvalidBuildRequestException()
     }
 
     class MatchNotFoundException{
-        +MatchNotFoundException(matchUUID: UUID)
     }
 
     class MissingAxialPositionsException{
-        +MissingAxialPositionsException(type: StructureType, receivedAxialPositions: int)
     }
 
     class MoveHasntBeenImplementedException{
-        +MoveHasntBeenImplementedException(type: PlayerActionType)
     }
 
     class NotEnoughResourcesException{
-        +NotEnoughResourcesException()
     }
 
     class NotPlayersTurnException{
-        +NotPlayersTurnException()
     }
 
     class TooLittleSpaceException{
-        +TooLittleSpaceException()
     }
 
     %% game/player
@@ -298,7 +282,6 @@ classDiagram
         -players: List
         -playersTurnOrder: List
         -winner: PlayerRepresentation
-        +GamePlayers(lobby: Lobby)
         -createPlayerRepresentationsForLobby(lobby: Lobby)
         -generatePlayersTurnOrder()
         +rotateNextPlayer()
@@ -312,7 +295,6 @@ classDiagram
 		-id: int
         -isAccount: boolean
         -user: User
-        +Player(user: User, id: int)
         +getUsername()
     }
 
@@ -329,7 +311,6 @@ classDiagram
         -resources: Map
         -chosenPortrait: String
         -points: int
-        +PlayerRepresentation(player: Player)
         +addPoints(points: int)
     }
 
@@ -363,7 +344,6 @@ classDiagram
     class TradingTarget{
         -allPlayers: boolean
         -playerId: Integer
-        +TradingTarget(playerId: Integer)
         +ofPlayer(playerId: Integer)
     }
 
@@ -387,10 +367,10 @@ classDiagram
 
     class StructureType{
         <<enumeration>>
+        -posAmount: int
         SETTLEMENT(3)
         TOWN(3)
         HARBOUR(2)
-        +StructureType(posAmount: int)
 	}
 
     class TradingStatus{
@@ -454,19 +434,15 @@ classDiagram
     }
 
     class BadRequestException{
-        +BadRequestException(message: String)
     }
 
     class ForbiddenException{
-        +ForbiddenException(message: String)
     }
 
     class InvalidDtoException{
-        +InvalidDtoException(message: String)
     }
 
     class NotFoundException{
-        +NotFoundException(message: String)
     }
 
     %% account
@@ -521,15 +497,12 @@ classDiagram
 
     %% account/error
     class InvalidCharactersException{
-        +InvalidCharactersException()
     }
 
     class InvalidCredentialsException{
-        +InvalidCredentialsException()
     }
 
     class UserAlreadyExistsException{
-        +UserAlreadyExistsException()
     }
 
     %% account/token
