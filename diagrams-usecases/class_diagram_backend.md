@@ -11,14 +11,14 @@ classDiagram
 
     class SseSender~T~{
         <<abstract>>
-        -groupsEmitters: Map
-        -createEmitter(username: String, group: T)
-        -sendEvent(emitters: Map<String, SseEmitter>, name: String, data: Object, group: T)
-        -allEmitters(group: T)
-        -allEmittersExcept(group: T, user: User)
-        -emittersOfOnly(group: T, user: User)
+        #groupsEmitters: Map
+        #createEmitter(username: String, group: T)
+        #sendEvent(emitters: Map<String, SseEmitter>, name: String, data: Object, group: T)
+        #allEmitters(group: T)
+        #allEmittersExcept(group: T, user: User)
+        #emittersOfOnly(group: T, user: User)
         -unsubscribe(group: T, username: String)
-        -onUnsubscribe(group: T, username: String)
+        #onUnsubscribe(group: T, username: String)
         +[abstract] subscribe(group: T, username: String)
     }
 
@@ -53,7 +53,6 @@ classDiagram
         +heartbeat(lobbyCode: String, dto: HeartbeatDTO, response: HttpServletResponse)
         +lobbyEvents(lobbyCode: String)
         +match(lobbyCode: String)
-		
     }
 
     class LobbyManager{
@@ -66,8 +65,8 @@ classDiagram
         -notifyLobbyUpdate(lobby: Lobby)
         +createMatchForLobby(lobby: Lobby, user: User)
         +findLobbyByMatch(matchUUID: UUID)
-        -subscribe(lobbyCode: String, username: String)
-        -onUnsubscribe(lobbyCode: String, username: String)
+        +subscribe(lobbyCode: String, username: String)
+        #onUnsubscribe(lobbyCode: String, username: String)
         +onNoHeartbeat(lobby: Lobby, playerId: int)
     }
 
@@ -114,6 +113,7 @@ classDiagram
     class AxialPosition{
         -q: int
         -r: int
+        +of(q: int, r: int)
     }
 
     class BuildingABuildingValidator{
@@ -174,7 +174,7 @@ classDiagram
         -validator: BuildingABuildingValidator
         -tradingHandler: TradingHandler
         +nextPlayersTurn()
-        +grantInitialResources()
+        -grantInitialResources()
         +grantResourcesForDiceResult(diceResult: int)
         -setOrAddResource(resources: Map, fields: Field)
         +buildBuilding(player: PlayerRepresentation, buildActionDTO: BuildActionDTO)
@@ -305,7 +305,7 @@ classDiagram
 
     class PlayerRepresentation{
 		-player: Player
-        -username: String
+        ~username: String
         -publicId: int
         -sessionId: String
 		-playerHue: int
@@ -395,7 +395,7 @@ classDiagram
         -accessTokenAuthenticationFilter: AccessTokenAuthenticationFilter
         -refreshTokenAuthenticationFilter: RefreshTokenAuthenticationFilter
         -sseTokenAuthenticationFilter: SseTokenAuthenticationFilter
-        +corsConfigurationSource()
+        ~corsConfigurationSource()
         +securityFilterChain(http: HttpSecurity)
     }
 
@@ -403,8 +403,8 @@ classDiagram
     class AccessTokenAuthenticationFilter{
         -jwtService: JwtService
         -userRepository: AllUserRepository
-        -shouldNotFilter(request: HttpServletRequest)
-        -doFilterInternal(request: HttpServletRequest, reponse: HttpServletResponse, filterChain: FilterChain)
+        #shouldNotFilter(request: HttpServletRequest)
+        #doFilterInternal(request: HttpServletRequest, reponse: HttpServletResponse, filterChain: FilterChain)
     }
 
     class RefreshTokenAuthenticationFilter{
@@ -412,8 +412,8 @@ classDiagram
         -refreshTokensService: RefreshTokensService
         -userRepository: AllUserRepository
         +doesFilter(path: String)
-        -shouldNotFilter(request: HttpServletRequest)
-        -doFilterInternal(request: HttpServletRequest, reponse: HttpServletResponse, filterChain: FilterChain)
+        #shouldNotFilter(request: HttpServletRequest)
+        #doFilterInternal(request: HttpServletRequest, reponse: HttpServletResponse, filterChain: FilterChain)
     }
 
     class SseTokenAuthenticationFilter{
@@ -421,8 +421,8 @@ classDiagram
         -sseTokenService: SseTokenService
         -userRepository: AllUserRepository
         +doesFilter(path: String)
-        -shouldNotFilter(request: HttpServletRequest)
-        -doFilterInternal(request: HttpServletRequest, reponse: HttpServletResponse, filterChain: FilterChain)
+        #shouldNotFilter(request: HttpServletRequest)
+        #doFilterInternal(request: HttpServletRequest, reponse: HttpServletResponse, filterChain: FilterChain)
         -extractSseToken(queryString: String)
     }
 
@@ -563,7 +563,8 @@ classDiagram
     }
 
     class GuestUserRepository{
-        -guestUsers: Map<String, User>
+        +guestUsers: Map<String, User>
+        +save(user: User)
         +findByUsername(username: String)
         +findByUsernameIgnoreCase(username: String)
         +deleteAll()
