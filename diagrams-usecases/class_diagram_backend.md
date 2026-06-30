@@ -627,6 +627,8 @@ classDiagram
     TradeBankDTO --* "1" RessourceType: offered
     TradePlayerDTO --* "1..*" RessourceType: requests
     TradePlayerDTO --* "1..*" RessourceType: offers
+    FieldFactory ..> Field: create
+    StructureFactory ..> Structure: create
 
     SecurityConfig ..> AccessTokenAuthenticationFilter: use
     SecurityConfig ..> RefreshTokenAuthenticationFilter: use
