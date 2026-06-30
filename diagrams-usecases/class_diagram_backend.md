@@ -236,6 +236,7 @@ classDiagram
     }
     
     class PlayerActionDTO{
+        <<abstract>>
         -type: PlayerActionType
     }
 
@@ -604,6 +605,7 @@ classDiagram
     Lobby ..> AppConfig: use
     Lobby ..> LobbyManager: use
     Lobby ..> User: use
+    Lobby ..|> NoHeartbeatListener
     LobbyController ..> LobbyManager : use
     LobbyController ..> CreateLobbyDTO : use
     LobbyController ..> AuthUtils : use
@@ -623,7 +625,12 @@ classDiagram
     LobbyManager ..> NotOwnerOfLobbyException: use
     LobbyManager ..> Match: use
     LobbyManager ..> MatchNotFoundException: use
+    LobbyManager --|> SseSender
+    LobbyManager ..|> NoHeartbeatListener
     LobbyDTO ..> Player: use
+    InvalidRadiusException --|> BadRequestException
+    LobbyNotFoundException --|> NotFoundException
+    NotOwnerOfLobbyException --|> ForbiddenException
     HeartbeatHandler ..> Lobby: use
     HeartbeatHandler ..> Player: use
     HeartbeatHandler ..> NoHeartbeatListener: use
@@ -668,6 +675,7 @@ classDiagram
     GameManager ..> StructureType: use
     GameManager ..> StructureFactory: use
     GameManager ..> ResourceType: use
+    GameManager --|> SseSender
     Match ..> GameBoard: use
     Match ..> GamePlayers: use
     Match ..> ResourceType: use
@@ -710,15 +718,23 @@ classDiagram
     BuildActionDTO ..> StructureType: use
     BuildActionDTO ..> AxialPosition: use
     BuildActionDTO --|> PlayerActionDTO
+    PickDicePairDTO --|> PlayerActionDTO
     PlayerActionDTO ..> PlayerActionType: use
-    TradeBankDTO --|> PlayerActionDTO
     TradeBankDTO ..> ResourceType: use
-    TradePlayerDTO --|> PlayerActionDTO
+    TradeBankDTO --|> PlayerActionDTO
     TradePlayerDTO ..> ResourceType: use
     TradePlayerDTO ..> TradingStatus: use
     TradePlayerDTO ..> TradingTarget: use
+    TradePlayerDTO --|> PlayerActionDTO
+    InvalidBuildRequestException --|> BadRequestException
+    MatchNotFoundException --|> NotFoundException
     MissingAxialPositionsException ..> StructureType: use
+    MissingAxialPositionsException --|> InvalidDtoException
     MoveHasntBeenImplementedException ..> PlayerActionType: use
+    MoveHasntBeenImplementedException --|> BadRequestException
+    NotEnoughResourcesException --|> BadRequestException
+    NotPlayersTurnException --|> ForbiddenException
+    TooLittleSpaceException --|> BadRequestException
     GamePlayers ..> PlayerRepresentation: use
     GamePlayers ..> Lobby: use
     GamePlayers ..> User: use
@@ -759,6 +775,7 @@ classDiagram
     ControllerExceptionHandler ..> NotFoundException: use
     ControllerExceptionHandler ..> ForbiddenException: use
     ControllerExceptionHandler ..> BadRequestException: use
+    InvalidDtoException --|> BadRequestException
 
     AuthUtils ..> User: use
     AuthenticationService ..> AllUserRepository: use
@@ -784,6 +801,9 @@ classDiagram
 	AccountController ..> RegisterDTO: use
     AccountController ..> User: use
     AccountController ..> AuthUtils: use
+    InvalidCharactersException --|> BadRequestException
+    InvalidCredentialsException --|> BadRequestException
+    UserAlreadyExistsException --|> BadRequestException
     CookieService ..> JwtService: use
     CookieService ..> AuthTokens: use
     JwtService ..> User: use
@@ -793,7 +813,7 @@ classDiagram
     SseTokenService ..> AuthTokens: use
     SseTokenService ..> User: use
     AccountUserRepository ..> User: use
-    AccountUserRepository ..|> UserRepository
+    AccountUserRepository --|> UserRepository
     AllUserRepository ..> AccountUserRepository: use
     AllUserRepository ..> GuestUserRepository: use
     AllUserRepository ..> User: use
