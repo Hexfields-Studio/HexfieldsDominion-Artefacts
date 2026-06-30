@@ -1,0 +1,9 @@
+# RMMM Tabelle
+Risk Score = Probablity * Impact
+
+| Risk ID | Category | Risk Description | Probability | Impact | Risk Score | Mitigation Strategy | Indicator | Contingency Plan | Responsible Status | Last modified date |
+|-|-|-|-|-|-|-|-|-|-|-|
+| R-01 | Project Complexity | Project involves the use of new technology | Medium | High | 4 | Early Proof of Concept, limit testing to measure perfomance (FPS) | PoC shows performance issues, slow onboarding, difficulty in implementing desired features | Switch to a different, game oriented engine for rendering the game, like phaser.io | Alexander Horst | 2026-04-10 |
+| R-02 | Planning & Control | Inadequate estimation of required resources | Low | Medium | 3 | Designing the Backend in a way so it avoids processing faulty requests and making sure it saves and manages its ressources automatically. Instead of crashing, it should simply disallow new requests until ressources are available again | PoC uses up too much ressources during testing, crashes when under too much load | Add more ressources (RAM, CPU) or optimize system resource usage | All | 2026-06-30 |
+| R-03 | Planning & Control | Updating dependencies may cause security vulnerabilities | Low | Medium | 3 | Before updating any dependency, check if there are serious security vulnerabilities included in an update | Any dependency includes a known security vulnerability in a version that is used in the project | Upgrade or Downgrade to a version that does not include said security vulnerability | All | 2026-04-10 |
+| R-04 | Quality & Integration | Frontend game client and backend API contract mismatch causes connection errors or missing features | Medium | High | 4 | Never deploy mismatched endpoints, manual re-check after every deployment | Frequent hotfixes after merges, failed end-to-end scenarios | Leave main on last stable version, run pair-wise PR completion (Frontend and Backend matching) | All | 2026-06-30 |
