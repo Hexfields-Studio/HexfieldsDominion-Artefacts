@@ -596,67 +596,202 @@ classDiagram
     }
 
     %% RELATIONS
-    LobbyController --o "1" LobbyManager : lobbyManager
-    LobbyManager --> "0..*" Lobby: freeLobbies
-    LobbyManager --> "0..*" Lobby: occupiedLobbies
-	LobbyManager ..> CreateLobbyDTO: use
+    SseSender ..> User: use
+
+    Lobby ..> HeartbeatHandler: use
+    Lobby ..> Player: use
+    Lobby ..> Match: use
+    Lobby ..> AppConfig: use
+    Lobby ..> LobbyManager: use
+    Lobby ..> User: use
+    LobbyController ..> LobbyManager : use
+    LobbyController ..> CreateLobbyDTO : use
+    LobbyController ..> AuthUtils : use
+    LobbyController ..> LobbyNotFoundException : use
+    LobbyController ..> HeartbeatDTO : use
+    LobbyController ..> NotOwnerOfLobbyException : use
+    LobbyController ..> TooLittleSpaceException : use
+    LobbyController ..> Match : use
+    LobbyManager ..> Lobby: use
     LobbyManager ..> AppConfig: use
     LobbyManager ..> LobbyCodeGenerator: use
-    Lobby --> "1..*" Player
+    LobbyManager ..> LobbyNotFoundException: use
+    LobbyManager ..> Player: use
+    LobbyManager ..> User: use
+	LobbyManager ..> TooLittleSpaceException: use
+    LobbyManager ..> InvalidRadiusException: use
+    LobbyManager ..> NotOwnerOfLobbyException: use
+    LobbyManager ..> Match: use
+    LobbyManager ..> MatchNotFoundException: use
+    LobbyDTO ..> Player: use
+    HeartbeatHandler ..> Lobby: use
+    HeartbeatHandler ..> Player: use
+    HeartbeatHandler ..> NoHeartbeatListener: use
+    NoHeartbeatListener ..> Lobby: use
 
-    GameController ..> BuildActionDTO: use
-    GameController ..> TradeBankDTO: use
-    GameController ..> TradePlayerDTO: use
-    GameController ..> PickDicePairDTO: use
-    GameController --> "0..*" Match: matches
-    Match "0..1" --* Lobby
-    Match --* Field
-    Match --* "2..*" PlayerRepresentation: players
-    Structure "0..*" --* Match: structures
-    Structure --> "1" Ressource: ressourceRecipe
-    PlayerRepresentation --> "0..1" Player: player
-    Ressource "0..*" --* PlayerRepresentation: ressources
-    Field --> "1" Ressource: ressource
-    BuildActionDTO --|> PlayerActionDTO
-    BuildActionDTO ..> StructureType: use
-    PickDicePairDTO --|> PlayerActionDTO
-    TradeBankDTO --|> PlayerActionDTO
-    TradePlayerDTO --|> PlayerActionDTO
-    PlayerActionDTO ..> PlayerActionType: use
-    TradeBankDTO --* "1" RessourceType: requested
-    TradeBankDTO --* "1" RessourceType: offered
-    TradePlayerDTO --* "1..*" RessourceType: requests
-    TradePlayerDTO --* "1..*" RessourceType: offers
+    BuildingABuildingValidator ..> AxialPosition: use
+    BuildingABuildingValidator ..> Field: use
+    BuildingABuildingValidator ..> User: use
+    BuildingABuildingValidator ..> Match: use
+    BuildingABuildingValidator ..> BuildActionDTO: use
+    BuildingABuildingValidator ..> MissingAxialPositionsException: use
+    BuildingABuildingValidator ..> StructureType: use
+    BuildingABuildingValidator ..> PlayerRepresentation: use
+    BuildingABuildingValidator ..> Structure: use
+    BuildingABuildingValidator ..> ResourceType: use
+    BuildingABuildingValidator ..> StructureFactory: use
+    GameController ..> LobbyManager: use
+    GameController ..> GameManager: use
+    GameController ..> MatchNotFoundException: use
+    GameController ..> Field: use
+    GameController ..> StructureType: use
+    GameController ..> ResourceType: use
+    GameController ..> StructureFactory: use
+    GameController ..> AuthUtils: use
+    GameController ..> NotPlayersTurnException: use
+    GameController ..> PlayerActionDTO: use
+    GameController ..> InvalidBuildRequestException: use
+    GameController ..> MoveHasntBeenImplementedException: use
+    GameController ..> Lobby: use
+    GameManager ..> LobbyManager: use
+    GameManager ..> MatchNotFoundException: use
+    GameManager ..> NotPlayersTurnException: use
+    GameManager ..> User: use
+    GameManager ..> Match: use
+    GameManager ..> ForbiddenException: use
+    GameManager ..> PlayerActionDTO: use
+    GameManager ..> InvalidBuildRequestException: use
+    GameManager ..> MoveHasntBeenImplementedException: use
+    GameManager ..> BuildActionDTO: use
+    GameManager ..> TradeBankDTO: use
+    GameManager ..> TradePlayerDTO: use
+    GameManager ..> StructureType: use
+    GameManager ..> StructureFactory: use
+    GameManager ..> ResourceType: use
+    Match ..> GameBoard: use
+    Match ..> GamePlayers: use
+    Match ..> ResourceType: use
+    Match ..> BuildingABuildingValidator: use
+    Match ..> TradingHandler: use
+    Match ..> Lobby: use
+    Match ..> TooLittleSpaceException: use
+    Match ..> StructureFactory: use
+    Match ..> StructureType: use
+    Match ..> PlayerRepresentation: use
+    Match ..> Field: use
+    Match ..> User: use
+    Match ..> BuildActionDTO: use
+    Field ..> AxialPosition: use
+    Field ..> ResourceType: use
     FieldFactory ..> Field: create
+    FieldFactory ..> ResourceType: use
+    FieldFactory ..> AxialPosition: use
+    GameBoard ..> ResourceType: use
+    GameBoard ..> Field: use
+    GameBoard ..> Structure: use
+    GameBoard ..> FieldFactory: use
+    GameBoard ..> PlayerRepresentation: use
+    GameBoard ..> BuildActionDTO: use
+    GameBoard ..> StructureFactory: use
+    GameBoard ..> AxialPosition: use
+    Structure ..> StructureType: use
+    Structure ..> AxialPosition: use
+    Structure ..> ResourceType: use
     StructureFactory ..> Structure: create
+    StructureFactory ..> ResourceType: use
+    StructureFactory ..> Match: use
+    StructureFactory ..> BuildingABuildingValidator: use
+    StructureFactory ..> TooLittleSpaceException: use
+    StructureFactory ..> AxialPosition: use
+    StructureFactory ..> PlayerRepresentation: use
+    StructureFactory ..> BuildActionDTO: use
+    StructureFactory ..> Field: use
+    StructureFactory ..> StructureType: use
+    BuildActionDTO ..> StructureType: use
+    BuildActionDTO ..> AxialPosition: use
+    BuildActionDTO --|> PlayerActionDTO
+    PlayerActionDTO ..> PlayerActionType: use
+    TradeBankDTO --|> PlayerActionDTO
+    TradeBankDTO ..> ResourceType: use
+    TradePlayerDTO --|> PlayerActionDTO
+    TradePlayerDTO ..> ResourceType: use
+    TradePlayerDTO ..> TradingStatus: use
+    TradePlayerDTO ..> TradingTarget: use
+    MissingAxialPositionsException ..> StructureType: use
+    MoveHasntBeenImplementedException ..> PlayerActionType: use
+    GamePlayers ..> PlayerRepresentation: use
+    GamePlayers ..> Lobby: use
+    GamePlayers ..> User: use
+    Player ..> User: use
+    Player ..> Role: use
+    PlayerRepresentation ..> Player: use
+    PlayerRepresentation ..> ResourceType: use
+    PlayerRepresentation ..> PlayerHueFactory: use
+    PlayerTrade ..> TradingStatus: use
+    PlayerTrade ..> TradingTarget: use
+    PlayerTrade ..> ResourceType: use
+    TradingHandler ..> PlayerTrade: use
+    TradingHandler ..> User: use
+    TradingHandler ..> Match: use
+    TradingHandler ..> TradePlayerDTO: use
+    TradingHandler ..> TradingStatus: use
+    TradingHandler ..> PlayerRepresentation: use
+    TradingHandler ..> TradingTarget: use
+    TradingHandler ..> ResourceType: use
+    TradingHandler ..> NotEnoughResourcesException: use
+    TradingHandler ..> BadRequestException: use
 
     SecurityConfig ..> AccessTokenAuthenticationFilter: use
     SecurityConfig ..> RefreshTokenAuthenticationFilter: use
+    SecurityConfig ..> SseTokenAuthenticationFilter: use
     AccessTokenAuthenticationFilter ..> JwtService: use
     AccessTokenAuthenticationFilter ..> AllUserRepository: use
     AccessTokenAuthenticationFilter ..> RefreshTokenAuthenticationFilter: use
+    AccessTokenAuthenticationFilter ..> SseTokenAuthenticationFilter: use
     RefreshTokenAuthenticationFilter ..> JwtService: use
-    RefreshTokenAuthenticationFilter ..> ValidRefreshTokensService: use
+    RefreshTokenAuthenticationFilter ..> RefreshTokensService: use
     RefreshTokenAuthenticationFilter ..> AllUserRepository: use
+    RefreshTokenAuthenticationFilter ..> AuthTokens: use
+    SseTokenAuthenticationFilter ..> JwtService: use
+    SseTokenAuthenticationFilter ..> AllUserRepository: use
+    SseTokenAuthenticationFilter ..> SseTokenService: use
 
-    AccountController ..> AuthenticationService: use
-    AccountController ..> AuthenticationResult: use
-	AccountController ..> LoginDTO: use
-	AccountController ..> RegisterDTO: use
-    AuthenticationResult ..> AuthenticationResponse: use
+    ControllerExceptionHandler ..> NotFoundException: use
+    ControllerExceptionHandler ..> ForbiddenException: use
+    ControllerExceptionHandler ..> BadRequestException: use
+
+    AuthUtils ..> User: use
     AuthenticationService ..> AllUserRepository: use
     AuthenticationService ..> JwtService: use
     AuthenticationService ..> CookieService: use
-    AuthenticationService ..> ValidRefreshTokensService: use
+    AuthenticationService ..> RefreshTokensService: use
     AuthenticationService ..> AuthenticationResult: use
+    AuthenticationService ..> User: use
+    AuthenticationService ..> InvalidCharactersException: use
+    AuthenticationService ..> UserAlreadyExistsException: use
+    AuthenticationService ..> Role: use
+    AuthenticationService ..> InvalidCredentialsException: use
     AuthenticationService ..> AuthenticationResponse: use
     AuthenticationService ..> AuthTokens: use
 	AuthenticationService ..> LoginDTO: use
 	AuthenticationService ..> RegisterDTO: use
+    AuthenticationResult ..> AuthenticationResponse: use
+    AccountController ..> AuthenticationService: use
+    AccountController ..> SseTokenService: use
+    AccountController ..> AuthenticationResponse: use
+    AccountController ..> AuthenticationResult: use
+	AccountController ..> LoginDTO: use
+	AccountController ..> RegisterDTO: use
+    AccountController ..> User: use
+    AccountController ..> AuthUtils: use
     CookieService ..> JwtService: use
     CookieService ..> AuthTokens: use
     JwtService ..> User: use
-    ValidRefreshTokensService ..> User: use
+    RefreshTokensService ..> User: use
+    RefreshTokensService ..> UserRepository: use
+    SseTokenService ..> JwtService: use
+    SseTokenService ..> AuthTokens: use
+    SseTokenService ..> User: use
     AccountUserRepository ..> User: use
     AccountUserRepository ..|> UserRepository
     AllUserRepository ..> AccountUserRepository: use
