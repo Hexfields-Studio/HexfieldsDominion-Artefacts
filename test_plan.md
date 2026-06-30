@@ -143,7 +143,7 @@ Die Testanforderungen sind direkt mit den folgenden Use Cases und funktionalen A
 
 | Komponente | Werkzeug | Beschreibung |
 |-----------|----------|-------------|
-| Backend | Gradle, JUnit | Automatisierte Unit- und Integrationstests |
+| Backend | Gradle, JUnit, Mockito | Automatisierte Unit- und Integrationstests |
 | Frontend | (geplant) Jest/Vitest + Testing Library | Teststruktur vorgesehen, aktuell noch nicht umgesetzt |
 
 #### Test-Verwaltung
