@@ -96,7 +96,7 @@ In der Authentifizierung des Backend-Repositories war mehrfach verwendete Logik 
 ### Umsetzung
 
 Im Commit  
-`7db20c2b958ed56a1587bc57f510598a5d565f09`  
+[`7db20c2b958ed56a1587bc57f510598a5d565f09`](https://github.com/Hexfields-Studio/HexfieldsDominion-Backend/commit/7db20c2b958ed56a1587bc57f510598a5d565f09)  
 wurde die wiederkehrende Authentifizierungslogik in eine gemeinsame Funktion extrahiert und zentralisiert.
 
 ### Technische Auswirkungen
