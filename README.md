@@ -13,7 +13,7 @@ Dokumentation:
   - [Test Report](./test_plan.md)
   - [Softwaremetriken](./metrics_summary.md)
 - [CI/CD Setup](./ci_cd_summary.md)
-- TODO [Risk Management Table]()
+- [Risk Management Table](./risk%20management%20table%20(RMMM).md)
 - [Zusammenfassung Retrospektive](./project_retrospective.md#zusammenfassung)
 
 Weitere Links:
